@@ -20,11 +20,11 @@ public interface EquipmentDao {
     @Query("SELECT * FROM equipments WHERE statusEquipment = :status")
     LiveData<EquipmentEntity> getByStatus(String status);
 
-    @Query("SELECT * FROM equipments WHERE nextInspectionDateEquipment = :date")
-    LiveData<List<InspectionEntity>> getByNextInspectionDate(String date);
-
-    @Query("SELECT * FROM equipments WHERE lastInspectionDateEquipment = :date")
-    LiveData<List<InspectionEntity>> getByLastInspectionDate(String date);
+//    @Query("SELECT * FROM equipments WHERE nextInspectionDateEquipment = :date")
+//    LiveData<List<InspectionEntity>> getByNextInspectionDate(String date);
+//
+//    @Query("SELECT * FROM equipments WHERE lastInspectionDateEquipment = :date")
+//    LiveData<List<InspectionEntity>> getByLastInspectionDate(String date);
 
     @Query("SELECT * FROM equipments")
     LiveData<List<EquipmentEntity>> getAll();

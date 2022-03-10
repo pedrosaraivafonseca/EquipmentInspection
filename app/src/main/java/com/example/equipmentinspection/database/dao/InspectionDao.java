@@ -16,10 +16,10 @@ public interface InspectionDao {
     @Query("SELECT * FROM inspections WHERE idInspection = :id")
     LiveData<InspectionEntity> getById(int id);
 
-    @Query("SELECT * FROM inspections WHERE idInspection = :idInspector")
+    @Query("SELECT * FROM inspections WHERE idInspector = :idInspector")
     LiveData<List<InspectionEntity>> getByInspector(int idInspector);
 
-    @Query("SELECT * FROM inspections WHERE idInspection = :idEquipment")
+    @Query("SELECT * FROM inspections WHERE idEquipment = :idEquipment")
     LiveData<List<InspectionEntity>> getByEquipment(int idEquipment);
 
     @Query("SELECT * FROM inspections WHERE statusInspection = :status")

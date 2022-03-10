@@ -28,6 +28,8 @@ import androidx.room.PrimaryKey;
 public class InspectionEntity {
     @PrimaryKey(autoGenerate = true)
     private int idInspection;
+    private int idInspector;
+    private int idEquipment;
     private int equipmentInspection;
     private int inspectorInspection;
     private String dateInspection;
@@ -40,6 +42,17 @@ public class InspectionEntity {
     public void setIdInspection(int idInspection) {
         this.idInspection = idInspection;
     }
+
+
+    public int getIdInspector() {
+        return idInspector;
+    }
+
+    public int getIdEquipment(){
+        return idEquipment;
+    }
+
+
 
     public int getEquipmentInspection() {
         return equipmentInspection;
