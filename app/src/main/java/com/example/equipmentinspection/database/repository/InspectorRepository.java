@@ -17,6 +17,7 @@ public class InspectorRepository {
         return instance;
     }
 
+    //
 //    public LiveData<InspectorEntity> getInspector(final int id, Context context) {
 //        return AppDatabase.getInstance(context).InspectorDao().getById(id);
 //    }
