@@ -19,8 +19,6 @@ import java.util.Objects;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<EquipmentEntity> equipmentData;
-    private List<InspectionEntity> inspectionData;
-    private List<InspectorEntity> inspectorData;
     private RecyclerViewItemClickListener listener;
 
     // Provide a reference to the views for each data item
