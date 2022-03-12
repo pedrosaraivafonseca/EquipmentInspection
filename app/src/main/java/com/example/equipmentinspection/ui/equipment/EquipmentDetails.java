@@ -1,4 +1,4 @@
-package com.example.equipmentinspection.ui;
+package com.example.equipmentinspection.ui.equipment;
 
 import android.os.Bundle;
 
@@ -12,11 +12,6 @@ import com.example.equipmentinspection.R;
 
 
 public class EquipmentDetails extends Fragment {
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

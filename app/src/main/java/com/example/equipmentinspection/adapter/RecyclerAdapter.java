@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
-import com.example.equipmentinspection.database.entity.InspectionEntity;
+//import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.util.RecyclerViewItemClickListener;
 

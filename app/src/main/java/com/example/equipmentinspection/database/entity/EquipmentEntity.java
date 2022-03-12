@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity(tableName = "equipments", primaryKeys = {"idEquipment"})
+@Entity(tableName = "equipments", primaryKeys = "idEquipment")
 public class EquipmentEntity {
     @PrimaryKey(autoGenerate = true)
     private int idEquipment;
@@ -15,7 +15,7 @@ public class EquipmentEntity {
     private String warrantyDateEquipment;
     private String lastInspectionDateEquipment;
     private String nextInspectionDateEquipment;
-    private InspectorEntity lastInspectorEquipment;
+    private String lastInspectorEquipment;
     private String statusEquipment;
 
     public int getIdEquipment() {
@@ -74,11 +74,11 @@ public class EquipmentEntity {
         this.nextInspectionDateEquipment = nextInspectionDateEquipment;
     }
 
-    public InspectorEntity getLastInspectorEquipment() {
+    public String getLastInspectorEquipment() {
         return lastInspectorEquipment;
     }
 
-    public void setLastInspectorEquipment(InspectorEntity lastInspectorEquipment) {
+    public void setLastInspectorEquipment(String lastInspectorEquipment) {
         this.lastInspectorEquipment = lastInspectorEquipment;
     }
 

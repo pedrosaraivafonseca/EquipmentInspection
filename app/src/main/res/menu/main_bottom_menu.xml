@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item
+    android:id="@+id/menu_equipment_toolbar_button"
+    android:icon="@drawable/baseline_construction_24"
+    android:title="@string/bottom_equipment_text" />
+<item
+    android:id="@+id/menu_inspection_toolbar_button"
+    android:icon="@drawable/baseline_zoom_in_24"
+    android:title="@string/bottom_inspection_text"></item>
+
+<item
+    android:id="@+id/menu_inspector_toolbar_button"
+    android:icon="@drawable/baseline_person_24"
+    android:title="@string/bottom_inspector_text" />
+</menu>
