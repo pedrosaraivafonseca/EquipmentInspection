@@ -7,11 +7,12 @@ import androidx.room.PrimaryKey;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity(tableName = "inspectors", primaryKeys = {"idInspector"})
+@Entity(tableName = "inspectors")
 public class InspectorEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int idInspector;
+
     private String nameInspector;
     private String firstNameInspector;
     private String emailInspector;

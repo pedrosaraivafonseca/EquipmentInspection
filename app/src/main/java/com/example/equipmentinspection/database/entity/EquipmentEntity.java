@@ -5,10 +5,12 @@ import androidx.room.PrimaryKey;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity(tableName = "equipments", primaryKeys = "idEquipment")
+@Entity(tableName = "equipments")
 public class EquipmentEntity {
+
     @PrimaryKey(autoGenerate = true)
     private int idEquipment;
+
     private String nameEquipment;
     private double priceEquipment;
     private String purchaseDateEquipment;

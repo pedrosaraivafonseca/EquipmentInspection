@@ -5,33 +5,33 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "inspections", primaryKeys = {"idInspection"},
+@Entity(tableName = "inspections",
         foreignKeys = {
             @ForeignKey(
                 entity = InspectorEntity.class,
                 parentColumns = "idInspector",
-                childColumns = "inspectorInspection",
+                childColumns = "idInspectorInspection",
                 onDelete = ForeignKey.CASCADE
             ),
             @ForeignKey(
                 entity = EquipmentEntity.class,
                 parentColumns = "idEquipment",
-                childColumns = "equipmentInspection",
+                childColumns = "idEquipmentInspection",
                 onDelete = ForeignKey.CASCADE
             )
         },
         indices = {
-            @Index(value = {"inspectorInspection"}),
-            @Index(value = {"equipmentInspection"})}
+            @Index(value = {"idInspectorInspection"}),
+            @Index(value = {"idEquipmentInspection"})}
 )
 
 public class InspectionEntity {
+
     @PrimaryKey(autoGenerate = true)
     private int idInspection;
-    private int idInspector;
-    private int idEquipment;
-    private int equipmentInspection;
-    private int inspectorInspection;
+
+    private int idInspectorInspection;
+    private int idEquipmentInspection;
     private String dateInspection;
     private String statusInspection;
 
@@ -44,30 +44,20 @@ public class InspectionEntity {
     }
 
 
-    public int getIdInspector() {
-        return idInspector;
+    public int getIdInspectorInspection() {
+        return idInspectorInspection;
     }
 
-    public int getIdEquipment(){
-        return idEquipment;
+    public int getIdEquipmentInspection(){
+        return idEquipmentInspection;
     }
 
-
-
-    public int getEquipmentInspection() {
-        return equipmentInspection;
+    public void setIdInspectorInspection(int idInspectorInspection) {
+        this.idInspectorInspection = idInspectorInspection;
     }
 
-    public void setEquipmentInspection(int equipmentInspection) {
-        this.equipmentInspection = equipmentInspection;
-    }
-
-    public int getInspectorInspection() {
-        return inspectorInspection;
-    }
-
-    public void setInspectorInspection(int inspectorInspection) {
-        this.inspectorInspection = inspectorInspection;
+    public void setIdEquipmentInspection(int idEquipmentInspection) {
+        this.idEquipmentInspection = idEquipmentInspection;
     }
 
     public String getDateInspection() {
