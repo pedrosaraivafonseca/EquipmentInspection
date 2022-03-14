@@ -13,6 +13,8 @@
     <string name="register_login_button_text">Login</string>
     <string name="register_email_hint">Enter Email</string>
     <string name="register_password_hint">Enter Password</string>
+    <string name="register_firstname_hint">Enter First Name</string>
+    <string name="register_lastname_hint">Enter Last Name</string>
     <string name="bottom_inspection_text">Inspection</string>
     <string name="bottom_equipment_text">Equipment</string>
     <string name="bottom_inspector_text">Inspector</string>
@@ -27,4 +29,10 @@
     <string name="equipment_nextInspection_hint">Next Inspection</string>
     <string name="equipment_nextInspector_hint">Next Inspector</string>
     <string name="equipment_status_hint">Status</string>
+
+    //Errors
+    <string name="error_password_retype">The passwords do not match</string>
+    <string name="error_invalid_email">Invalid email entered</string>
+    <string name="error_empty_field">Please fill in the field</string>
+    <string name="error_already_registered">Email already in use</string>
 </resources>

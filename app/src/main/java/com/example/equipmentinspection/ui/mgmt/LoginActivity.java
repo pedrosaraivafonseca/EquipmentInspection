@@ -55,9 +55,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 checkLogin();
-//                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//                intent.putExtra("ok", "yes");
-//                startActivity(intent);
             }
         });
     }
@@ -96,7 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(this, "Login successfull", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
                     toast.show();
-//                SharedPreferences
+
+                    SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+                    editor.putString(MainActivity.PREFS_USER, inspectorEntity.getEmailInspector());
+                    editor.apply();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     this.finish();

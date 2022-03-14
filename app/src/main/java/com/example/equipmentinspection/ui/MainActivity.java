@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +36,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String PREFS_NAME = "SharedPrefs";
+    public static final String PREFS_USER = "LoggedIn";
 
     private Toolbar mainToolbar;
     private BottomNavigationView mainBottomNavigation;
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-        String logged = intent.getStringExtra("ok");
+        SharedPreferences logged = getSharedPreferences(MainActivity.PREFS_NAME,0);
         if (logged==null){
             goToLogin();
         }
