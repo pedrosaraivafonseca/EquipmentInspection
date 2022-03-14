@@ -72,15 +72,15 @@ public class InspectionDetailsViewModel extends AndroidViewModel {
         return observableInspection;
     }
 
-    public void createClient(InspectionEntity inspection, OnAsyncEventListener callback) {
+    public void createInspection(InspectionEntity inspection, OnAsyncEventListener callback) {
         repository.insert(inspection, callback, applicationContext);
     }
 
-    public void updateClient(InspectionEntity inspection, OnAsyncEventListener callback) {
+    public void updateInspection(InspectionEntity inspection, OnAsyncEventListener callback) {
         repository.update(inspection, callback, applicationContext);
     }
 
-    public void deleteClient(InspectionEntity inspection, OnAsyncEventListener callback) {
+    public void deleteInspection(InspectionEntity inspection, OnAsyncEventListener callback) {
         repository.delete(inspection, callback, applicationContext);
     }
 }
