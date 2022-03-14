@@ -15,7 +15,7 @@ import com.example.equipmentinspection.database.entity.InspectorEntity;
 public interface InspectorDao {
 
     @Query("SELECT * FROM inspectors WHERE idInspector = :id")
-    LiveData<InspectorEntity> getById(int id);
+    LiveData<InspectorEntity> getById(String id);
 
     @Query("SELECT * FROM inspectors WHERE emailInspector = :email AND passwordInspector = :password")
     LiveData<InspectorEntity> getByLogin(String email, String password);

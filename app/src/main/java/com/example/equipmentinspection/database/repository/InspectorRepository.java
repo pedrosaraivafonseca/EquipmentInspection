@@ -1,9 +1,11 @@
 package com.example.equipmentinspection.database.repository;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.database.AppDatabase;
 import com.example.equipmentinspection.database.async.InspectorCreate;
 import com.example.equipmentinspection.database.async.InspectorDelete;
@@ -31,13 +33,13 @@ public class InspectorRepository {
     }
 
     //
-    public LiveData<InspectorEntity> getInspector(final int id, Context context) {
-        return AppDatabase.getInstance(context).inspectorDao().getById(id);
+    public LiveData<InspectorEntity> getInspector(final String inspectorId, Application application) {
+        return ((BaseApp) application).getDatabase().inspectorDao().getById(inspectorId);
     }
 
-    public LiveData<InspectorEntity> getInspector(final String email, final String password, Context context) {
-        return AppDatabase.getInstance(context).inspectorDao().getByLogin(email, password);
-    }
+//    public LiveData<InspectorEntity> getInspector(final String email, Context context) {
+//        return AppDatabase.getInstance(context).inspectorDao().getById(email);
+//    }
 
     public LiveData<List<InspectorEntity>> getAllInspector(Context context) {
         return AppDatabase.getInstance(context).inspectorDao().getAll();

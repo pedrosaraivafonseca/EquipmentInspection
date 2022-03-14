@@ -23,7 +23,7 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
     private final MediatorLiveData<InspectorEntity> observableInspector;
 
     public InspectorDetailsViewModel(@NonNull Application application,
-                           final int idInspector, InspectorRepository inspectorRepository) {
+                           final String idInspector, InspectorRepository inspectorRepository) {
         super(application);
 
         repository = inspectorRepository;
@@ -34,7 +34,7 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
         // set by default null, until we get data from the database.
         observableInspector.setValue(null);
 
-        LiveData<InspectorEntity> inspector = repository.getInspector(idInspector, applicationContext);
+        LiveData<InspectorEntity> inspector = repository.getInspector(idInspector, application);
 
         // observe the changes of the client entity from the database and forward them
         observableInspector.addSource(inspector, observableInspector::setValue);
@@ -48,11 +48,11 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
         @NonNull
         private final Application application;
 
-        private final int idInspector;
+        private final String idInspector;
 
         private final InspectorRepository repository;
 
-        public Factory(@NonNull Application application, int idInspector) {
+        public Factory(@NonNull Application application, String idInspector) {
             this.application = application;
             this.idInspector = idInspector;
             repository = InspectorRepository.getInstance();

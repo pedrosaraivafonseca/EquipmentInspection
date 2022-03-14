@@ -65,7 +65,7 @@ public class InspectorListViewModel extends AndroidViewModel {
     /**
      * Expose the LiveData inspectorEntities query so the UI can observe it.
      */
-    public LiveData<List<InspectorEntity>> getInspectors() {
+    public LiveData<List<InspectorEntity>> getInspector() {
         return observableInspectors;
     }
 }
