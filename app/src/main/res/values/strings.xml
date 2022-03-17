@@ -18,8 +18,9 @@
     <string name="bottom_inspection_text">Inspection</string>
     <string name="bottom_equipment_text">Equipment</string>
     <string name="bottom_inspector_text">Inspector</string>
-    <string name="equipment_make_change_text">Edit</string>
+    <string name="equipment_edit_text">Edit</string>
     <string name="equipment_delete_text">Delete</string>
+    <string name="equipment_add_text">Add</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="equipment_name_hint">Name</string>
     <string name="equipment_price_hint">Price</string>
@@ -30,6 +31,19 @@
     <string name="equipment_nextInspector_hint">Next Inspector</string>
     <string name="equipment_status_hint">Status</string>
 
+    <string name="inspection_edit_text">Edit</string>
+    <string name="inspection_delete_text">Delete</string>
+    <string name="inspection_add_text">Add</string>
+    <string name="inspection_date_hint">Inspection Date</string>
+    <string name="inspection_nextInspectionDate_hint">Next Inspection Date</string>
+    <string name="inspection_inspector_hint">Inspector</string>
+    <string name="inspection_status_hint">Status</string>
+
+    <string name="inspector_edit_text">Edit</string>
+    <string name="inspector_delete_text">Delete</string>
+    <string name="inspector_add_text">Add</string>
+    <string name="inspector_firstName_hint">First Name</string>
+    <string name="inspector_lastName_hint">Last Name</string>
     //Errors
     <string name="error_password_retype">The passwords do not match</string>
     <string name="error_invalid_email">Invalid email entered</string>

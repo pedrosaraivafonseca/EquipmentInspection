@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
-//import com.example.equipmentinspection.database.entity.InspectionEntity;
-import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.util.RecyclerViewItemClickListener;
 
 import java.util.List;
 import java.util.Objects;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
+//import com.example.equipmentinspection.database.entity.InspectionEntity;
+
+public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private List<EquipmentEntity> equipmentData;
     private RecyclerViewItemClickListener listener;
@@ -44,10 +44,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 .inflate(R.layout.recycler_view, parent, false);
         final ViewHolder viewHolder = new ViewHolder(v);
         v.setOnClickListener(view -> listener.onItemClick(view, viewHolder.getAdapterPosition()));
-        v.setOnLongClickListener(view -> {
-            listener.onItemLongClick(view, viewHolder.getAdapterPosition());
-            return true;
-        });
+
         return viewHolder;
     }
 

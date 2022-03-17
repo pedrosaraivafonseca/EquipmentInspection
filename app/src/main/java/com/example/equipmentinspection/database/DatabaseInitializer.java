@@ -37,11 +37,8 @@ public class DatabaseInitializer {
     private static void populateWithTestData(AppDatabase db) {
         db.equipmentDao().deleteAll();
 
-        addInspector(db, "Platini", "Michel", "michel.platini@fifa.com", "michel");
-        addInspector(db, "Blatter", "Sepp", "sepp.blatter@fifa.com", "sepp");
-        addInspector(db, "Schwarz", "Ebbe", "ebbe.schwartz@fifa.com", "ebbe");
-        addInspector(db, "Ceferin", "Aleksander", "aleksander.ceferin@fifa.com", "aleksander");
-    }
+        addInspector(db, "admin", "admin", "admin@admin.admin", "admin");
+      }
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 

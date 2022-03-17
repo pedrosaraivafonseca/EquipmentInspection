@@ -134,10 +134,14 @@ public class MainActivity extends AppCompatActivity {
     private void goToLogin() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
-        finish();
+
     }
 
-    private void logout(){
+    public void logout() {
+        SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+        editor.remove(MainActivity.PREFS_USER);
+        editor.apply();
+
         goToLogin();
     }
 }

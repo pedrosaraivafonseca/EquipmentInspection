@@ -20,6 +20,10 @@ public class EquipmentEntity {
     private String lastInspectorEquipment;
     private String statusEquipment;
 
+    public EquipmentEntity(){
+
+    }
+
     public int getIdEquipment() {
         return idEquipment;
     }
