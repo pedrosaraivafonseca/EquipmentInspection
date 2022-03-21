@@ -30,7 +30,7 @@ public class EquipmentRepository {
         return instance;
     }
 
-    public LiveData<EquipmentEntity> getEquipment(final int id, Context context) {
+    public LiveData<EquipmentEntity> getEquipment(final Long id, Context context) {
         return AppDatabase.getInstance(context).equipmentDao().getById(id);
     }
 

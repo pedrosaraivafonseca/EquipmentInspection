@@ -30,11 +30,11 @@ public class InspectionRepository {
         return instance;
     }
 
-    public LiveData<InspectionEntity> getInspection(final int id, Context context) {
+    public LiveData<InspectionEntity> getInspection(final Long id, Context context) {
         return AppDatabase.getInstance(context).inspectionDao().getById(id);
     }
 
-    public LiveData<InspectionEntity> getInspection(final String status, Context context) {
+    public LiveData<InspectionEntity> getInspectionByStatus(final String status, Context context) {
         return AppDatabase.getInstance(context).inspectionDao().getByStatus(status);
     }
 

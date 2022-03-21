@@ -23,7 +23,7 @@ public class EquipmentDetailsViewModel extends AndroidViewModel {
     private final MediatorLiveData<EquipmentEntity> observableEquipment;
 
     public EquipmentDetailsViewModel(@NonNull Application application,
-                                     final int idEquipment, EquipmentRepository equipmentRepository) {
+                                     final Long idEquipment, EquipmentRepository equipmentRepository) {
         super(application);
 
         repository = equipmentRepository;
@@ -48,11 +48,11 @@ public class EquipmentDetailsViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final int idEquipment;
+        private final Long idEquipment;
 
         private final EquipmentRepository repository;
 
-        public Factory(@NonNull Application application, int idEquipment) {
+        public Factory(@NonNull Application application, Long idEquipment) {
             this.application = application;
             this.idEquipment = idEquipment;
             repository = EquipmentRepository.getInstance();

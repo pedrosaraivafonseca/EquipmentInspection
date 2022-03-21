@@ -14,13 +14,13 @@ import com.example.equipmentinspection.database.entity.InspectionEntity;
 @Dao
 public interface InspectionDao {
     @Query("SELECT * FROM inspections WHERE idInspection = :id")
-    LiveData<InspectionEntity> getById(int id);
+    LiveData<InspectionEntity> getById(Long id);
 
     @Query("SELECT * FROM inspections WHERE idInspectorInspection = :idInspector")
-    LiveData<List<InspectionEntity>> getByInspector(int idInspector);
+    LiveData<List<InspectionEntity>> getByInspector(Long idInspector);
 
     @Query("SELECT * FROM inspections WHERE idEquipmentInspection = :idEquipment")
-    LiveData<List<InspectionEntity>> getByEquipment(int idEquipment);
+    LiveData<List<InspectionEntity>> getByEquipment(Long idEquipment);
 
     @Query("SELECT * FROM inspections WHERE statusInspection = :status")
     LiveData<InspectionEntity> getByStatus(String status);

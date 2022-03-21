@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         if (isValid) {
             String emailValue = login_email_field.getText().toString();
             String passwordValue = login_password_field.getText().toString();
-            inspectorRepository.getInspector(emailValue, getApplication()).observe(LoginActivity.this, inspectorEntity -> {
+            inspectorRepository.getInspectorByLogin(emailValue,passwordValue, getApplication()).observe(LoginActivity.this, inspectorEntity -> {
                 if (inspectorEntity.getPasswordInspector().equals(passwordValue)) {
                     Toast toast = Toast.makeText(this, "Login successfull", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);

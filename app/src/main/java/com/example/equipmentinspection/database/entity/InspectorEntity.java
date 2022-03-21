@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class InspectorEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int idInspector;
+    private Long idInspector;
 
     private String nameInspector;
     private String firstNameInspector;
@@ -25,11 +25,11 @@ public class InspectorEntity {
         this.passwordInspector = passwordInspector;
     }
 
-    public int getIdInspector() {
+    public Long getIdInspector() {
         return idInspector;
     }
 
-    public void setIdInspector(int idInspector) {
+    public void setIdInspector(Long idInspector) {
         this.idInspector = idInspector;
     }
 
@@ -63,5 +63,14 @@ public class InspectorEntity {
 
     public void setPasswordInspector(String passwordInspector) {
         this.passwordInspector = passwordInspector;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof InspectorEntity)) return false;
+        InspectorEntity o = (InspectorEntity) obj;
+        return o.getIdInspector().equals(this.getIdInspector());
     }
 }

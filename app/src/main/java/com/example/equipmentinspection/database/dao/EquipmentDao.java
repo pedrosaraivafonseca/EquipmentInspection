@@ -15,7 +15,7 @@ import com.example.equipmentinspection.database.entity.InspectionEntity;
 @Dao
 public interface EquipmentDao {
     @Query("SELECT * FROM equipments WHERE idEquipment = :id")
-    LiveData<EquipmentEntity> getById(int id);
+    LiveData<EquipmentEntity> getById(Long id);
 
     @Query("SELECT * FROM equipments WHERE statusEquipment = :status")
     LiveData<EquipmentEntity> getByStatus(String status);

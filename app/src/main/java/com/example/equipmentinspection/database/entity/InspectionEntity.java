@@ -28,35 +28,35 @@ import androidx.room.PrimaryKey;
 public class InspectionEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int idInspection;
+    private Long idInspection;
 
-    private int idInspectorInspection;
-    private int idEquipmentInspection;
+    private Long idInspectorInspection;
+    private Long idEquipmentInspection;
     private String dateInspection;
     private String statusInspection;
 
-    public int getIdInspection() {
+    public Long getIdInspection() {
         return idInspection;
     }
 
-    public void setIdInspection(int idInspection) {
+    public void setIdInspection(Long idInspection) {
         this.idInspection = idInspection;
     }
 
 
-    public int getIdInspectorInspection() {
+    public Long getIdInspectorInspection() {
         return idInspectorInspection;
     }
 
-    public int getIdEquipmentInspection(){
+    public Long getIdEquipmentInspection(){
         return idEquipmentInspection;
     }
 
-    public void setIdInspectorInspection(int idInspectorInspection) {
+    public void setIdInspectorInspection(Long idInspectorInspection) {
         this.idInspectorInspection = idInspectorInspection;
     }
 
-    public void setIdEquipmentInspection(int idEquipmentInspection) {
+    public void setIdEquipmentInspection(Long idEquipmentInspection) {
         this.idEquipmentInspection = idEquipmentInspection;
     }
 
@@ -74,5 +74,14 @@ public class InspectionEntity {
 
     public void setStatusInspection(String statusInspection) {
         this.statusInspection = statusInspection;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof InspectionEntity)) return false;
+        InspectionEntity o = (InspectionEntity) obj;
+        return o.getIdInspection().equals(this.getIdInspection());
     }
 }

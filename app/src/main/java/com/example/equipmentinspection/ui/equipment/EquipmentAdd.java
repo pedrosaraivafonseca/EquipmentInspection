@@ -138,11 +138,12 @@ public class EquipmentAdd extends AppCompatActivity {
 
     private void setResponse(boolean response) {
         if (response) {
-            Toast toast = Toast.makeText(EquipmentAdd.this, "Equipment successfully created", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Equipment successfully created", Toast.LENGTH_SHORT);
             toast.show();
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
         } else {
             //register_email.setError(getString(R.string.error_already_registered));
             //register_email.requestFocus();

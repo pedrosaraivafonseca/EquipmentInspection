@@ -32,14 +32,14 @@ public class InspectorRepository {
         return instance;
     }
 
-    //
-    public LiveData<InspectorEntity> getInspector(final String inspectorId, Application application) {
+
+    public LiveData<InspectorEntity> getInspector(final Long inspectorId, Application application) {
         return ((BaseApp) application).getDatabase().inspectorDao().getById(inspectorId);
     }
 
-//    public LiveData<InspectorEntity> getInspector(final String email, Context context) {
-//        return AppDatabase.getInstance(context).inspectorDao().getById(email);
-//    }
+    public LiveData<InspectorEntity> getInspectorByLogin(final String mail, String password, Application application) {
+        return ((BaseApp) application).getDatabase().inspectorDao().getByLogin(mail, password);
+    }
 
     public LiveData<List<InspectorEntity>> getAllInspector(Context context) {
         return AppDatabase.getInstance(context).inspectorDao().getAll();

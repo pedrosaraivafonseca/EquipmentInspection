@@ -23,7 +23,7 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
     private final MediatorLiveData<InspectorEntity> observableInspector;
 
     public InspectorDetailsViewModel(@NonNull Application application,
-                           final String idInspector, InspectorRepository inspectorRepository) {
+                           final Long idInspector, InspectorRepository inspectorRepository) {
         super(application);
 
         repository = inspectorRepository;
@@ -48,11 +48,11 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
         @NonNull
         private final Application application;
 
-        private final String idInspector;
+        private final Long idInspector;
 
         private final InspectorRepository repository;
 
-        public Factory(@NonNull Application application, String idInspector) {
+        public Factory(@NonNull Application application, Long idInspector) {
             this.application = application;
             this.idInspector = idInspector;
             repository = InspectorRepository.getInstance();

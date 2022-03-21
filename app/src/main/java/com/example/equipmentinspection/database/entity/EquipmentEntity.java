@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class EquipmentEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int idEquipment;
+    private Long idEquipment;
 
     private String nameEquipment;
     private double priceEquipment;
@@ -37,11 +37,11 @@ public class EquipmentEntity {
         setStatusEquipment("Uninspected");
     }
 
-    public int getIdEquipment() {
+    public Long getIdEquipment() {
         return idEquipment;
     }
 
-    public void setIdEquipment(int idEquipment) {
+    public void setIdEquipment(Long idEquipment) {
         this.idEquipment = idEquipment;
     }
 
@@ -107,5 +107,14 @@ public class EquipmentEntity {
 
     public void setStatusEquipment(String statusEquipment) {
         this.statusEquipment = statusEquipment;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof EquipmentEntity)) return false;
+        EquipmentEntity o = (EquipmentEntity) obj;
+        return o.getIdEquipment().equals(this.getIdEquipment());
     }
 }

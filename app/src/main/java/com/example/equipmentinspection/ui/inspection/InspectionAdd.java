@@ -49,7 +49,9 @@ public class InspectionAdd extends AppCompatActivity {
             myCalendar.set(Calendar.DAY_OF_MONTH,day);
             updateLabelInspectionDate();
         };
-        inspectionInspectionDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,inspectionDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show());
+        inspectionInspectionDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,
+                inspectionDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show());
     }
 
     private void updateLabelInspectionDate(){
