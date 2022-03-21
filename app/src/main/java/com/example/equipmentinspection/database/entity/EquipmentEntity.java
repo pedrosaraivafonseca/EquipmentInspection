@@ -3,6 +3,8 @@ package com.example.equipmentinspection.database.entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity(tableName = "equipments")
@@ -22,6 +24,17 @@ public class EquipmentEntity {
 
     public EquipmentEntity(){
 
+    }
+
+    //Fill the specified fields with generic info for next and last inspection as well as status
+    public void setNewEquipmentFields(){
+        setLastInspectionDateEquipment(null);
+        setLastInspectorEquipment("");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, 3);
+        Date nextInspectionTime = cal.getTime();
+        setNextInspectionDateEquipment(nextInspectionTime.toString());
+        setStatusEquipment("Uninspected");
     }
 
     public int getIdEquipment() {

@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setResponse(Boolean response) {
         if (response) {
-            Toast toast = Toast.makeText(RegisterActivity.this, "account successfully created", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(RegisterActivity.this, "Account successfully created", Toast.LENGTH_SHORT);
             toast.show();
 
             Intent intent = new Intent(this, MainActivity.class);

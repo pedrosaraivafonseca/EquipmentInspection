@@ -38,6 +38,7 @@
     <string name="inspection_add_text">Add</string>
     <string name="inspection_date_hint">Inspection Date</string>
     <string name="inspection_nextInspectionDate_hint">Next Inspection Date</string>
+    <string name="equipment_purchaseDate_hint">Purchase date</string>
     <string name="inspection_inspector_hint">Inspector</string>
     <string name="inspection_status_hint">Status</string>
 
@@ -46,12 +47,14 @@
     <string name="inspector_add_text">Add</string>
     <string name="inspector_firstName_hint">First Name</string>
     <string name="inspector_lastName_hint">Last Name</string>
-    //Errors
+    <string name="title_activity_settings">SettingsActivity</string>
+
+   <!-- Errors -->
     <string name="error_password_retype">The passwords do not match</string>
     <string name="error_invalid_email">Invalid email entered</string>
     <string name="error_empty_field">Please fill in the field</string>
     <string name="error_already_registered">Email already in use</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="error_dates_field">Purchase date is superior to warranty date</string>
 
     <!-- Preference Titles -->
     <string name="settings_about_text">About</string>
@@ -61,4 +64,5 @@
     <!-- Display Preferences -->
     <string name="settings__title">Sync email periodically</string>
     <string name="settings_darkmode_title">Dark Mode</string>
+    <string name="inspection_equipment_hint">Equipment</string>
 </resources>
