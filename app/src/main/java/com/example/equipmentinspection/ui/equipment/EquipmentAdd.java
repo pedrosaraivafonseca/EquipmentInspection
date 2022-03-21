@@ -32,9 +32,6 @@ public class EquipmentAdd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_add);
 
-//        Intent intent = getIntent();
-//        String equipment = intent.getStringExtra("id");
-
         equipmentName = (EditText) findViewById(R.id.equipment_name_text);
         equipmentPrice = (EditText) findViewById(R.id.equipment_price);
         equipmentLastInspector = (EditText) findViewById(R.id.equipment_lastInspector);
@@ -44,29 +41,11 @@ public class EquipmentAdd extends AppCompatActivity {
 
         equipmentAdd= (Button) findViewById(R.id.equipment_edit_button);
 
-
-//        listView = findViewById(R.id.equipment_listview);
-//        listView.setItemsCanFocus(true);
-
-
         equipmentBackButton = (ImageButton) findViewById(R.id.equipment_back_button);
         equipmentToolbar = (Toolbar) findViewById(R.id.equipment_toolbar);
         setSupportActionBar(equipmentToolbar);
         setTitle("Equipment");
         setupListeners();
-
-//        ListView listView = findViewById(R.id.equipment_listview);
-//        List<String> list = new ArrayList<>();
-//        list.add("Name");
-//        list.add("Price");
-//        list.add("PurchaseDate");
-//        list.add("WarrantDate");
-//        list.add("LastInspection");
-//        list.add("LastInspector");
-//        list.add("Status");
-//
-//        ArrayAdapter arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, list);
-//        listView.setAdapter(arrayAdapter);
 
     }
 
@@ -77,13 +56,6 @@ public class EquipmentAdd extends AppCompatActivity {
                 finish();
             }
         });
-
-//        equipmentAdd.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
 
     }
 

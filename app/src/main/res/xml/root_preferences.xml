@@ -1,0 +1,22 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/settings_information_text">
+
+        <EditTextPreference
+            app:key="about"
+            app:title="@string/settings_about_text"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_display_text">
+
+        <SwitchPreferenceCompat
+            android:id="@+id/settings_darkmode_button"
+            app:key="display"
+            app:title="@string/settings_darkmode_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

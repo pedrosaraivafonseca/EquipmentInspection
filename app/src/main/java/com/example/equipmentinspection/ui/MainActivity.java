@@ -26,6 +26,7 @@ import com.example.equipmentinspection.ui.equipment.EquipmentFragment;
 import com.example.equipmentinspection.ui.inspection.InspectionFragment;
 import com.example.equipmentinspection.ui.inspector.InspectorFragment;
 import com.example.equipmentinspection.ui.mgmt.LoginActivity;
+import com.example.equipmentinspection.ui.mgmt.SettingsActivity;
 import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -88,13 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        mainAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     private void setFragment(Fragment fragment) {
@@ -126,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_logout_button:
                 logout();
                 return true;
+
+            case R.id.action_settings_button:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             default:
                 return false;
         }

@@ -8,6 +8,8 @@
     <string name="register_title_text">Equipment Inspection</string>
     <string name="action_search_text">Search</string>
     <string name="action_logout_text">Logout</string>
+    <string name="action_settings_text">Settings</string>
+
     <string name="register_password_retype_hint">Confirm Password</string>
     <string name="register_register_button_text">Register</string>
     <string name="register_login_button_text">Login</string>
@@ -49,4 +51,14 @@
     <string name="error_invalid_email">Invalid email entered</string>
     <string name="error_empty_field">Please fill in the field</string>
     <string name="error_already_registered">Email already in use</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="settings_about_text">About</string>
+    <string name="settings_display_text">Display</string>
+    <string name="settings_information_text">Information</string>
+
+    <!-- Display Preferences -->
+    <string name="settings__title">Sync email periodically</string>
+    <string name="settings_darkmode_title">Dark Mode</string>
 </resources>
