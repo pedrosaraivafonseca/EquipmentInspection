@@ -62,33 +62,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/inspection_date_hint"
-                android:inputType="textPersonName" />
+                android:inputType="date" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/inspection_inspector_hint"
+            android:textColorHint="@color/cardview_dark_background"
+            app:helperText="@string/inspection_inspector_spinner_hint"
+            app:helperTextEnabled="false"
+            app:hintEnabled="false">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inspection_inspector"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/inspection_inspector_hint"
-                android:inputType="text" />
+            <Spinner
+                android:id="@+id/inspection_inspector_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:helperText="@string/inspection_equipment_spinner_hint">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inspection_equipment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/inspection_equipment_hint"
-                android:inputType="textPersonName" />
+            <Spinner
+                android:id="@+id/inspection_equipment_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
+
 
 
     </LinearLayout>

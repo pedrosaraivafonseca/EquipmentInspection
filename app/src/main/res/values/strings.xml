@@ -65,4 +65,6 @@
     <string name="settings__title">Sync email periodically</string>
     <string name="settings_darkmode_title">Dark Mode</string>
     <string name="inspection_equipment_hint">Equipment</string>
+    <string name="inspection_inspector_spinner_hint">Choose an inspector...</string>
+    <string name="inspection_equipment_spinner_hint">Choose an equipment...</string>
 </resources>

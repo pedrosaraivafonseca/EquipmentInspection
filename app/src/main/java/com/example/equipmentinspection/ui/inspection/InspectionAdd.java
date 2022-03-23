@@ -10,8 +10,10 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.equipmentinspection.R;
+import com.example.equipmentinspection.adapter.SpinnerAdapter;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
 import com.example.equipmentinspection.viewmodel.InspectorListViewModel;
@@ -26,11 +28,8 @@ import java.util.Observer;
 public class InspectionAdd extends AppCompatActivity {
 
     private EditText inspectionInspectionDate;
-    private EditText inspectionEquipment;
-    private EditText inspectionInspector;
-
-    private ArrayList<String> inspectorsListName;
-    private ArrayList<Integer> inspectorsListId;
+    private Spinner inspectionEquipment;
+    private Spinner inspectionInspector;
 
     final Calendar myCalendar= Calendar.getInstance();
 
@@ -39,8 +38,8 @@ public class InspectionAdd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection_add);
 
-        inspectionEquipment = (EditText) findViewById(R.id.inspection_equipment);
-        inspectionInspector = (EditText) findViewById(R.id.inspection_inspector);
+        inspectionEquipment = (Spinner) findViewById(R.id.inspection_equipment_spinner);
+        inspectionInspector = (Spinner) findViewById(R.id.inspection_inspector_spinner);
 
         inspectionInspectionDate = (EditText) findViewById(R.id.inspection_date_text);
         DatePickerDialog.OnDateSetListener inspectionDate = (view, year, month, day) -> {
@@ -49,6 +48,7 @@ public class InspectionAdd extends AppCompatActivity {
             myCalendar.set(Calendar.DAY_OF_MONTH,day);
             updateLabelInspectionDate();
         };
+
         inspectionInspectionDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,
                 inspectionDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
