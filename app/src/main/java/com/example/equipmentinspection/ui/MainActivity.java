@@ -101,10 +101,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-        SharedPreferences logged = getSharedPreferences(MainActivity.PREFS_NAME,0);
-        if (logged==null){
+        if(intent.getExtras() == null){
             goToLogin();
         }
+
+
     }
 
     @Override
@@ -136,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout() {
-        SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_USER, 0).edit();
         editor.remove(MainActivity.PREFS_USER);
         editor.apply();
 

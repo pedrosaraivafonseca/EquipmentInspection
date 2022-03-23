@@ -67,4 +67,6 @@
     <string name="inspection_equipment_hint">Equipment</string>
     <string name="inspection_inspector_spinner_hint">Choose an inspector...</string>
     <string name="inspection_equipment_spinner_hint">Choose an equipment...</string>
+    <string name="error_incorrect_password">Password incorrect</string>
+    <string name="error_invalid_login">Invalid login credentials</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.equipmentinspection.ui.mgmt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,8 +16,11 @@ import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.BaseApp;
+import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
 import com.example.equipmentinspection.ui.MainActivity;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -54,58 +58,35 @@ public class LoginActivity extends AppCompatActivity {
         login_login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkLogin();
+                attemptLogin(login_email_field.getText().toString(), login_password_field.getText().toString());
             }
         });
     }
 
-    private boolean isEmail(EditText text) {
-        CharSequence email = text.getText().toString();
-        return (!TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches());
-    }
+    private void attemptLogin(String email, String password) {
+      InspectorRepository  repo = InspectorRepository.getInstance();
 
-    private boolean isEmpty(EditText text) {
-        CharSequence string = text.getText().toString();
-        return TextUtils.isEmpty(string);
-    }
+      repo.getInspectorByLogin(email, password, getApplication()).observe(LoginActivity.this, inspectorEntity -> {
+          if (inspectorEntity != null) {
+              if (inspectorEntity.getPasswordInspector().equals(password)) {
+                  SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
+                  editor.putString(MainActivity.PREFS_USER, inspectorEntity.getEmailInspector());
+                  editor.apply();
 
-
-    private void checkLogin() {
-        boolean isValid = true;
-        if (isEmpty(login_email_field)) {
-            login_email_field.setError("Enter email !");
-            isValid = false;
-        } else {
-            if (!isEmail(login_email_field)) {
-                login_email_field.setError("Enter valid email !");
-                isValid = false;
-            }
+                  Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                  intent.putExtra("logged","true");
+                  startActivity(intent);
+              } else {
+                  login_password_field.setError(getString(R.string.error_incorrect_password));
+                  login_password_field.requestFocus();
+                  login_password_field.setText("");
+              }
+          }else {
+            login_email_field.setError(getString(R.string.error_invalid_login));
+            login_email_field.requestFocus();
+            login_email_field.setText("");
+            login_password_field.setText("");
         }
-        if (isEmpty(login_password_field)) {
-            login_password_field.setError("Enter password !");
-            isValid = false;
-        }
-        if (isValid) {
-            String emailValue = login_email_field.getText().toString();
-            String passwordValue = login_password_field.getText().toString();
-            inspectorRepository.getInspectorByLogin(emailValue,passwordValue, getApplication()).observe(LoginActivity.this, inspectorEntity -> {
-                if (inspectorEntity.getPasswordInspector().equals(passwordValue)) {
-                    Toast toast = Toast.makeText(this, "Login successfull", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
-
-                    SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-                    editor.putString(MainActivity.PREFS_USER, inspectorEntity.getEmailInspector());
-                    editor.apply();
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                    this.finish();
-                } else {
-                    Toast toast = Toast.makeText(this, "Wrong login", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
-                }
-            });
-        }
+      });
     }
 }
