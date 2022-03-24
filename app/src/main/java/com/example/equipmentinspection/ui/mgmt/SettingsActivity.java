@@ -1,20 +1,14 @@
 package com.example.equipmentinspection.ui.mgmt;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.preference.PreferenceManager;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.ui.MainActivity;
 
 public class SettingsActivity extends Activity {
     public static final String DARK_MODE = "isDark";

@@ -4,6 +4,7 @@ import static java.security.AccessController.getContext;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,7 +13,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.equipmentinspection.R;
@@ -30,9 +33,14 @@ import java.util.Observer;
 
 public class InspectionAdd extends AppCompatActivity {
 
+    ImageButton inspectionBackButton;
+    Button inspectionAdd;
+
     private EditText inspectionInspectionDate;
     private Spinner inspectionEquipment;
     private Spinner inspectionInspector;
+    private Toolbar inspectionToolbar;
+
 
     final Calendar myCalendar= Calendar.getInstance();
 
@@ -43,6 +51,7 @@ public class InspectionAdd extends AppCompatActivity {
 
         inspectionEquipment = (Spinner) findViewById(R.id.inspection_equipment_spinner);
         inspectionInspector = (Spinner) findViewById(R.id.inspection_inspector_spinner);
+        inspectionAdd= (Button) findViewById(R.id.inspection_add_button);
 
         inspectionInspectionDate = (EditText) findViewById(R.id.inspection_date_text);
         DatePickerDialog.OnDateSetListener inspectionDate = (view, year, month, day) -> {
@@ -56,7 +65,21 @@ public class InspectionAdd extends AppCompatActivity {
                 inspectionDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
+        inspectionBackButton = (ImageButton) findViewById(R.id.equipment_back_button);
+        inspectionToolbar = (Toolbar) findViewById(R.id.equipment_toolbar);
+        setSupportActionBar(inspectionToolbar);
+        setTitle("Inspection");
+        setupListeners();
         setupSpinners();
+    }
+
+    private void setupListeners() {
+        inspectionBackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void updateLabelInspectionDate(){
