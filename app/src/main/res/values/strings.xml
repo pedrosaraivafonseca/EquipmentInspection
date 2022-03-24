@@ -49,7 +49,7 @@
     <string name="inspector_lastName_hint">Last Name</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-   <!-- Errors -->
+    <!-- Errors -->
     <string name="error_password_retype">The passwords do not match</string>
     <string name="error_invalid_email">Invalid email entered</string>
     <string name="error_empty_field">Please fill in the field</string>
@@ -69,4 +69,24 @@
     <string name="inspection_equipment_spinner_hint">Choose an equipment...</string>
     <string name="error_incorrect_password">Password incorrect</string>
     <string name="error_invalid_login">Invalid login credentials</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="settings_light_text">Light Mode</string>
+    <string name="settings_dark_text">Dark Mode</string>
+    <string name="pref_about_text">This app was developed to check the equipment inside your company</string>
+    <string name="pref_header_about">About</string>
+    <string name="equipment_image_text">Add</string>
 </resources>

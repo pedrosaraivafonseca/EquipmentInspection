@@ -5,10 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.inspection.InspectionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/inspectionfrag_add_buttom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="330dp"
+        android:layout_marginTop="550dp"
+        android:clickable="true"
+
+        android:src="@drawable/outline_add_24" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/equipment_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </FrameLayout>

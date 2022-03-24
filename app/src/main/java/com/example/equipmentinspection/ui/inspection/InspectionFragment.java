@@ -11,7 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.equipmentinspection.R;
+import com.example.equipmentinspection.adapter.RecyclerAdapter;
+import com.example.equipmentinspection.database.entity.EquipmentEntity;
+import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.ui.equipment.EquipmentAdd;
+import com.example.equipmentinspection.ui.equipment.EquipmentDetails;
+import com.example.equipmentinspection.util.RecyclerViewItemClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -20,14 +25,24 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  */
 public class InspectionFragment extends Fragment {
 
-    private FloatingActionButton addButton;
+    private RecyclerAdapter<InspectionEntity> recyclerAdapter;
+    FloatingActionButton addButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addButton = (FloatingActionButton) getActivity().findViewById(R.id.main_add_buttom);
         RecyclerView recyclerView = getActivity().findViewById(R.id.equipment_recyclerView);
+
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_inspection, container, false);
+
+        addButton = (FloatingActionButton) view.findViewById(R.id.inspectionfrag_add_buttom);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,13 +51,21 @@ public class InspectionFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.equipment_recyclerView);
+        recyclerView.setAdapter(recyclerAdapter);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inspection, container, false);
+        recyclerAdapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(getContext(), EquipmentDetails.class);
+                intent.setFlags(
+                        Intent.FLAG_ACTIVITY_NO_ANIMATION |
+                                Intent.FLAG_ACTIVITY_NO_HISTORY
+                );
+//                intent.putExtra("inspectionId", inspectionEntityList.get(position).getIdEquipment());
+//                startActivity(intent);
+            }
+        });
+        return view;
     }
 }

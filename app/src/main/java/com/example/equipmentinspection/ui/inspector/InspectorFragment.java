@@ -26,16 +26,8 @@ public class InspectorFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addButton = (FloatingActionButton) getActivity().findViewById(R.id.main_add_buttom);
         RecyclerView recyclerView = getActivity().findViewById(R.id.equipment_recyclerView);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), InspectorAdd.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.adapter.RecyclerAdapter;
@@ -31,23 +33,15 @@ public class EquipmentFragment extends Fragment {
     private List<EquipmentEntity> equipmentEntityList;
     private RecyclerAdapter<EquipmentEntity> recyclerAdapter;
     private EquipmentListViewModel equipmentListViewModel;
-    private FloatingActionButton addButton;
+    FloatingActionButton addButton;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addButton = (FloatingActionButton) getActivity().findViewById(R.id.main_add_buttom);
         RecyclerView recyclerView = getActivity().findViewById(R.id.equipment_recyclerView);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), EquipmentAdd.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -59,12 +53,22 @@ public class EquipmentFragment extends Fragment {
 //        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
 //        Bundle bundle = new Bundle();
 
-        ArrayList<String> list = new ArrayList<>();
-        list.add("AAA");
-        list.add("AAA");
-        list.add("AAA");
+//        ArrayList<String> list = new ArrayList<>();
+//        list.add("AAA");
+//        list.add("AAA");
+//        list.add("AAA");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, list);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, list);
+
+        addButton = (FloatingActionButton) view.findViewById(R.id.equipmentfrag_add_buttom);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), EquipmentAdd.class);
+                startActivity(intent);
+            }
+        });
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.equipment_recyclerView);
         recyclerView.setAdapter(recyclerAdapter);

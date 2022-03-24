@@ -8,8 +8,10 @@ import androidx.lifecycle.MediatorLiveData;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.example.equipmentinspection.R;
@@ -30,6 +32,8 @@ public class InspectionAdd extends AppCompatActivity {
     private EditText inspectionInspectionDate;
     private Spinner inspectionEquipment;
     private Spinner inspectionInspector;
+    ImageButton inspectionBackButton;
+
 
     final Calendar myCalendar= Calendar.getInstance();
 
@@ -41,6 +45,8 @@ public class InspectionAdd extends AppCompatActivity {
         inspectionEquipment = (Spinner) findViewById(R.id.inspection_equipment_spinner);
         inspectionInspector = (Spinner) findViewById(R.id.inspection_inspector_spinner);
 
+        inspectionBackButton = (ImageButton) findViewById(R.id.inspection_back_button);
+
         inspectionInspectionDate = (EditText) findViewById(R.id.inspection_date_text);
         DatePickerDialog.OnDateSetListener inspectionDate = (view, year, month, day) -> {
             myCalendar.set(Calendar.YEAR, year);
@@ -49,9 +55,18 @@ public class InspectionAdd extends AppCompatActivity {
             updateLabelInspectionDate();
         };
 
+        setTitle("Inspection");
+
         inspectionInspectionDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,
                 inspectionDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
+
+        inspectionBackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void updateLabelInspectionDate(){
