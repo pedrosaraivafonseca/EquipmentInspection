@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText register_password_retype;
 
     Button register_register_button;
-
+    Button register_login_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,17 @@ public class RegisterActivity extends AppCompatActivity {
         register_lastname = findViewById(R.id.register_lastname);
         register_firstname = findViewById(R.id.register_firstname);
         register_register_button = findViewById(R.id.register_register_button);
+
+        register_login_button = findViewById(R.id.register_login_button);
+
+        register_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         register_register_button.setOnClickListener(view -> saveChanges(
                 register_email.getText().toString(),
                 register_firstname.getText().toString(),
