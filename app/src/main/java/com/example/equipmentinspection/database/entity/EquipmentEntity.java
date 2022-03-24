@@ -1,17 +1,19 @@
 package com.example.equipmentinspection.database.entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity(tableName = "equipments")
+@Entity(tableName = "equipments", indices = {@Index(value = {"nameEquipment"}, unique = true)})
 public class EquipmentEntity {
 
     @PrimaryKey(autoGenerate = true)
     private Long idEquipment;
+
 
     private String nameEquipment;
     private double priceEquipment;
@@ -107,6 +109,11 @@ public class EquipmentEntity {
 
     public void setStatusEquipment(String statusEquipment) {
         this.statusEquipment = statusEquipment;
+    }
+
+    @Override
+    public String toString(){
+        return nameEquipment;
     }
 
     @Override
