@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         if(intent.getExtras() == null){
             goToLogin();
         }
-
-
     }
 
     @Override

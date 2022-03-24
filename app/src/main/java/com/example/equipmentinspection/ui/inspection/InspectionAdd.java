@@ -5,9 +5,12 @@ import static java.security.AccessController.getContext;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -52,11 +55,36 @@ public class InspectionAdd extends AppCompatActivity {
         inspectionInspectionDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,
                 inspectionDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
+
+        setupSpinners();
     }
 
     private void updateLabelInspectionDate(){
         String myFormat="dd/MM/yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.FRANCE);
         inspectionInspectionDate.setText(dateFormat.format(myCalendar.getTime()));
+    }
+
+    private void setupSpinners(){
+        InspectorRepository repoInsp = InspectorRepository.getInstance();
+        List<InspectorEntity> inspectorList = repoInsp.getAllInspector(this).getValue();
+
+        ArrayAdapter<InspectorEntity> adapterInspector = new ArrayAdapter<InspectorEntity>(this,
+                android.R.layout.simple_spinner_item, inspectorList);
+        adapterInspector.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        inspectionInspector.setAdapter(adapterInspector);
+
+        inspectionInspector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                InspectorEntity inspector = (InspectorEntity) parent.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 }
