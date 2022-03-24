@@ -1,39 +1,32 @@
 package com.example.equipmentinspection.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.adapter.RecyclerAdapter;
-import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.ui.equipment.EquipmentFragment;
 import com.example.equipmentinspection.ui.inspection.InspectionFragment;
 import com.example.equipmentinspection.ui.inspector.InspectorFragment;
 import com.example.equipmentinspection.ui.mgmt.LoginActivity;
 import com.example.equipmentinspection.ui.mgmt.SettingsActivity;
-import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar mainToolbar;
     private BottomNavigationView mainBottomNavigation;
     private FrameLayout mainFrame;
-    private FloatingActionButton mainAddButton;
 
     private EquipmentFragment equipmentFragment;
     private InspectorFragment inspectorFragment;
@@ -52,7 +44,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SettingsActivity.DARK_MODE, 0);
+        Boolean isDark = sharedPreferences.getBoolean("isDark", false);
+        if (isDark)
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        else
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         setContentView(R.layout.activity_main);
+
+//        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+//        final boolean isDark = sharedPreferences.getBoolean("idDark", true);
+//        if (isDark) {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        } else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        }
+
 
         mainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mainToolbar = (Toolbar) findViewById(R.id.main_toolbar);
@@ -60,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Equipment Inspection");
 
         mainBottomNavigation = findViewById(R.id.main_bottom_navigation);
-
-        mainAddButton = findViewById(R.id.main_add_buttom);
 
         equipmentFragment = new EquipmentFragment();
         inspectorFragment = new InspectorFragment();
@@ -138,7 +145,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_USER, 0).edit();
         editor.remove(MainActivity.PREFS_USER);
         editor.apply();
+        SharedPreferences.Editor editor2 = getSharedPreferences(SettingsActivity.DARK_MODE, 0).edit();
+        editor2.remove(SettingsActivity.DARK_MODE);
+        editor2.apply();
 
-        goToLogin();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

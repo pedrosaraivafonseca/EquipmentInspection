@@ -3,6 +3,7 @@ package com.example.equipmentinspection.ui.inspector;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -12,14 +13,13 @@ import com.example.equipmentinspection.R;
 
 public class InspectorAdd extends AppCompatActivity {
 
-    Button inspectorAdd;
-
     private EditText inspectorFirstName;
     private EditText inspectorLastName;
+    ImageButton inspectorBackButton;
+
 
 
     private Toolbar inspectorToolbar;
-    ImageButton inspectorBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,14 @@ public class InspectorAdd extends AppCompatActivity {
 
         inspectorFirstName = (EditText) findViewById(R.id.inspector_firstName);
         inspectorLastName = (EditText) findViewById(R.id.inspector_lastName);
+        inspectorBackButton = (ImageButton) findViewById(R.id.inspector_back_button);
 
+        inspectorBackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 }

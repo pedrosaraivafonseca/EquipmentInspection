@@ -43,7 +43,7 @@ public class EquipmentDetails extends AppCompatActivity {
         equipmentBackButton = (ImageButton) findViewById(R.id.equipment_back_button);
 
         equipmentToolbar = (Toolbar) findViewById(R.id.equipment_toolbar);
-        equipmentToolbar.setTitle("EquipmentDetails");
+        equipmentToolbar.setTitle("Equipment Details");
         setSupportActionBar(equipmentToolbar);
 
         setupListeners();

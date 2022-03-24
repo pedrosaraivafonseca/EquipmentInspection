@@ -1,22 +1,46 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/settings_information_text">
+    <PreferenceCategory app:title="@string/messages_header">
 
         <EditTextPreference
-            app:key="about"
-            app:title="@string/settings_about_text"
+            app:key="signature"
+            app:title="@string/signature_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            app:key="reply"
+            app:title="@string/reply_title"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/settings_display_text">
+    <Preference
+        app:selectable="false"
+        app:enabled="true"
+        app:title="@string/equipment_nextInspector_hint"
+        app:summary="@string/equipment_add_text" />
+    <PreferenceCategory app:title="@string/sync_header">
 
         <SwitchPreferenceCompat
-            android:id="@+id/settings_darkmode_button"
-            app:key="display"
-            app:title="@string/settings_darkmode_title" />
+            app:key="sync"
+            app:title="@string/sync_title" />
+
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="attachment"
+            app:summaryOff="@string/attachment_summary_off"
+            app:summaryOn="@string/attachment_summary_on"
+            app:title="@string/attachment_title" />
 
     </PreferenceCategory>
+
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    </PreferenceScreen>
 
 </PreferenceScreen>
