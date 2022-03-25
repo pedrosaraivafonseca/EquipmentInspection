@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
@@ -28,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText login_password_field;
     Button login_login_button;
     Button login_register_button;
-
     private InspectorRepository inspectorRepository;
 
     @Override

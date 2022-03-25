@@ -53,6 +53,11 @@ public class SettingsActivity extends Activity {
         darkMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+                {
+                    Toast toast = Toast.makeText(SettingsActivity.this, "Alreay dark mode", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 editor.putBoolean(DARK_MODE, true);
                 editor.apply();

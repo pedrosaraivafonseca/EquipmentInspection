@@ -89,4 +89,5 @@
     <string name="pref_about_text">This app was developed to check the equipment inside your company</string>
     <string name="pref_header_about">About</string>
     <string name="equipment_image_text">Add</string>
+    <string name="settings_mode_text">Change Background</string>
 </resources>

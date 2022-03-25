@@ -8,27 +8,44 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="84dp">
 
+    <TextView
+        android:id="@+id/settings_mode_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/settings_mode_text"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inspection_toolbar" />
+
     <Button
         android:id="@+id/settings_light_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/settings_light_text"
-        app:layout_constraintBottom_toTopOf="@+id/settings_dark_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_mode_view" />
 
     <Button
         android:id="@+id/settings_dark_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="176dp"
+        android:layout_marginTop="8dp"
         android:text="@string/settings_dark_text"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_light_button"
+        app:layout_constraintVertical_bias="0.039" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/inspection_toolbar"
@@ -41,24 +58,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-
-
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/settings_light_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inspection_toolbar">
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/settings_aboutTitle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_about_text"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
 
         <TextView
             android:id="@+id/settings_about_view"
             android:layout_width="match_parent"
-            android:layout_height="93dp"
+            android:layout_height="98dp"
             android:text="@string/pref_about_text" />
+
+
     </LinearLayout>
 
     <ImageButton
