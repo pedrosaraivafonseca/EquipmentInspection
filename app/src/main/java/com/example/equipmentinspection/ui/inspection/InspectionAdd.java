@@ -4,6 +4,7 @@ import static java.security.AccessController.getContext;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MediatorLiveData;
 
 import android.app.DatePickerDialog;
@@ -33,6 +34,7 @@ public class InspectionAdd extends AppCompatActivity {
     private Spinner inspectionEquipment;
     private Spinner inspectionInspector;
     ImageButton inspectionBackButton;
+    private Toolbar insepctionToolbar;
 
 
     final Calendar myCalendar= Calendar.getInstance();
@@ -55,6 +57,9 @@ public class InspectionAdd extends AppCompatActivity {
             updateLabelInspectionDate();
         };
 
+        insepctionToolbar = (Toolbar) findViewById(R.id.inspection_toolbar);
+        setSupportActionBar(insepctionToolbar);
+        setTitle("Equipment");
         setTitle("Inspection");
 
         inspectionInspectionDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,
