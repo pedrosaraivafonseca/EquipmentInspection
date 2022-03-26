@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
@@ -19,7 +20,7 @@ import androidx.preference.PreferenceManager;
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.ui.MainActivity;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends AppCompatActivity {
     public static final String DARK_MODE = "isDark";
 
     private Toolbar inspectionToolbar;

@@ -85,8 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
         new InspectorCreate(getApplication(), new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-                SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-                editor.putString(MainActivity.PREFS_USER, inspector.getEmailInspector());
+                SharedPreferences.Editor editor = getSharedPreferences(LoginActivity.PREFS_USER, 0).edit();
+                editor.putString(LoginActivity.PREFS_USER, inspector.getEmailInspector());
                 editor.apply();
 
                 setResponse(true);
