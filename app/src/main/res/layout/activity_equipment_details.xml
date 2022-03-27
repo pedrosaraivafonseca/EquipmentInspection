@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/equipment_name_hint"
-                android:inputType="textPersonName" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/equipment_lastInspector_hint"
-                android:inputType="textPersonName" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -145,7 +145,8 @@
                 android:id="@+id/equipment_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/equipment_status_hint" />
+                android:hint="@string/equipment_status_hint"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
