@@ -58,7 +58,7 @@ public class InspectionAdd extends AppCompatActivity {
     private Spinner inspectionEquipment;
     private Spinner inspectionInspector;
     ImageButton inspectionBackButton;
-    private Toolbar insepctionToolbar;
+    private Toolbar inspectionToolbar;
     private Button inspectionAddButton;
 
     final Calendar myCalendar= Calendar.getInstance();
@@ -68,8 +68,8 @@ public class InspectionAdd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection_add);
 
-        insepctionToolbar = (Toolbar) findViewById(R.id.inspection_toolbar);
-        setSupportActionBar(insepctionToolbar);
+        inspectionToolbar = (Toolbar) findViewById(R.id.inspection_toolbar);
+        setSupportActionBar(inspectionToolbar);
         setTitle("Equipment");
         setTitle("Inspection");
 

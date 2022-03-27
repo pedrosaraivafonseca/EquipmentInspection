@@ -21,7 +21,7 @@ public class InspectionDetails extends AppCompatActivity {
 
         inspectionBackButton = (ImageButton) findViewById(R.id.inspection_back_button);
 
-        inspectionToolbar = (Toolbar) findViewById(R.id.equipment_toolbar);
+        inspectionToolbar = (Toolbar) findViewById(R.id.inspection_toolbar);
         inspectionToolbar.setTitle("Equipment Details");
         setSupportActionBar(inspectionToolbar);
         setTitle("Inspection Details");

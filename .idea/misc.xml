@@ -4,9 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_equipment_add.xml" value="0.1" />
+        <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_equipment_details.xml" value="0.1796875" />
         <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_inspection_add.xml" value="0.22" />
+        <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_inspection_details.xml" value="0.1796875" />
         <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
         <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/fragment_equipment.xml" value="0.1" />
+        <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/fragment_inspection.xml" value="0.1796875" />
+        <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/fragment_inspector.xml" value="0.1796875" />
+        <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/recycler_view.xml" value="0.1796875" />
+        <entry key="..\:/Users/Massimo/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/row_delete_item.xml" value="0.1796875" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_equipment_add.xml" value="0.2" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_equipment_details.xml" value="0.1956521739130435" />
         <entry key="..\:/Users/Pedro/AndroidStudioProjects/EquipmentInspection/app/src/main/res/layout/activity_inspection_add.xml" value="0.20260416666666667" />

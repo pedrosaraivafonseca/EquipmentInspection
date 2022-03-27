@@ -92,4 +92,11 @@
     <string name="equipment_image_text">Add</string>
     <string name="settings_mode_text">Change Background</string>
     <string name="generic_error">An error occured</string>
+    <string name="title_activity_delete_equipment">Delete equipment</string>
+    <string name="equipment_delete_msg">Do you really want to delete the equipment %1$s?</string>
+    <string name="inspector_delete_msg">Do you really want to delete the inspector %1$s?</string>
+    <string name="inspection_delete_msg">Do you really want to delete %1$s?</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_accept">Accept</string>
+    <string name="title_activity_delete_inspection">Delete Inspection</string>
 </resources>
