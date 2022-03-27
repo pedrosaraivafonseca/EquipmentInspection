@@ -145,8 +145,8 @@ public class EquipmentAdd extends AppCompatActivity {
             startActivity(intent);
 
         } else {
-            //register_email.setError(getString(R.string.error_already_registered));
-            //register_email.requestFocus();
+            equipmentPrice.setError(getString(R.string.generic_error));
+            equipmentPrice.requestFocus();
         }
     }
 

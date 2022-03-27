@@ -18,11 +18,18 @@ import androidx.room.PrimaryKey;
                 parentColumns = "idEquipment",
                 childColumns = "idEquipmentInspection",
                 onDelete = ForeignKey.CASCADE
-            )
+            ),
+                @ForeignKey(
+                        entity = EquipmentEntity.class,
+                        parentColumns = "nameEquipment",
+                        childColumns = "nameEquipmentInspection",
+                        onDelete = ForeignKey.CASCADE
+                )
         },
         indices = {
             @Index(value = {"idInspectorInspection"}),
-            @Index(value = {"idEquipmentInspection"})}
+            @Index(value = {"idEquipmentInspection"}),
+            @Index(value = {"nameEquipmentInspection"})}
 )
 
 public class InspectionEntity {
@@ -32,8 +39,17 @@ public class InspectionEntity {
 
     private Long idInspectorInspection;
     private Long idEquipmentInspection;
+    private String nameEquipmentInspection;
     private String dateInspection;
     private String statusInspection;
+
+    public String getNameEquipmentInspection() {
+        return nameEquipmentInspection;
+    }
+
+    public void setNameEquipmentInspection(String nameEquipmentInspection) {
+        this.nameEquipmentInspection = nameEquipmentInspection;
+    }
 
     public Long getIdInspection() {
         return idInspection;
@@ -83,5 +99,10 @@ public class InspectionEntity {
         if (!(obj instanceof InspectionEntity)) return false;
         InspectionEntity o = (InspectionEntity) obj;
         return o.getIdInspection().equals(this.getIdInspection());
+    }
+
+    @Override
+    public String toString(){
+        return nameEquipmentInspection + " Inspection on " + dateInspection;
     }
 }

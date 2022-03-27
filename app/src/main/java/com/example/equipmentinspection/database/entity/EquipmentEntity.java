@@ -1,13 +1,14 @@
 package com.example.equipmentinspection.database.entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity(tableName = "equipments")
+@Entity(tableName = "equipments", indices = {@Index(value = {"nameEquipment"}, unique = true)})
 public class EquipmentEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -116,5 +117,10 @@ public class EquipmentEntity {
         if (!(obj instanceof EquipmentEntity)) return false;
         EquipmentEntity o = (EquipmentEntity) obj;
         return o.getIdEquipment().equals(this.getIdEquipment());
+    }
+
+    @Override
+    public String toString(){
+        return nameEquipment;
     }
 }

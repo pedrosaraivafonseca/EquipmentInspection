@@ -73,4 +73,9 @@ public class InspectorEntity {
         InspectorEntity o = (InspectorEntity) obj;
         return o.getIdInspector().equals(this.getIdInspector());
     }
+
+    @Override
+    public String toString(){
+        return firstNameInspector + " " + nameInspector;
+    }
 }
