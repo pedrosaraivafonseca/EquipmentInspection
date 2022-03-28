@@ -156,7 +156,7 @@ public class InspectionAdd extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Inspection successfully created", Toast.LENGTH_SHORT);
             toast.show();
 
-            Intent intent = new Intent(this, InspectionFragment.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
         } else {

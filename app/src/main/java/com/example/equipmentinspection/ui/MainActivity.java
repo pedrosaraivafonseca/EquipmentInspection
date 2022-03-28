@@ -32,6 +32,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     public static final String PREFS_NAME = "SharedPrefs";
+    public static final String PREFS_USER = LoginActivity.PREFS_USER;
     public static final boolean PREFS_SESSION = false;
 
     private Toolbar mainToolbar;

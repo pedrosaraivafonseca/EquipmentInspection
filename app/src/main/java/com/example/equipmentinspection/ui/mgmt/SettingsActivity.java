@@ -34,7 +34,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
         SharedPreferences.Editor editor = getSharedPreferences("isDark", 0).edit();
 
-
         lightMode = (Button) findViewById(R.id.settings_light_button);
         darkMode = (Button) findViewById(R.id.settings_dark_button);
         inspectionBackButton = (ImageButton) findViewById(R.id.settings_back_button);

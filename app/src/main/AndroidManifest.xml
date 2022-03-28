@@ -18,9 +18,6 @@
             android:name=".ui.inspector.InspectorDetails"
             android:exported="false" />
         <activity
-            android:name=".ui.inspector.InspectorAdd"
-            android:exported="false" />
-        <activity
             android:name=".ui.inspection.InspectionDetails"
             android:exported="false" />
         <activity

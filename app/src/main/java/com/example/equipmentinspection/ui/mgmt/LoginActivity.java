@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
           if (inspectorEntity != null) {
               if (inspectorEntity.getPasswordInspector().equals(password)) {
                   SharedPreferences.Editor editor = getSharedPreferences(PREFS_USER, 0).edit();
-                  editor.putString("email", inspectorEntity.getEmailInspector());
+                  editor.putString("email", email);
                   editor.putString("logged", "true");
                   editor.apply();
                   Intent intent = new Intent(LoginActivity.this, MainActivity.class);

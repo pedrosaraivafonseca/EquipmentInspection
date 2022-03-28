@@ -143,12 +143,12 @@ public class EquipmentDetails extends AppCompatActivity {
             linearLayout.setVisibility(View.VISIBLE);
             equipmentStatus.setFocusable(false);
             equipmentStatus.setEnabled(false);
-            saveChanges(equipmentName.getText().toString(), equipmentStatus.getText().toString());
+            saveChanges(equipmentStatus.getText().toString());
         }
         isEditable = !isEditable;
     }
 
-    private void saveChanges(String equipName, String equipStatus){
+    private void saveChanges(String equipStatus){
         if (equipmentStatus.getText().toString().isEmpty()) {
             equipmentStatus.setError(getString(R.string.error_empty_field));
             equipmentStatus.requestFocus();
@@ -160,12 +160,10 @@ public class EquipmentDetails extends AppCompatActivity {
         new EquipmentUpdate(this, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-
             }
 
             @Override
             public void onFailure(Exception e) {
-
             }
         }).execute(equipment);
     }

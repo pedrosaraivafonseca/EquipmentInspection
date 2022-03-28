@@ -1,9 +1,5 @@
 package com.example.equipmentinspection.ui.inspection;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +7,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
-import com.example.equipmentinspection.ui.equipment.EquipmentFragment;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
-import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
 import com.example.equipmentinspection.viewmodel.InspectionDetailsViewModel;
 
 public class InspectionDetails extends AppCompatActivity {
@@ -54,6 +52,7 @@ public class InspectionDetails extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 
     private void updateContent() {

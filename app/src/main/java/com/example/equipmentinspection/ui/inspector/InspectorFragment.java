@@ -71,6 +71,7 @@ public class InspectorFragment extends Fragment {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
+
                 intent.putExtra("inspectorId", inspectors.get(position).getIdInspector());
                 startActivity(intent);
             }
