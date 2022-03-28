@@ -24,6 +24,7 @@ import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.adapter.RecyclerAdapter;
 import com.example.equipmentinspection.adapter.SpinnerAdapter;
 import com.example.equipmentinspection.database.async.EquipmentCreate;
+import com.example.equipmentinspection.database.async.EquipmentUpdate;
 import com.example.equipmentinspection.database.async.InspectionCreate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
@@ -53,6 +54,9 @@ public class InspectionAdd extends AppCompatActivity {
 
     private List<EquipmentEntity> equipments;
     private EquipmentListViewModel equipmentViewModel;
+    private EquipmentEntity equipmentToUpdate;
+    private InspectionEntity inspectionCreated;
+    private String inspectorName;
 
     private EditText inspectionInspectionDate;
     private Spinner inspectionEquipment;
@@ -132,6 +136,9 @@ public class InspectionAdd extends AppCompatActivity {
         new InspectionCreate(getApplication(), new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
+                inspectionCreated = newInspection;
+                equipmentToUpdate = equipment;
+                inspectorName = inspector.toString();
                 setResponse(true);
             }
 
@@ -144,6 +151,8 @@ public class InspectionAdd extends AppCompatActivity {
 
     private void setResponse(boolean response) {
         if (response) {
+            updateEquipment(equipmentToUpdate);
+
             Toast toast = Toast.makeText(this, "Inspection successfully created", Toast.LENGTH_SHORT);
             toast.show();
 
@@ -244,5 +253,23 @@ public class InspectionAdd extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    private void updateEquipment(EquipmentEntity equipment){
+        equipment.setStatusEquipment("To be inspected");
+        equipment.setNextInspectionDateEquipment(inspectionCreated.getDateInspection());
+        equipment.setLastInspectorEquipment(inspectorName);
+
+        new EquipmentUpdate(this, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        }).execute(equipment);
     }
 }
