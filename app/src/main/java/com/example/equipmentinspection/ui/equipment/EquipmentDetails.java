@@ -61,7 +61,7 @@ public class EquipmentDetails extends AppCompatActivity {
 
         view();
 
-        equipmentEdit= (Button) findViewById(R.id.equipment_edit_button);
+        equipmentEdit = (Button) findViewById(R.id.equipment_edit_button);
         equipmentBackButton = (ImageButton) findViewById(R.id.equipment_back_button);
 
         equipmentToolbar = (Toolbar) findViewById(R.id.equipment_toolbar);
@@ -138,61 +138,27 @@ public class EquipmentDetails extends AppCompatActivity {
             equipmentName.setEnabled(true);
             equipmentName.setFocusableInTouchMode(true);
 
-            equipmentPrice.setFocusable(true);
-            equipmentPrice.setEnabled(true);
-            equipmentPrice.setFocusableInTouchMode(true);
-
-            equipmentPurchase.setFocusable(true);
-            equipmentPurchase.setEnabled(true);
-            equipmentPurchase.setFocusableInTouchMode(true);
-
-            equipmentLastInspector.setFocusable(true);
-            equipmentLastInspector.setEnabled(true);
-            equipmentLastInspector.setFocusableInTouchMode(true);
-
-            equipmentLastInspection.setFocusable(true);
-            equipmentLastInspection.setEnabled(true);
-            equipmentLastInspection.setFocusableInTouchMode(true);
-
-            equipmentNextInspection.setFocusable(true);
-            equipmentNextInspection.setEnabled(true);
-            equipmentNextInspection.setFocusableInTouchMode(true);
 
             equipmentStatus.setFocusable(true);
             equipmentStatus.setEnabled(true);
             equipmentStatus.setFocusableInTouchMode(true);
         } else {
+            saveChanges(equipmentName.getText().toString(), equipmentStatus.toString());
 
             LinearLayout linearLayout = findViewById(R.id.equipment_details_layout);
             linearLayout.setVisibility(View.VISIBLE);
             equipmentName.setFocusable(false);
             equipmentName.setEnabled(false);
-            equipmentPrice.setFocusable(false);
-            equipmentPrice.setEnabled(false);
-            equipmentPurchase.setFocusable(false);
-            equipmentPurchase.setEnabled(false);
-            equipmentLastInspector.setFocusable(false);
-            equipmentLastInspector.setEnabled(false);
-            equipmentLastInspection.setFocusable(false);
-            equipmentLastInspection.setEnabled(false);
-            equipmentNextInspection.setFocusable(false);
-            equipmentNextInspection.setEnabled(false);
             equipmentStatus.setFocusable(false);
             equipmentStatus.setEnabled(false);
         }
         isEditable = !isEditable;
     }
 
-    private void saveChanges(String equipName, String equipWarranty, String equipStatus){
+    private void saveChanges(String equipName, String equipStatus){
         if(equipmentName.getText().toString().isEmpty()){
             equipmentName.setError(getString(R.string.error_empty_field));
             equipmentName.requestFocus();
-            return;
-        }
-
-        if (equipmentWarranty.getText().toString().isEmpty()){
-            equipmentWarranty.setError(getString(R.string.error_empty_field));
-            equipmentWarranty.requestFocus();
             return;
         }
 
