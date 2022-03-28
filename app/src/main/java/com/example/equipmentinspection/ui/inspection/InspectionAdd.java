@@ -156,7 +156,7 @@ public class InspectionAdd extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Inspection successfully created", Toast.LENGTH_SHORT);
             toast.show();
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, InspectionFragment.class);
             startActivity(intent);
 
         } else {
@@ -235,6 +235,9 @@ public class InspectionAdd extends AppCompatActivity {
     }
 
     private boolean checkDate(String stringDate1)  {
+        if(stringDate1.isEmpty()){
+            return false;
+        }
         Date date1 = null;
         Date today = new Date();
         String todayString;
