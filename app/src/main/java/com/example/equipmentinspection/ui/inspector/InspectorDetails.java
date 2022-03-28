@@ -124,7 +124,6 @@ public class InspectorDetails extends AppCompatActivity {
             LinearLayout linearLayout=new LinearLayout(this);
             final EditText input= new EditText(this);
 
-            // write the email using which you registered
             input.setHint("Password");
             input.setMinEms(16);
             input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -134,7 +133,6 @@ public class InspectorDetails extends AppCompatActivity {
             linearLayout.setPadding(10,10,10,10);
             builder.setView(linearLayout);
 
-            // Click on Recover and a email will be sent to your registered email id
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -164,7 +162,6 @@ public class InspectorDetails extends AppCompatActivity {
         LinearLayout linearLayout=new LinearLayout(this);
         final EditText input= new EditText(this);
 
-        // write the email using which you registered
         input.setHint("New Password");
         input.setMinEms(16);
         input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -173,7 +170,6 @@ public class InspectorDetails extends AppCompatActivity {
         linearLayout.setPadding(10,10,10,10);
         builder.setView(linearLayout);
 
-        // Click on Recover and a email will be sent to your registered email id
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
