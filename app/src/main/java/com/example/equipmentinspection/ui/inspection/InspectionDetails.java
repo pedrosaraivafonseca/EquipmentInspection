@@ -47,7 +47,10 @@ public class InspectionDetails extends AppCompatActivity {
     private boolean isEditable;
     InspectorDetailsViewModel inspectorVM;
     InspectorEntity inspector;
+    InspectionDetailsViewModel inspectionVM;
     final Calendar myCalendar= Calendar.getInstance();
+    Long inspectionId;
+    Long inspectorId;
 
     //Build the UI, get the intents from fragment
     @Override
@@ -56,24 +59,9 @@ public class InspectionDetails extends AppCompatActivity {
         setContentView(R.layout.activity_inspection_details);
 
         Intent intent = getIntent();
-        Long inspectionId = intent.getLongExtra("inspectionId", 0);
-        Long inspectorId = intent.getLongExtra("inspectorId", 0);
+        inspectionId = intent.getLongExtra("inspectionId", 0);
+        inspectorId = intent.getLongExtra("inspectorId", 0);
 
-        InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspectionId);
-        InspectionDetailsViewModel inspectionVM = inspectionVMFactory.create(InspectionDetailsViewModel.class);
-
-        inspectionVM.getInspection().observe(this, inspectionEntity -> {
-            inspection = inspectionEntity;
-            updateContent();
-        });
-
-        InspectorDetailsViewModel.Factory factory = new InspectorDetailsViewModel.Factory(getApplication(),inspectorId);
-        inspectorVM = factory.create(InspectorDetailsViewModel.class);
-
-        inspectorVM.getInspector().observe(this, inspectorEntity -> {
-            inspector = inspectorEntity;
-            updateInspectorName();
-        });
 
         inspectionBackButton = (ImageButton) findViewById(R.id.inspection_back_button);
         inspectionDelete = (Button) findViewById(R.id.inspection_delete_button);
@@ -90,8 +78,32 @@ public class InspectionDetails extends AppCompatActivity {
         setupListeners();
     }
 
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
+        InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspectionId);
+        inspectionVM = inspectionVMFactory.create(InspectionDetailsViewModel.class);
+
+        inspectionVM.getInspection().observe(this, inspectionEntity -> {
+            inspection = inspectionEntity;
+            updateContent();
+        });
+
+        InspectorDetailsViewModel.Factory factory = new InspectorDetailsViewModel.Factory(getApplication(), inspectorId);
+        inspectorVM = factory.create(InspectorDetailsViewModel.class);
+
+        inspectorVM.getInspector().observe(this, inspectorEntity -> {
+            inspector = inspectorEntity;
+            updateInspectorName();
+        });
+    }
+
+
     //Setup onclick listeners for buttons
     private void setupListeners() {
+
         inspectionBackButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -125,17 +137,20 @@ public class InspectionDetails extends AppCompatActivity {
 
     //Update content of Inspection and Inspector entities LiveData
     private void updateContent() {
-        if (inspection != null) {
-            inspectionDate.setText(inspection.getDateInspection());
-            inspectionEquipment.setText(inspection.getNameEquipmentInspection());
-            inspectionStatus.setText(inspection.getStatusInspection());
-        }
+        InspectionEntity ins = inspection;
+            if(ins != null) {
+                inspectionDate.setText(ins.getDateInspection());
+                inspectionEquipment.setText(ins.getNameEquipmentInspection());
+                inspectionStatus.setText(ins.getStatusInspection());
+                checkInspection(ins);
+            }
     }
     private void updateInspectorName(){
-        if(inspector != null){
-            inspectionInspector.setText(inspector.toString());
-            checkInspections();
-        }
+        InspectorEntity inspec = inspector;
+            if(inspec != null) {
+                inspectionInspector.setText(inspec.toString());
+                checkInspector(inspec);
+            }
     }
 
     //Builds the view to make every Edittext uneditable
@@ -304,10 +319,11 @@ public class InspectionDetails extends AppCompatActivity {
     //If so, inspection can be deleted, edited and validated
     //If not, the buttons are hidden
     //If inspection status is "Done", buttons are hidden
-    private void checkInspections() {
+    private void checkInspector(InspectorEntity inspectorCheck) {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFS_USER, 0);
         String userMail = sharedPreferences.getString("email", "");
-        if (userMail.equals(inspector.getEmailInspector())){
+
+        if (userMail.equals(inspectorCheck.getEmailInspector())){
             inspectionEdit.setVisibility(View.VISIBLE);
             inspectionValidate.setVisibility(View.VISIBLE);
             inspectionDelete.setVisibility(View.VISIBLE);
@@ -316,8 +332,10 @@ public class InspectionDetails extends AppCompatActivity {
             inspectionValidate.setVisibility(View.GONE);
             inspectionDelete.setVisibility(View.GONE);
         }
+    }
 
-        if(inspection.getStatusInspection().equals("Done")){
+    private void checkInspection(InspectionEntity inspectionCheck){
+        if(inspectionCheck.getStatusInspection().equals("Done")){
             inspectionEdit.setVisibility(View.GONE);
             inspectionValidate.setVisibility(View.GONE);
             inspectionDelete.setVisibility(View.GONE);
