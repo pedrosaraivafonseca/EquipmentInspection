@@ -175,19 +175,26 @@ public class InspectorDetails extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String inputPassword=input.getText().toString().trim();
                 if (inputPassword.equals(inspector.getPasswordInspector())){
-                    input.setError("Password already in use");
+                    Toast toast = Toast.makeText(getApplication(), "Password already in use", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else if (!inputPassword.equals(inspector.getPasswordInspector())){
+                    saveChanges(inspector.getFirstNameInspector(), inspector.getNameInspector(), inspector.getEmailInspector(), inputPassword);
+                    inspector.setPasswordInspector(inputPassword);
+                    Toast toast = Toast.makeText(getApplication(), "Password succesfully changed", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_USER, 0).edit();
+                    editor.clear();
+                    editor.commit();
+                    Intent intent = new Intent(getApplication(), MainActivity.class);
+                    startActivity(intent);
                 }
-                saveChanges(inspector.getFirstNameInspector(), inspector.getNameInspector(), inspector.getEmailInspector(), inputPassword);
-                inspector.setPasswordInspector(inputPassword);
-                Toast toast = Toast.makeText(getApplication(), "Password succesfully changed", Toast.LENGTH_SHORT);
-                toast.show();
-
-                SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_USER, 0).edit();
-                editor.clear();
-                editor.commit();
-                Intent intent = new Intent(getApplication(), MainActivity.class);
-                startActivity(intent);
-
+                else {
+                    {
+                        Toast toast = Toast.makeText(getApplication(), "Wrong Password", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
             }
         });
 
