@@ -1,33 +1,32 @@
 package com.example.equipmentinspection.ui.equipment;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.Observer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.database.dao.EquipmentDao;
+import com.example.equipmentinspection.database.async.EquipmentUpdate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
-import com.example.equipmentinspection.database.repository.EquipmentRepository;
-import com.example.equipmentinspection.ui.MainActivity;
+import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
-import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 
 public class EquipmentDetails extends AppCompatActivity {
 
     ImageButton equipmentBackButton;
     private Toolbar equipmentToolbar;
     Button equipmentEdit;
+    Button equipmentDelete;
     private boolean isEditable;
 
     private TextView equipmentName;
@@ -62,6 +61,7 @@ public class EquipmentDetails extends AppCompatActivity {
         view();
 
         equipmentEdit = (Button) findViewById(R.id.equipment_edit_button);
+        equipmentDelete = (Button) findViewById(R.id.equipment_delete_button);
         equipmentBackButton = (ImageButton) findViewById(R.id.equipment_back_button);
 
         equipmentToolbar = (Toolbar) findViewById(R.id.equipment_toolbar);
@@ -79,18 +79,18 @@ public class EquipmentDetails extends AppCompatActivity {
             }
         });
 
-        equipmentName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                equipmentName = (EditText) findViewById(R.id.equipment_name_text);
-                equipmentName.requestFocus();
-            }
-        });
-
         equipmentEdit.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 goEdit();
+            }
+        });
+
+        equipmentDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               AlertDialog diaBox =  createDeleteDialog();
+               diaBox.show();
             }
         });
     }
@@ -134,44 +134,41 @@ public class EquipmentDetails extends AppCompatActivity {
         if (!isEditable){
             LinearLayout linearLayout = findViewById(R.id.equipment_details_layout);
             linearLayout.setVisibility(View.VISIBLE);
-            equipmentName.setFocusable(true);
-            equipmentName.setEnabled(true);
-            equipmentName.setFocusableInTouchMode(true);
-
-
             equipmentStatus.setFocusable(true);
             equipmentStatus.setEnabled(true);
             equipmentStatus.setFocusableInTouchMode(true);
-        } else {
-            saveChanges(equipmentName.getText().toString(), equipmentStatus.toString());
 
+        } else {
             LinearLayout linearLayout = findViewById(R.id.equipment_details_layout);
             linearLayout.setVisibility(View.VISIBLE);
-            equipmentName.setFocusable(false);
-            equipmentName.setEnabled(false);
             equipmentStatus.setFocusable(false);
             equipmentStatus.setEnabled(false);
+            saveChanges(equipmentName.getText().toString(), equipmentStatus.getText().toString());
         }
         isEditable = !isEditable;
     }
 
     private void saveChanges(String equipName, String equipStatus){
-        if(equipmentName.getText().toString().isEmpty()){
-            equipmentName.setError(getString(R.string.error_empty_field));
-            equipmentName.requestFocus();
-            return;
-        }
-
         if (equipmentStatus.getText().toString().isEmpty()) {
             equipmentStatus.setError(getString(R.string.error_empty_field));
             equipmentStatus.requestFocus();
             return;
         }
 
+        equipment.setStatusEquipment(equipStatus);
 
+        new EquipmentUpdate(this, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
 
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        }).execute(equipment);
     }
-
 
     private void updateContent() {
         if (equipment != null) {
@@ -182,5 +179,45 @@ public class EquipmentDetails extends AppCompatActivity {
             equipmentNextInspection.setText(equipment.getNextInspectionDateEquipment());
             equipmentStatus.setText(equipment.getStatusEquipment());
         }
+    }
+
+    private AlertDialog createDeleteDialog() {
+        AlertDialog dialogBox = new AlertDialog.Builder(this)
+                .setTitle("Delete")
+                .setMessage("Do you want to Delete " + equipment.getNameEquipment())
+
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipment.getIdEquipment());
+                        EquipmentDetailsViewModel equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
+                            equipmentVM.deleteEquipment(equipment, new OnAsyncEventListener() {
+                                @Override
+                                public void onSuccess() {
+                                    Toast toast = Toast.makeText(getApplication(), "Equipment successfully deleted", Toast.LENGTH_LONG);
+                                    toast.show();
+
+                                    Intent intent = new Intent(getApplication(), EquipmentFragment.class);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onFailure(Exception e) {
+                                    Toast toast = Toast.makeText(getApplication(), "There was an error", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            });
+                        dialog.dismiss();
+                    }
+
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                }).create();
+        return dialogBox;
     }
 }

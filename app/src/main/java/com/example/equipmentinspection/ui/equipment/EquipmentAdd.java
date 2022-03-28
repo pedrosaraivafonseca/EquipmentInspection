@@ -143,7 +143,7 @@ public class EquipmentAdd extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Equipment successfully created", Toast.LENGTH_SHORT);
             toast.show();
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, EquipmentFragment.class);
             startActivity(intent);
 
         } else {
