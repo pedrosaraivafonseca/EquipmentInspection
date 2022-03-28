@@ -49,6 +49,7 @@ public class InspectionDetails extends AppCompatActivity {
     InspectorEntity inspector;
     final Calendar myCalendar= Calendar.getInstance();
 
+    //Build the UI, get the intents from fragment
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class InspectionDetails extends AppCompatActivity {
         setupListeners();
     }
 
+    //Setup onclick listeners for buttons
     private void setupListeners() {
         inspectionBackButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -121,6 +123,7 @@ public class InspectionDetails extends AppCompatActivity {
         });
     }
 
+    //Update content of Inspection and Inspector entities LiveData
     private void updateContent() {
         if (inspection != null) {
             inspectionDate.setText(inspection.getDateInspection());
@@ -128,7 +131,6 @@ public class InspectionDetails extends AppCompatActivity {
             inspectionStatus.setText(inspection.getStatusInspection());
         }
     }
-
     private void updateInspectorName(){
         if(inspector != null){
             inspectionInspector.setText(inspector.toString());
@@ -136,6 +138,7 @@ public class InspectionDetails extends AppCompatActivity {
         }
     }
 
+    //Builds the view to make every Edittext uneditable
     private void view(){
         isEditable = false;
 
@@ -156,6 +159,7 @@ public class InspectionDetails extends AppCompatActivity {
         inspectionStatus.requestFocus();
     }
 
+    //On edit button click, makes fields editable
     private void goEdit(){
         if (!isEditable){
             LinearLayout linearLayout = findViewById(R.id.inspection_details_layout);
@@ -183,6 +187,7 @@ public class InspectionDetails extends AppCompatActivity {
         isEditable = !isEditable;
     }
 
+    //Save changes made to the inspection
     private void saveChanges(String dateInsp){
         if (inspectionDate.getText().toString().isEmpty()) {
             inspectionDate.setError(getString(R.string.error_empty_field));
@@ -205,6 +210,7 @@ public class InspectionDetails extends AppCompatActivity {
         }).execute(inspection);
     }
 
+    //Create a delete confirmation dialog to delete the inspection
     private AlertDialog createDeleteDialog() {
         AlertDialog dialogBox = new AlertDialog.Builder(this)
                 .setTitle("Delete")
@@ -245,6 +251,7 @@ public class InspectionDetails extends AppCompatActivity {
         return dialogBox;
     }
 
+    //Create a validation confirmation dialog to validate the inspection
     private AlertDialog createValidateDialog() {
         AlertDialog dialogBox = new AlertDialog.Builder(this)
                 .setTitle("Validate")
@@ -286,12 +293,17 @@ public class InspectionDetails extends AppCompatActivity {
         return dialogBox;
     }
 
+    //Update date in datepicker for edition
     private void updateLabelDate(){
         String myFormat="dd/MM/yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.FRANCE);
         inspectionDate.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    //Check if the user mail = to the one logged in
+    //If so, inspection can be deleted, edited and validated
+    //If not, the buttons are hidden
+    //If inspection status is "Done", buttons are hidden
     private void checkInspections() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFS_USER, 0);
         String userMail = sharedPreferences.getString("email", "");

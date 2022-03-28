@@ -44,6 +44,7 @@ public class EquipmentAdd extends AppCompatActivity {
     private Toolbar equipmentToolbar;
     ImageButton equipmentBackButton;
 
+    //Build the UI, set date picker for different date fields
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,7 @@ public class EquipmentAdd extends AppCompatActivity {
         setupListeners();
     }
 
+    //Setup listeners for the back button
     private void setupListeners() {
         equipmentBackButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -95,6 +97,9 @@ public class EquipmentAdd extends AppCompatActivity {
         });
     }
 
+    //Method used to create a new equipment from data gathered by Edittexts
+    // which is checked before being processed
+    //Warranty date can't be inferior to purchase date
     private void saveChanges(String equipmentNameString, String equipmentPriceString, String equipmentPurchaseDateString, String equipmentWarrantyDateString){
 
         //Error Handling
@@ -138,6 +143,7 @@ public class EquipmentAdd extends AppCompatActivity {
         }).execute(newEquipment);
     }
 
+    //Use by saveChanges() to determine if the operation was successful or not
     private void setResponse(boolean response) {
         if (response) {
             Toast toast = Toast.makeText(this, "Equipment successfully created", Toast.LENGTH_SHORT);
@@ -152,18 +158,19 @@ public class EquipmentAdd extends AppCompatActivity {
         }
     }
 
+    //Update the date labels with data from the date picker
     private void updateLabelWarranty(){
         String myFormat="dd/MM/yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.FRANCE);
         equipmentWarrantyDate.setText(dateFormat.format(myCalendar.getTime()));
     }
-
     private void updateLabelPurchase(){
         String myFormat="dd/MM/yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.FRANCE);
         equipmentPurchaseDate.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    //Return false if purchase date is after warranty date, or is equal
     private boolean checkDate(String stringDate1, String stringDate2)  {
         Date date1 = null;
         Date date2 = null;

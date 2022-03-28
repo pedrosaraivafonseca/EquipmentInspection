@@ -49,24 +49,10 @@ public class EquipmentFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        //Edit button
-
-        /*
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(view -> {
-                    Intent intent = new Intent(AccountsActivity.this, EditAccountActivity.class);
-                    intent.setFlags(
-                            Intent.FLAG_ACTIVITY_NO_ANIMATION |
-                                    Intent.FLAG_ACTIVITY_NO_HISTORY
-                    );
-                    startActivity(intent);
-                }
-        );
-        */
     }
 
+    //Create the view list via RecyclerView
+    //Get the equipments from LiveData
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

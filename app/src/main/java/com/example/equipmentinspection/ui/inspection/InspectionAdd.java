@@ -67,6 +67,8 @@ public class InspectionAdd extends AppCompatActivity {
 
     final Calendar myCalendar= Calendar.getInstance();
 
+    //Build the UI, set date picker for date field
+    //Setup spinners for Inspector and Equipment field
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,12 +110,16 @@ public class InspectionAdd extends AppCompatActivity {
         ));
     }
 
+    //Update the date field
     private void updateLabelInspectionDate(){
         String myFormat="dd/MM/yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.FRANCE);
         inspectionInspectionDate.setText(dateFormat.format(myCalendar.getTime()));
     }
 
+    //Method used to create a new inspection from data gathered by Edittexts
+    // which is checked before being processed
+    //inspection date can't be set as today
     private void saveChanges(String date, Object equipment1, Object inspector1){
         //Error Handling
         if(!checkDate(date)){
@@ -150,6 +156,7 @@ public class InspectionAdd extends AppCompatActivity {
         }).execute(newInspection);
     }
 
+    //Use by saveChanges() to determine if the operation was successful or not
     private void setResponse(boolean response) {
         if (response) {
             updateEquipment(equipmentToUpdate);
@@ -166,11 +173,13 @@ public class InspectionAdd extends AppCompatActivity {
         }
     }
 
+    //Setup both spinners
     private void setupSpinners(){
         setupInspectorSpinner();
         setupEquipmentSpinner();
     }
 
+    //Populate the inspector spinner with Inspectors from the DB
     private void setupInspectorSpinner(){
         inspectors = new ArrayList<>();
 
@@ -203,6 +212,7 @@ public class InspectionAdd extends AppCompatActivity {
         });
     }
 
+    //Populate the equipment spinner with Equipments from the DB
     private void setupEquipmentSpinner(){
         equipments = new ArrayList<>();
 
@@ -235,6 +245,7 @@ public class InspectionAdd extends AppCompatActivity {
         });
     }
 
+    //Check that the inspection date is correct
     private boolean checkDate(String stringDate1)  {
         if(stringDate1.isEmpty()){
             return false;
@@ -259,6 +270,8 @@ public class InspectionAdd extends AppCompatActivity {
         return true;
     }
 
+    //Update the equipment that is set to be inspected
+    //Fields NextInspectionDate and Inspector
     private void updateEquipment(EquipmentEntity equipment){
         equipment.setStatusEquipment("To be inspected");
         equipment.setNextInspectionDateEquipment(inspectionCreated.getDateInspection());

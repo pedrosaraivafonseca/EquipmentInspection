@@ -41,6 +41,8 @@ public class EquipmentDetails extends AppCompatActivity {
     private EquipmentEntity equipment;
 
 
+    //Build the UI, get the equipmentId from EquipmentFragment intent,
+    //Setup observers for data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,10 @@ public class EquipmentDetails extends AppCompatActivity {
         setupListeners();
     }
 
+    //Setup the click listeners
+    //Back is to go back
+    //Edit is to edit the fields
+    //Delete is to delete the equipment
     private void setupListeners() {
         equipmentBackButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -95,6 +101,7 @@ public class EquipmentDetails extends AppCompatActivity {
         });
     }
 
+    //View created to display the information without being editable
     private void view(){
         isEditable = false;
         equipmentName = (EditText) findViewById(R.id.equipment_name_text);
@@ -130,6 +137,7 @@ public class EquipmentDetails extends AppCompatActivity {
         equipmentStatus.requestFocus();
     }
 
+    //Called by EditButton, makes the fields editable or not
     private void goEdit(){
         if (!isEditable){
             LinearLayout linearLayout = findViewById(R.id.equipment_details_layout);
@@ -148,6 +156,7 @@ public class EquipmentDetails extends AppCompatActivity {
         isEditable = !isEditable;
     }
 
+    //Save the changes made to the EquipmentEntity in the DB via update
     private void saveChanges(String equipStatus){
         if (equipmentStatus.getText().toString().isEmpty()) {
             equipmentStatus.setError(getString(R.string.error_empty_field));
@@ -168,6 +177,7 @@ public class EquipmentDetails extends AppCompatActivity {
         }).execute(equipment);
     }
 
+    //Use to get the equipment from LiveData
     private void updateContent() {
         if (equipment != null) {
             equipmentName.setText(equipment.getNameEquipment());
@@ -179,6 +189,7 @@ public class EquipmentDetails extends AppCompatActivity {
         }
     }
 
+    //Builds a dialog to confirm or not the deletion of the equipment
     private AlertDialog createDeleteDialog() {
         AlertDialog dialogBox = new AlertDialog.Builder(this)
                 .setTitle("Delete")

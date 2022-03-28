@@ -49,6 +49,8 @@ public class InspectionFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    //Create the view list via RecyclerView
+    //Get the inspections from LiveData
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
