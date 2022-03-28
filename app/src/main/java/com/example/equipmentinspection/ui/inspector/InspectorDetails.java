@@ -1,10 +1,17 @@
 package com.example.equipmentinspection.ui.inspector;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +29,8 @@ import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.viewmodel.InspectorDetailsViewModel;
 
+import org.w3c.dom.Text;
+
 public class InspectorDetails extends AppCompatActivity {
 
     private Toolbar inspectorToolbar;
@@ -30,9 +39,12 @@ public class InspectorDetails extends AppCompatActivity {
     private EditText inspectorFirstName;
     private EditText inspectorLastName;
     private EditText inspectorMail;
+    private EditText inspectorPassword;
     private Button inspectorEdit;
     private Button inspectorDelete;
     private Boolean isEditable;
+    private Button inspector_password_button;
+    private String m_Text ="";
 
     private static String mail;
 
@@ -58,6 +70,7 @@ public class InspectorDetails extends AppCompatActivity {
 
         inspectorEdit = (Button) findViewById(R.id.inspector_edit_button);
         inspectorDelete = (Button) findViewById(R.id.inspector_delete_button);
+        inspector_password_button = (Button) findViewById(R.id.inspector_password_button);
 
         view();
 
@@ -91,7 +104,107 @@ public class InspectorDetails extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+
+        inspector_password_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("AAAAAaaaa");
+                checkPassword();
+            }
+        });
     }
+
+    private void checkPassword() {
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setTitle("Introduce actual password")
+                    .setCancelable(false)
+                    .setPositiveButton("Confirm", null)
+                    .setNegativeButton("Cancel", null)
+                    .create();
+            LinearLayout linearLayout=new LinearLayout(this);
+            final EditText input= new EditText(this);
+
+            // write the email using which you registered
+            input.setHint("Password");
+            input.setMinEms(16);
+            input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+            linearLayout.addView(input);
+            linearLayout.setPadding(10,10,10,10);
+            builder.setView(linearLayout);
+
+            // Click on Recover and a email will be sent to your registered email id
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String inputPassword=input.getText().toString().trim();
+                    if (inputPassword.equals(inspector.getPasswordInspector())){
+                        setNewPassword();
+                    } else {
+                        Toast toast = Toast.makeText(getApplication(), "Wrong Password", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+        }
+
+    private void setNewPassword() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("Introduce new password");
+        LinearLayout linearLayout=new LinearLayout(this);
+        final EditText input= new EditText(this);
+
+        // write the email using which you registered
+        input.setHint("New Password");
+        input.setMinEms(16);
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        linearLayout.addView(input);
+        linearLayout.setPadding(10,10,10,10);
+        builder.setView(linearLayout);
+
+        // Click on Recover and a email will be sent to your registered email id
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String inputPassword=input.getText().toString().trim();
+                if (inputPassword.equals(inspector.getPasswordInspector())){
+                    input.setError("Password already in use");
+                }
+                saveChanges(inspector.getFirstNameInspector(), inspector.getNameInspector(), inspector.getEmailInspector(), inputPassword);
+                inspector.setPasswordInspector(inputPassword);
+                Toast toast = Toast.makeText(getApplication(), "Password succesfully changed", Toast.LENGTH_SHORT);
+                toast.show();
+
+                SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_USER, 0).edit();
+                editor.clear();
+                editor.commit();
+                Intent intent = new Intent(getApplication(), MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+
 
     private AlertDialog createDeleteDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
@@ -149,6 +262,13 @@ public class InspectorDetails extends AppCompatActivity {
             inspectorMail.setFocusable(true);
             inspectorMail.setEnabled(true);
             inspectorMail.setFocusableInTouchMode(true);
+
+            inspectorPassword.setFocusable(true);
+            inspectorPassword.setEnabled(true);
+            inspectorPassword.setFocusableInTouchMode(true);
+
+
+
         } else {
             LinearLayout linearLayout = findViewById(R.id.inspector_details_layout);
             linearLayout.setVisibility(View.VISIBLE);
@@ -158,13 +278,16 @@ public class InspectorDetails extends AppCompatActivity {
             inspectorLastName.setEnabled(false);
             inspectorMail.setFocusable(false);
             inspectorMail.setEnabled(false);
-            saveChanges(inspectorFirstName.getText().toString(), inspectorLastName.getText().toString(), inspectorMail.getText().toString());
+            inspectorPassword.setFocusable(false);
+            inspectorPassword.setEnabled(false);
+            inspector_password_button.setVisibility(View.VISIBLE);
+            saveChanges(inspectorFirstName.getText().toString(), inspectorLastName.getText().toString(), inspectorMail.getText().toString(), inspectorPassword.getText().toString());
 
         }
         isEditable = !isEditable;
     }
 
-    private void saveChanges(String inspecFirstName, String inspecLastName, String inspectMail) {
+    private void saveChanges(String inspecFirstName, String inspecLastName, String inspectMail, String inspectPass) {
         if (inspecFirstName.isEmpty()) {
             inspectorFirstName.setError(getString(R.string.error_empty_field));
             inspectorFirstName.requestFocus();
@@ -217,9 +340,13 @@ public class InspectorDetails extends AppCompatActivity {
         if (userMail.equals(mail)){
             inspectorEdit.setVisibility(View.VISIBLE);
             inspectorDelete.setVisibility(View.VISIBLE);
+            inspector_password_button.setVisibility(View.VISIBLE);
+
         }else {
             inspectorEdit.setVisibility(View.GONE);
             inspectorDelete.setVisibility(View.GONE);
+            inspector_password_button.setVisibility(View.GONE);
+
         }
     }
 
@@ -236,6 +363,11 @@ public class InspectorDetails extends AppCompatActivity {
         inspectorMail = (EditText) findViewById(R.id.inspector_email);
         inspectorMail.setEnabled(false);
         inspectorMail.requestFocus();
+
+        inspectorPassword = (EditText) findViewById(R.id.inspector_password);
+        inspectorPassword.setEnabled(false);
+        inspectorPassword.requestFocus();
+        inspectorPassword.setVisibility(View.GONE);
     }
 
 

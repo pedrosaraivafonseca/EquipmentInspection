@@ -101,4 +101,6 @@
     <string name="inspection_validate_text">Validate</string>
     <string name="inspector_mail_hint">Email</string>
     <string name="inspection_equipmentName_hint">Equipment</string>
+    <string name="inspector_password_text">Change Password</string>
+    <string name="inspector_password_hint">Password</string>
 </resources>
