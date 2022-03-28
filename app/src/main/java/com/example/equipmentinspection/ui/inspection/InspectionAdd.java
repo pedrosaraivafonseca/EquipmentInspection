@@ -140,6 +140,7 @@ public class InspectionAdd extends AppCompatActivity {
                 equipmentToUpdate = equipment;
                 inspectorName = inspector.toString();
                 setResponse(true);
+
             }
 
             @Override

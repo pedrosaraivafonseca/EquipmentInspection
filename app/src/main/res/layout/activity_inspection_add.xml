@@ -61,7 +61,7 @@
                 android:id="@+id/inspection_date_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="true"
+                android:focusable="false"
                 android:hint="@string/inspection_date_hint"
                 android:inputType="date" />
 

@@ -67,6 +67,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/inspection_details_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -93,10 +94,10 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inspection_nextInspectionDate"
+                android:id="@+id/inspection_equipmentName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/inspection_nextInspectionDate_hint"
+                android:hint="@string/inspection_equipmentName_hint"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
