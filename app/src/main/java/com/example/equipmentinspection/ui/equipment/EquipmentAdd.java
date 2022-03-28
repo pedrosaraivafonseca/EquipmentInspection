@@ -40,6 +40,7 @@ public class EquipmentAdd extends AppCompatActivity {
     private EditText equipmentWarrantyDate;
     private EditText equipmentPurchaseDate;
 
+
     private Toolbar equipmentToolbar;
     ImageButton equipmentBackButton;
 
@@ -59,6 +60,7 @@ public class EquipmentAdd extends AppCompatActivity {
             updateLabelPurchase();
         };
         equipmentPurchaseDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,purchaseDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show());
+
 
         equipmentWarrantyDate = (EditText) findViewById(R.id.equipment_warrantyDate);
         DatePickerDialog.OnDateSetListener warrantyDate = (view, year, month, day) -> {

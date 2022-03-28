@@ -54,8 +54,8 @@
         tools:ignore="SpeakableTextPresentCheck" />
 
 
-
     <LinearLayout
+        android:id="@+id/equipment_details_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
