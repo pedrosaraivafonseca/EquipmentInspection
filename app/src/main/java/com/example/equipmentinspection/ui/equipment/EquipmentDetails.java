@@ -182,6 +182,8 @@ public class EquipmentDetails extends AppCompatActivity {
         if (equipment != null) {
             equipmentName.setText(equipment.getNameEquipment());
             equipmentPrice.setText(Double.toString(equipment.getPriceEquipment()));
+            equipmentPurchase.setText(equipment.getPurchaseDateEquipment());
+            equipmentWarranty.setText(equipment.getWarrantyDateEquipment());
             equipmentLastInspector.setText(equipment.getLastInspectorEquipment());
             equipmentLastInspection.setText(equipment.getLastInspectionDateEquipment());
             equipmentNextInspection.setText(equipment.getNextInspectionDateEquipment());
