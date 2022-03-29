@@ -36,9 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        inspectorRepository = ((BaseApp) getApplicationContext()).getInspectorRepository();
-
+        
         login_email_field = (EditText) findViewById(R.id.login_email);
         login_password_field = (EditText) findViewById(R.id.login_password);
         login_login_button = (Button) findViewById(R.id.login_login_button);

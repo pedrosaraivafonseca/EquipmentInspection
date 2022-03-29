@@ -78,7 +78,7 @@ public class InspectorFragment extends Fragment {
 
             @Override
             public void onItemLongClick(View v, int position) {
-                createDeleteDialog(position);
+
             }
         });
 
@@ -94,37 +94,5 @@ public class InspectorFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         return view;
-    }
-
-    private void createDeleteDialog(final int position) {
-        final InspectorEntity inspector = inspectors.get(position);
-        LayoutInflater inflater = LayoutInflater.from(this.getContext());
-        final View view = inflater.inflate(R.layout.row_delete_item, null);
-        final AlertDialog alertDialog = new AlertDialog.Builder(this.getContext()).create();
-        alertDialog.setTitle(getString(R.string.title_activity_delete_equipment));
-        alertDialog.setCancelable(false);
-
-        final TextView deleteMessage = view.findViewById(R.id.tv_delete_item);
-        deleteMessage.setText(String.format(getString(R.string.inspector_delete_msg), inspector.toString()));
-
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.action_accept), (dialog, which) -> {
-            inspectorVM.deleteInspector(inspector, new OnAsyncEventListener() {
-                @Override
-                public void onSuccess() {
-                    Toast toast = Toast.makeText(getActivity(), "Inspector successfully deleted", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                    Toast toast = Toast.makeText(getActivity(), "There was an error", Toast.LENGTH_LONG);
-                    toast.show();
-                }
-            });
-        });
-
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.action_cancel), (dialog, which) -> alertDialog.dismiss());
-        alertDialog.setView(view);
-        alertDialog.show();
     }
 }

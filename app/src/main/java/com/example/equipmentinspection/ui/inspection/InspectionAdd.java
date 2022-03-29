@@ -1,11 +1,7 @@
 package com.example.equipmentinspection.ui.inspection;
 
-import static java.security.AccessController.getContext;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.MediatorLiveData;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -19,11 +15,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.adapter.RecyclerAdapter;
-import com.example.equipmentinspection.adapter.SpinnerAdapter;
-import com.example.equipmentinspection.database.async.EquipmentCreate;
 import com.example.equipmentinspection.database.async.EquipmentUpdate;
 import com.example.equipmentinspection.database.async.InspectionCreate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
@@ -39,13 +31,10 @@ import com.example.equipmentinspection.viewmodel.InspectorListViewModel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Observable;
-import java.util.Observer;
 
 public class InspectionAdd extends AppCompatActivity {
 
