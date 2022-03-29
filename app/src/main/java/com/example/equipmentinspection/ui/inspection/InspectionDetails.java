@@ -73,15 +73,13 @@ public class InspectionDetails extends AppCompatActivity {
         setSupportActionBar(inspectionToolbar);
         setTitle("Inspection Details");
 
-        view();
+        InspectorDetailsViewModel.Factory factory = new InspectorDetailsViewModel.Factory(getApplication(), inspectorId);
+        inspectorVM = factory.create(InspectorDetailsViewModel.class);
 
-        setupListeners();
-    }
-
-    @Override
-    protected void onStart() {
-
-        super.onStart();
+        inspectorVM.getInspector().observe(this, inspectorEntity -> {
+            inspector = inspectorEntity;
+            updateInspectorName();
+        });
 
         InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspectionId);
         inspectionVM = inspectionVMFactory.create(InspectionDetailsViewModel.class);
@@ -91,15 +89,10 @@ public class InspectionDetails extends AppCompatActivity {
             updateContent();
         });
 
-        InspectorDetailsViewModel.Factory factory = new InspectorDetailsViewModel.Factory(getApplication(), inspectorId);
-        inspectorVM = factory.create(InspectorDetailsViewModel.class);
+        view();
 
-        inspectorVM.getInspector().observe(this, inspectorEntity -> {
-            inspector = inspectorEntity;
-            updateInspectorName();
-        });
+        setupListeners();
     }
-
 
     //Setup onclick listeners for buttons
     private void setupListeners() {
@@ -148,6 +141,7 @@ public class InspectionDetails extends AppCompatActivity {
     private void updateInspectorName(){
         InspectorEntity inspec = inspector;
             if(inspec != null) {
+                InspectionEntity ins = inspection;
                 inspectionInspector.setText(inspec.toString());
                 checkInspector(inspec);
             }
