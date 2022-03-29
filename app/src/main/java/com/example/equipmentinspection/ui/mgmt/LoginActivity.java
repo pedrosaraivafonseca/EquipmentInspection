@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
@@ -24,20 +25,21 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String PREFS_USER = "user";
     private EditText login_email_field;
     private EditText login_password_field;
-    Button login_login_button;
-    Button login_register_button;
-
+    private Button login_login_button;
+    private Button login_register_button;
     private InspectorRepository inspectorRepository;
+
+    // Build the UI
+    // Setup buttons
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        inspectorRepository = ((BaseApp) getApplicationContext()).getInspectorRepository();
-
+        
         login_email_field = (EditText) findViewById(R.id.login_email);
         login_password_field = (EditText) findViewById(R.id.login_password);
         login_login_button = (Button) findViewById(R.id.login_login_button);
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setupListeners();
     }
 
+    //Buttons listener
     private void setupListeners() {
         login_register_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,19 +66,20 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Check credentials
     private void attemptLogin(String email, String password) {
       InspectorRepository  repo = InspectorRepository.getInstance();
 
       repo.getInspectorByLogin(email, password, getApplication()).observe(LoginActivity.this, inspectorEntity -> {
           if (inspectorEntity != null) {
               if (inspectorEntity.getPasswordInspector().equals(password)) {
-                  SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-                  editor.putString(MainActivity.PREFS_USER, inspectorEntity.getEmailInspector());
+                  SharedPreferences.Editor editor = getSharedPreferences(PREFS_USER, 0).edit();
+                  editor.putString("email", email);
+                  editor.putString("logged", "true");
                   editor.apply();
-
                   Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                  intent.putExtra("logged","true");
                   startActivity(intent);
+
               } else {
                   login_password_field.setError(getString(R.string.error_incorrect_password));
                   login_password_field.requestFocus();

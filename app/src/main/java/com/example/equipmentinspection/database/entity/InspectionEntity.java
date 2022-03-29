@@ -1,15 +1,9 @@
 package com.example.equipmentinspection.database.entity;
 
-import android.app.Activity;
-import android.content.Context;
-
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
-
-import com.example.equipmentinspection.database.dao.EquipmentDao;
-import com.example.equipmentinspection.database.repository.EquipmentRepository;
 
 @Entity(tableName = "inspections",
         foreignKeys = {
@@ -49,6 +43,14 @@ public class InspectionEntity {
     private String dateInspection;
     private String statusInspection;
 
+    public String getNameEquipmentInspection() {
+        return nameEquipmentInspection;
+    }
+
+    public void setNameEquipmentInspection(String nameEquipmentInspection) {
+        this.nameEquipmentInspection = nameEquipmentInspection;
+    }
+
     public Long getIdInspection() {
         return idInspection;
     }
@@ -57,13 +59,6 @@ public class InspectionEntity {
         this.idInspection = idInspection;
     }
 
-    public void setNameEquipmentInspection(String nameEquipmentInspection) {
-        this.nameEquipmentInspection = nameEquipmentInspection;
-    }
-
-    public String getNameEquipmentInspection() {
-        return nameEquipmentInspection;
-    }
 
     public Long getIdInspectorInspection() {
         return idInspectorInspection;
@@ -98,11 +93,6 @@ public class InspectionEntity {
     }
 
     @Override
-    public String toString(){
-       return nameEquipmentInspection + " Inspection on " + dateInspection;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;
@@ -111,5 +101,8 @@ public class InspectionEntity {
         return o.getIdInspection().equals(this.getIdInspection());
     }
 
-
+    @Override
+    public String toString(){
+        return nameEquipmentInspection + " Inspection on " + dateInspection;
+    }
 }

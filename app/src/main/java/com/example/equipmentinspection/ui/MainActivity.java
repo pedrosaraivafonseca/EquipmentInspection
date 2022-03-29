@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.ui.equipment.EquipmentFragment;
@@ -30,17 +31,18 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PREFS_NAME = "SharedPrefs";
-    public static final String PREFS_USER = "LoggedIn";
+    public static final String PREFS_USER = LoginActivity.PREFS_USER;
 
     private Toolbar mainToolbar;
     private BottomNavigationView mainBottomNavigation;
     private FrameLayout mainFrame;
-
     private EquipmentFragment equipmentFragment;
     private InspectorFragment inspectorFragment;
     private InspectionFragment inspectionFragment;
 
+    //Build UI
+    //Check display mode
+    //Create navigation menu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,14 +55,6 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         setContentView(R.layout.activity_main);
-
-//        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-//        final boolean isDark = sharedPreferences.getBoolean("idDark", true);
-//        if (isDark) {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//        } else {
-//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//        }
 
 
         mainFrame = (FrameLayout) findViewById(R.id.main_frame);
@@ -75,6 +69,22 @@ public class MainActivity extends AppCompatActivity {
         inspectionFragment = new InspectionFragment();
 
         setFragment(equipmentFragment);
+
+
+        Intent intent = getIntent();
+        if (intent == null){
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            if(bundle == null){}
+            else {
+                String frag = bundle.getString("frag");
+                if (frag == null) {
+                } else {
+                    if (frag.equals("inspection"))
+                        setFragment(inspectionFragment);
+                }
+            }
+        }
 
         mainBottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -97,28 +107,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Fragment selected by user
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     }
 
+    //Check if there is an active session to redirect to login page
     @Override
     protected void onStart() {
         super.onStart();
-        Intent intent = getIntent();
-        if(intent.getExtras() == null){
-            goToLogin();
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_USER, MODE_PRIVATE);
+        if(sharedPreferences.getString("logged", "").equals("true")){
+
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
+    //Create top menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_top_menu, menu);
         return true;
     }
 
+    //Options items listeners
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -135,20 +151,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void goToLogin() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
 
-    }
-
+    //Logout method
     public void logout() {
-        SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_USER, 0).edit();
-        editor.remove(MainActivity.PREFS_USER);
+        SharedPreferences.Editor editor = getSharedPreferences(LoginActivity.PREFS_USER, 0).edit();
+        editor.remove("logged");
         editor.apply();
-        SharedPreferences.Editor editor2 = getSharedPreferences(SettingsActivity.DARK_MODE, 0).edit();
-        editor2.remove(SettingsActivity.DARK_MODE);
-        editor2.apply();
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

@@ -3,22 +3,32 @@ package com.example.equipmentinspection.ui.equipment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.adapter.RecyclerAdapter;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
+import com.example.equipmentinspection.database.repository.EquipmentRepository;
+import com.example.equipmentinspection.database.repository.InspectorRepository;
+import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.util.RecyclerViewItemClickListener;
 import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
+import com.example.equipmentinspection.viewmodel.InspectorListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,35 +40,32 @@ import java.util.List;
  */
 public class EquipmentFragment extends Fragment {
 
-    private List<EquipmentEntity> equipmentEntityList;
-    private RecyclerAdapter<EquipmentEntity> recyclerAdapter;
-    private EquipmentListViewModel equipmentListViewModel;
+    private List<EquipmentEntity> equipments;
+    private RecyclerAdapter<EquipmentEntity> adapter;
+    private EquipmentListViewModel equipmentVM;
     FloatingActionButton addButton;
-
+    RecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        RecyclerView recyclerView = getActivity().findViewById(R.id.equipment_recyclerView);
-
     }
 
+    //Create the view list via RecyclerView
+    //Get the equipments from LiveData
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_equipment, container, false);
 
-//        Fragment fragment = new EquipmentDetails();
-//        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-//        Bundle bundle = new Bundle();
+        recyclerView = (RecyclerView) view.findViewById(R.id.equipment_recyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
 
-//        ArrayList<String> list = new ArrayList<>();
-//        list.add("AAA");
-//        list.add("AAA");
-//        list.add("AAA");
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, list);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                LinearLayoutManager.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
         addButton = (FloatingActionButton) view.findViewById(R.id.equipmentfrag_add_buttom);
 
@@ -70,10 +77,8 @@ public class EquipmentFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.equipment_recyclerView);
-        recyclerView.setAdapter(recyclerAdapter);
-
-        recyclerAdapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
+        equipments = new ArrayList<>();
+        adapter = new RecyclerAdapter<>(new RecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(getContext(), EquipmentDetails.class);
@@ -81,10 +86,27 @@ public class EquipmentFragment extends Fragment {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("equipmentId", equipmentEntityList.get(position).getIdEquipment());
+                intent.putExtra("equipmentId", equipments.get(position).getIdEquipment());
                 startActivity(intent);
             }
+
+            @Override
+            public void onItemLongClick(View v, int position) {
+
+            }
         });
+
+        EquipmentListViewModel.Factory factory = new EquipmentListViewModel.Factory(
+                getActivity().getApplication());
+        equipmentVM = new EquipmentListViewModel(this.getActivity().getApplication(), EquipmentRepository.getInstance());
+        equipmentVM.getEquipments().observe(getViewLifecycleOwner(), equipmentEntities -> {
+            if (equipmentEntities != null) {
+                equipments = equipmentEntities;
+                adapter.setData(equipments);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
         return view;
     }
 }

@@ -3,6 +3,8 @@ package com.example.equipmentinspection;
 import android.app.Application;
 
 import com.example.equipmentinspection.database.AppDatabase;
+import com.example.equipmentinspection.database.repository.EquipmentRepository;
+import com.example.equipmentinspection.database.repository.InspectionRepository;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
 
 /**
@@ -23,13 +25,13 @@ public class BaseApp extends Application {
     public InspectorRepository getInspectorRepository() {
         return InspectorRepository.getInstance();
     }
-//
-//    public EquipmentRepository getEquipmentRepository() {
-//        return EquipmentRepository.getInstance();
-//    }
-//
-//
-//    public InspectionRepository getInspectionRepository() {
-//        return InspectionRepository.getInstance();
-//    }
+
+    public EquipmentRepository getEquipmentRepository() {
+        return EquipmentRepository.getInstance();
+    }
+
+
+    public InspectionRepository getInspectionRepository() {
+        return InspectionRepository.getInstance();
+    }
 }

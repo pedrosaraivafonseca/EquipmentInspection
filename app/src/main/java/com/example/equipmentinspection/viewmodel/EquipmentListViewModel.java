@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.repository.EquipmentRepository;
+import com.example.equipmentinspection.util.OnAsyncEventListener;
 
 public class EquipmentListViewModel extends AndroidViewModel {
 
@@ -67,5 +68,9 @@ public class EquipmentListViewModel extends AndroidViewModel {
      */
     public LiveData<List<EquipmentEntity>> getEquipments() {
         return observableEquipments;
+    }
+
+    public void deleteEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
+        repository.delete(equipment, callback, applicationContext);
     }
 }

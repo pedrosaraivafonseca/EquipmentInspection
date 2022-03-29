@@ -1,14 +1,10 @@
 package com.example.equipmentinspection.ui.inspection;
 
-import static java.security.AccessController.getContext;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.MediatorLiveData;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,41 +13,72 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.adapter.SpinnerAdapter;
+import com.example.equipmentinspection.database.async.EquipmentUpdate;
+import com.example.equipmentinspection.database.async.InspectionCreate;
+import com.example.equipmentinspection.database.entity.EquipmentEntity;
+import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
+import com.example.equipmentinspection.database.repository.EquipmentRepository;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
+import com.example.equipmentinspection.ui.MainActivity;
+import com.example.equipmentinspection.util.OnAsyncEventListener;
+import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 import com.example.equipmentinspection.viewmodel.InspectorListViewModel;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Observer;
 
 public class InspectionAdd extends AppCompatActivity {
 
-    ImageButton inspectionBackButton;
-    Button inspectionAdd;
+    private List<InspectorEntity> inspectors;
+    private InspectorListViewModel inspectorViewModel;
+
+    private List<EquipmentEntity> equipments;
+    private EquipmentListViewModel equipmentViewModel;
+    private EquipmentEntity equipmentToUpdate;
+    private InspectionEntity inspectionCreated;
+    private String inspectorName;
 
     private EditText inspectionInspectionDate;
     private Spinner inspectionEquipment;
     private Spinner inspectionInspector;
+    ImageButton inspectionBackButton;
     private Toolbar inspectionToolbar;
-
+    private Button inspectionAddButton;
 
     final Calendar myCalendar= Calendar.getInstance();
 
+    //Build the UI, set date picker for date field
+    //Setup spinners for Inspector and Equipment field
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection_add);
 
+        inspectionToolbar = (Toolbar) findViewById(R.id.inspection_toolbar);
+        setSupportActionBar(inspectionToolbar);
+        setTitle("Equipment");
+        setTitle("Inspection");
+
         inspectionEquipment = (Spinner) findViewById(R.id.inspection_equipment_spinner);
         inspectionInspector = (Spinner) findViewById(R.id.inspection_inspector_spinner);
-        inspectionAdd= (Button) findViewById(R.id.inspection_add_button);
+        setupSpinners();
+
+        inspectionBackButton = (ImageButton) findViewById(R.id.inspection_back_button);
+        inspectionBackButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         inspectionInspectionDate = (EditText) findViewById(R.id.inspection_date_text);
         DatePickerDialog.OnDateSetListener inspectionDate = (view, year, month, day) -> {
@@ -60,41 +87,107 @@ public class InspectionAdd extends AppCompatActivity {
             myCalendar.set(Calendar.DAY_OF_MONTH,day);
             updateLabelInspectionDate();
         };
-
         inspectionInspectionDate.setOnClickListener(view -> new DatePickerDialog(this, android.R.style.Theme_Holo_Dialog,
                 inspectionDate,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
-        inspectionBackButton = (ImageButton) findViewById(R.id.equipment_back_button);
-        inspectionToolbar = (Toolbar) findViewById(R.id.equipment_toolbar);
-        setSupportActionBar(inspectionToolbar);
-        setTitle("Inspection");
-        setupListeners();
-        setupSpinners();
+        inspectionAddButton = (Button) findViewById(R.id.inspection_add_button);
+        inspectionAddButton.setOnClickListener(view -> saveChanges(
+                inspectionInspectionDate.getText().toString(),
+                inspectionEquipment.getSelectedItem(),
+                inspectionInspector.getSelectedItem()
+        ));
     }
 
-    private void setupListeners() {
-        inspectionBackButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-    }
-
+    //Update the date field
     private void updateLabelInspectionDate(){
         String myFormat="dd/MM/yyyy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.FRANCE);
         inspectionInspectionDate.setText(dateFormat.format(myCalendar.getTime()));
     }
 
-    private void setupSpinners(){
-        InspectorRepository repoInsp = InspectorRepository.getInstance();
-        List<InspectorEntity> inspectorList = repoInsp.getAllInspector(this).getValue();
+    //Method used to create a new inspection from data gathered by Edittexts
+    // which is checked before being processed
+    //inspection date can't be set as today
+    private void saveChanges(String date, Object equipment1, Object inspector1){
+        //Error Handling
+        if(!checkDate(date)){
+            inspectionInspectionDate.setError(getString(R.string.error_inspection_date));
+            inspectionInspectionDate.requestFocus();
+            return;
+        }
+        InspectorEntity inspector = (InspectorEntity) inspector1;
 
-        ArrayAdapter<InspectorEntity> adapterInspector = new ArrayAdapter<InspectorEntity>(this,
-                android.R.layout.simple_spinner_item, inspectorList);
+        EquipmentEntity equipment = (EquipmentEntity) equipment1;
+
+        InspectionEntity newInspection = new InspectionEntity();
+
+        newInspection.setIdInspectorInspection(inspector.getIdInspector());
+        newInspection.setIdEquipmentInspection(equipment.getIdEquipment());
+        newInspection.setNameEquipmentInspection(equipment.getNameEquipment());
+        newInspection.setDateInspection(date);
+        newInspection.setStatusInspection("To do");
+
+        new InspectionCreate(getApplication(), new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+                inspectionCreated = newInspection;
+                equipmentToUpdate = equipment;
+                inspectorName = inspector.toString();
+                setResponse(true);
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                setResponse(false);
+            }
+        }).execute(newInspection);
+    }
+
+    //Use by saveChanges() to determine if the operation was successful or not
+    private void setResponse(boolean response) {
+        if (response) {
+            updateEquipment(equipmentToUpdate);
+
+            Toast toast = Toast.makeText(this, "Inspection successfully created", Toast.LENGTH_SHORT);
+            toast.show();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("frag", "inspection");
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        } else {
+            inspectionInspectionDate.setError(getString(R.string.generic_error));
+            inspectionInspectionDate.requestFocus();
+        }
+    }
+
+    //Setup both spinners
+    private void setupSpinners(){
+        setupInspectorSpinner();
+        setupEquipmentSpinner();
+    }
+
+    //Populate the inspector spinner with Inspectors from the DB
+    private void setupInspectorSpinner(){
+        inspectors = new ArrayList<>();
+
+        ArrayAdapter<InspectorEntity> adapterInspector = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, inspectors);
         adapterInspector.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        inspectorViewModel = new InspectorListViewModel(this.getApplication(), InspectorRepository.getInstance());
+
+        inspectorViewModel.getInspector().observe(this, inspectorEntities -> {
+            if(inspectorEntities != null){
+                inspectors = inspectorEntities;
+                adapterInspector.addAll(inspectors);
+                adapterInspector.notifyDataSetChanged();
+            }
+        });
 
         inspectionInspector.setAdapter(adapterInspector);
 
@@ -109,5 +202,83 @@ public class InspectionAdd extends AppCompatActivity {
 
             }
         });
+    }
+
+    //Populate the equipment spinner with Equipments from the DB
+    private void setupEquipmentSpinner(){
+        equipments = new ArrayList<>();
+
+        ArrayAdapter<EquipmentEntity> adapterEquipment = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, equipments);
+        adapterEquipment.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        equipmentViewModel = new EquipmentListViewModel(this.getApplication(), EquipmentRepository.getInstance());
+
+        equipmentViewModel.getEquipments().observe(this, equipmentEntities -> {
+            if(equipmentEntities != null){
+                equipments = equipmentEntities;
+                adapterEquipment.addAll(equipments);
+                adapterEquipment.notifyDataSetChanged();
+            }
+        });
+
+        inspectionEquipment.setAdapter(adapterEquipment);
+
+        inspectionEquipment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                EquipmentEntity equipment = (EquipmentEntity) parent.getSelectedItem();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    //Check that the inspection date is correct
+    private boolean checkDate(String stringDate1)  {
+        if(stringDate1.isEmpty()){
+            return false;
+        }
+        Date date1 = null;
+        Date today = new Date();
+        String todayString;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        todayString = formatter.format(today);
+
+        try {
+            date1 = formatter.parse(stringDate1);
+            today = formatter.parse(todayString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if(date1.equals(today)){
+            return false;
+        }
+        return true;
+    }
+
+    //Update the equipment that is set to be inspected
+    //Fields NextInspectionDate and Inspector
+    private void updateEquipment(EquipmentEntity equipment){
+        equipment.setStatusEquipment("To be inspected");
+        equipment.setNextInspectionDateEquipment(inspectionCreated.getDateInspection());
+        equipment.setLastInspectorEquipment(inspectorName);
+
+        new EquipmentUpdate(this, new OnAsyncEventListener() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        }).execute(equipment);
     }
 }

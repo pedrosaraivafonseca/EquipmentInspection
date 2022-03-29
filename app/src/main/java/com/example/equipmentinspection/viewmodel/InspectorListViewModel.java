@@ -12,8 +12,10 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
+import com.example.equipmentinspection.util.OnAsyncEventListener;
 
 public class InspectorListViewModel extends AndroidViewModel {
 
@@ -67,5 +69,9 @@ public class InspectorListViewModel extends AndroidViewModel {
      */
     public LiveData<List<InspectorEntity>> getInspector() {
         return observableInspectors;
+    }
+
+    public void deleteInspector(InspectorEntity inspector, OnAsyncEventListener callback) {
+        repository.delete(inspector, callback, applicationContext);
     }
 }

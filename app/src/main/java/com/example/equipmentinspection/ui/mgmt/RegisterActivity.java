@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -18,15 +19,18 @@ import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
+
     private EditText register_email;
     private EditText register_password;
     private EditText register_lastname;
     private EditText register_firstname;
     private EditText register_password_retype;
 
-    Button register_register_button;
+    private Button register_register_button;
+    private Button register_login_button;
 
-
+    //Build UI
+    //Buttons listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,17 @@ public class RegisterActivity extends AppCompatActivity {
         register_lastname = findViewById(R.id.register_lastname);
         register_firstname = findViewById(R.id.register_firstname);
         register_register_button = findViewById(R.id.register_register_button);
+
+        register_login_button = findViewById(R.id.register_login_button);
+
+        register_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         register_register_button.setOnClickListener(view -> saveChanges(
                 register_email.getText().toString(),
                 register_firstname.getText().toString(),
@@ -47,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         ));
     }
 
+    //Create new inspector with data given
     private void saveChanges(String email, String firstname, String lastname, String password1, String password2){
         if(!password1.equals(password2)){
             register_password.setError(getString(R.string.error_password_retype));
@@ -73,8 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
         new InspectorCreate(getApplication(), new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
-                SharedPreferences.Editor editor = getSharedPreferences(MainActivity.PREFS_NAME, 0).edit();
-                editor.putString(MainActivity.PREFS_USER, inspector.getEmailInspector());
+                SharedPreferences.Editor editor = getSharedPreferences(LoginActivity.PREFS_USER, 0).edit();
+                editor.putString(LoginActivity.PREFS_USER, inspector.getEmailInspector());
                 editor.apply();
 
                 setResponse(true);
@@ -87,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
         }).execute(inspector);
     }
 
+    //Check if account can be created
     private void setResponse(Boolean response) {
         if (response) {
             Toast toast = Toast.makeText(RegisterActivity.this, "Account successfully created", Toast.LENGTH_SHORT);

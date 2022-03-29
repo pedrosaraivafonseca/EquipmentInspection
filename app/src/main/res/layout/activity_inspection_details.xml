@@ -39,6 +39,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="@string/inspection_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/inspection_validate_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/inspection_validate_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/inspection_validate_text"
         app:layout_constraintBottom_toTopOf="@+id/inspection_delete_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -56,6 +67,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/inspection_details_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -82,10 +94,10 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inspection_nextInspectionDate"
+                android:id="@+id/inspection_equipmentName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/inspection_nextInspectionDate_hint"
+                android:hint="@string/inspection_equipmentName_hint"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 

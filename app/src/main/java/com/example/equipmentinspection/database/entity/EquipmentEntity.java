@@ -112,16 +112,16 @@ public class EquipmentEntity {
     }
 
     @Override
-    public String toString(){
-        return nameEquipment;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj == this) return true;
         if (!(obj instanceof EquipmentEntity)) return false;
         EquipmentEntity o = (EquipmentEntity) obj;
         return o.getIdEquipment().equals(this.getIdEquipment());
+    }
+
+    @Override
+    public String toString(){
+        return nameEquipment;
     }
 }

@@ -7,4 +7,5 @@
     android:text="TextView"
     android:textSize="25sp"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    android:longClickable="true"
     />
