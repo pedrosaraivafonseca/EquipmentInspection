@@ -28,9 +28,12 @@ public class LoginActivity extends AppCompatActivity {
     public static final String PREFS_USER = "user";
     private EditText login_email_field;
     private EditText login_password_field;
-    Button login_login_button;
-    Button login_register_button;
+    private Button login_login_button;
+    private Button login_register_button;
     private InspectorRepository inspectorRepository;
+
+    // Build the UI
+    // Setup buttons
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setupListeners();
     }
 
+    //Buttons listener
     private void setupListeners() {
         login_register_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Check credentials
     private void attemptLogin(String email, String password) {
       InspectorRepository  repo = InspectorRepository.getInstance();
 

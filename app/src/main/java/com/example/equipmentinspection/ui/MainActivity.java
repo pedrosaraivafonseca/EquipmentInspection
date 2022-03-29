@@ -31,18 +31,18 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PREFS_NAME = "SharedPrefs";
     public static final String PREFS_USER = LoginActivity.PREFS_USER;
-    public static final boolean PREFS_SESSION = false;
 
     private Toolbar mainToolbar;
     private BottomNavigationView mainBottomNavigation;
     private FrameLayout mainFrame;
-
     private EquipmentFragment equipmentFragment;
     private InspectorFragment inspectorFragment;
     private InspectionFragment inspectionFragment;
 
+    //Build UI
+    //Check display mode
+    //Create navigation menu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,13 +91,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Fragment selected by user
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     }
 
+    //Check if there is an active session to redirect to login page
     @Override
     protected void onStart() {
         super.onStart();
@@ -108,18 +109,16 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
-//        Intent intent = getIntent();
-//        if(intent.getExtras() == null){
-//            goToLogin();
-//        }
     }
 
+    //Create top menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main_top_menu, menu);
         return true;
     }
 
+    //Options items listeners
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -136,20 +135,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void goToLogin() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
 
-    }
-
+    //Logout method
     public void logout() {
         SharedPreferences.Editor editor = getSharedPreferences(LoginActivity.PREFS_USER, 0).edit();
         editor.remove("logged");
         editor.apply();
-//        SharedPreferences.Editor editor2 = getSharedPreferences(SettingsActivity.DARK_MODE, 0).edit();
-//        editor2.remove(SettingsActivity.DARK_MODE);
-//        editor2.apply();
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

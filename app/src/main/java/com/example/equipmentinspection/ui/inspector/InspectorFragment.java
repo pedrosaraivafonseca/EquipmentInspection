@@ -44,11 +44,14 @@ public class InspectorFragment extends Fragment {
     private InspectorListViewModel inspectorVM;
     RecyclerView recyclerView;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    //Create the view list via RecyclerView
+    //Get the inspector from LiveData
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

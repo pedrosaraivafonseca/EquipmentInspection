@@ -19,15 +19,18 @@ import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
+
     private EditText register_email;
     private EditText register_password;
     private EditText register_lastname;
     private EditText register_firstname;
     private EditText register_password_retype;
 
-    Button register_register_button;
-    Button register_login_button;
+    private Button register_register_button;
+    private Button register_login_button;
 
+    //Build UI
+    //Buttons listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         ));
     }
 
+    //Create new inspector with data given
     private void saveChanges(String email, String firstname, String lastname, String password1, String password2){
         if(!password1.equals(password2)){
             register_password.setError(getString(R.string.error_password_retype));
@@ -99,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
         }).execute(inspector);
     }
 
+    //Check if account can be created
     private void setResponse(Boolean response) {
         if (response) {
             Toast toast = Toast.makeText(RegisterActivity.this, "Account successfully created", Toast.LENGTH_SHORT);

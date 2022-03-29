@@ -24,10 +24,12 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String DARK_MODE = "isDark";
 
     private Toolbar inspectionToolbar;
-    ImageButton inspectionBackButton;
-    Button darkMode;
-    Button lightMode;
+    private ImageButton inspectionBackButton;
+    private Button darkMode;
+    private Button lightMode;
 
+    //Build UI
+    //Buttons listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

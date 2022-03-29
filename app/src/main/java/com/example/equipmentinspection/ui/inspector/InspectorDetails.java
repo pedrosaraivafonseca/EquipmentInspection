@@ -44,10 +44,12 @@ public class InspectorDetails extends AppCompatActivity {
     private Button inspectorDelete;
     private Boolean isEditable;
     private Button inspector_password_button;
-    private String m_Text ="";
 
     private static String mail;
 
+    //Build UI
+    //Setup buttons
+    //Setup observe to retrieve data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,7 @@ public class InspectorDetails extends AppCompatActivity {
 
     }
 
+    //Buttons listeners
     private void setupListeners() {
         inspectorBackButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -114,6 +117,7 @@ public class InspectorDetails extends AppCompatActivity {
         });
     }
 
+    //Alert to check if user knows his password
     private void checkPassword() {
             AlertDialog.Builder builder=new AlertDialog.Builder(this);
             builder.setTitle("Introduce actual password")
@@ -156,6 +160,7 @@ public class InspectorDetails extends AppCompatActivity {
             builder.show();
         }
 
+        //Alert to create new password
     private void setNewPassword() {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
         builder.setTitle("Introduce new password");
@@ -208,7 +213,7 @@ public class InspectorDetails extends AppCompatActivity {
     }
 
 
-
+    //Alert to delete account
     private AlertDialog createDeleteDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle("Delete")
@@ -250,6 +255,7 @@ public class InspectorDetails extends AppCompatActivity {
         return alertDialog;
     }
 
+    //Display the field that the user is allowed to change
     private void goEdit() {
         if (!isEditable){
             LinearLayout linearLayout = findViewById(R.id.inspector_details_layout);
@@ -290,6 +296,7 @@ public class InspectorDetails extends AppCompatActivity {
         isEditable = !isEditable;
     }
 
+    //Save the changes made by edit
     private void saveChanges(String inspecFirstName, String inspecLastName, String inspectMail, String inspectPass) {
         if (inspecFirstName.isEmpty()) {
             inspectorFirstName.setError(getString(R.string.error_empty_field));
@@ -337,6 +344,7 @@ public class InspectorDetails extends AppCompatActivity {
         }).execute(inspector);
     }
 
+    //Check if user corresponds to the user selected
     private void checkEdit() {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFS_USER, 0);
         String userMail = sharedPreferences.getString("email", "");
@@ -353,6 +361,7 @@ public class InspectorDetails extends AppCompatActivity {
         }
     }
 
+    //Setup field UI
     private void view() {
         isEditable = false;
         inspectorFirstName = (EditText) findViewById(R.id.inspector_firstName);
@@ -373,7 +382,7 @@ public class InspectorDetails extends AppCompatActivity {
         inspectorPassword.setVisibility(View.GONE);
     }
 
-
+    //Get data from livedata
     private void updateContent() {
         if (inspector!=null){
             inspectorFirstName.setText(inspector.getFirstNameInspector());
