@@ -154,6 +154,9 @@ public class InspectionAdd extends AppCompatActivity {
             toast.show();
 
             Intent intent = new Intent(this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("frag", "inspection");
+            intent.putExtras(bundle);
             startActivity(intent);
 
         } else {

@@ -70,6 +70,19 @@ public class MainActivity extends AppCompatActivity {
 
         setFragment(equipmentFragment);
 
+
+        Intent intent = getIntent();
+        if (intent == null){
+        } else {
+            Bundle bundle = getIntent().getExtras();
+            String frag = bundle.getString("frag");
+            if (frag == null) {
+            } else {
+                if (frag.equals("inspection"))
+                    setFragment(inspectionFragment);
+            }
+        }
+
         mainBottomNavigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
