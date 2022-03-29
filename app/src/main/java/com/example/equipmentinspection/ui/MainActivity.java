@@ -75,11 +75,14 @@ public class MainActivity extends AppCompatActivity {
         if (intent == null){
         } else {
             Bundle bundle = getIntent().getExtras();
-            String frag = bundle.getString("frag");
-            if (frag == null) {
-            } else {
-                if (frag.equals("inspection"))
-                    setFragment(inspectionFragment);
+            if(bundle == null){}
+            else {
+                String frag = bundle.getString("frag");
+                if (frag == null) {
+                } else {
+                    if (frag.equals("inspection"))
+                        setFragment(inspectionFragment);
+                }
             }
         }
 
