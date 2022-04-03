@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.database.async.EquipmentUpdate;
 import com.example.equipmentinspection.database.async.InspectionUpdate;
+import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.ui.MainActivity;
@@ -47,10 +48,13 @@ public class InspectionDetails extends AppCompatActivity {
     private boolean isEditable;
     InspectorDetailsViewModel inspectorVM;
     InspectorEntity inspector;
+    EquipmentEntity equipment;
+    EquipmentDetailsViewModel equipmentVM;
     InspectionDetailsViewModel inspectionVM;
     final Calendar myCalendar= Calendar.getInstance();
     Long inspectionId;
     Long inspectorId;
+    Long equipmentId;
 
     //Build the UI, get the intents from fragment
     @Override
@@ -61,6 +65,7 @@ public class InspectionDetails extends AppCompatActivity {
         Intent intent = getIntent();
         inspectionId = intent.getLongExtra("inspectionId", 0);
         inspectorId = intent.getLongExtra("inspectorId", 0);
+        equipmentId = intent.getLongExtra("equipmentId", 0);
 
 
         inspectionBackButton = (ImageButton) findViewById(R.id.inspection_back_button);
@@ -87,6 +92,13 @@ public class InspectionDetails extends AppCompatActivity {
         inspectionVM.getInspection().observe(this, inspectionEntity -> {
             inspection = inspectionEntity;
             updateContent();
+        });
+
+        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipmentId);
+        equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
+
+        equipmentVM.getEquipment().observe(this, equipmentEntity -> {
+            equipment = equipmentEntity;
         });
 
         view();
@@ -272,6 +284,23 @@ public class InspectionDetails extends AppCompatActivity {
                         InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspection.getIdInspection());
                         InspectionDetailsViewModel inspectionVM = inspectionVMFactory.create(InspectionDetailsViewModel.class);
                         inspection.setStatusInspection("Done");
+
+                        equipment.setLastInspectionDateEquipment(inspection.getDateInspection());
+                        equipment.setStatusEquipment("Inspected");
+                        equipment.setLastInspectorEquipment(inspector.toString());
+
+                        equipmentVM.updateEquipment(equipment, new OnAsyncEventListener() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+
+                            }
+                        });
+
                         inspectionVM.updateInspection(inspection, new OnAsyncEventListener() {
                             @Override
                             public void onSuccess() {

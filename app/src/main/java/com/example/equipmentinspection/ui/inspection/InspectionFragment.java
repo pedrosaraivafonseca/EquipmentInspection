@@ -86,6 +86,7 @@ public class InspectionFragment extends Fragment {
                 );
                 intent.putExtra("inspectionId", inspections.get(position).getIdInspection());
                 intent.putExtra("inspectorId", inspections.get(position).getIdInspectorInspection());
+                intent.putExtra("equipmentId", inspections.get(position).getIdEquipmentInspection());
                 startActivity(intent);
             }
 

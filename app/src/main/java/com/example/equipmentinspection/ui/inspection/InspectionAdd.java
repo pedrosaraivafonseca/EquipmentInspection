@@ -267,7 +267,6 @@ public class InspectionAdd extends AppCompatActivity {
     private void updateEquipment(EquipmentEntity equipment){
         equipment.setStatusEquipment("To be inspected");
         equipment.setNextInspectionDateEquipment(inspectionCreated.getDateInspection());
-        equipment.setLastInspectorEquipment(inspectorName);
 
         new EquipmentUpdate(this, new OnAsyncEventListener() {
             @Override
