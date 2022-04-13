@@ -73,14 +73,14 @@ public class EquipmentDetailsViewModel extends AndroidViewModel {
     }
 
     public void createEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
-        repository.insert(equipment, callback, applicationContext);
+        repository.insert(equipment, callback);
     }
 
     public void updateEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
-        repository.update(equipment, callback, applicationContext);
+        repository.update(equipment, callback);
     }
 
     public void deleteEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
-        repository.delete(equipment, callback, applicationContext);
+        repository.delete(equipment, callback);
     }
 }

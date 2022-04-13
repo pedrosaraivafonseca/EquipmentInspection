@@ -8,8 +8,13 @@ import com.example.equipmentinspection.database.AppDatabase;
 import com.example.equipmentinspection.database.async.EquipmentDelete;
 import com.example.equipmentinspection.database.async.EquipmentUpdate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
+import com.example.equipmentinspection.database.firebase.EquipmentListLiveData;
+import com.example.equipmentinspection.database.firebase.EquipmentLiveData;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.database.async.EquipmentCreate;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -30,23 +35,64 @@ public class EquipmentRepository {
         return instance;
     }
 
-    public LiveData<EquipmentEntity> getEquipment(final Long id, Context context) {
-        return AppDatabase.getInstance(context).equipmentDao().getById(id);
+    public LiveData<EquipmentEntity> getEquipment(final String id) {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("equipment")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(id);
+        return new EquipmentLiveData(reference);
     }
 
-    public LiveData<List<EquipmentEntity>> getAllEquipment(Context context) {
-        return AppDatabase.getInstance(context).equipmentDao().getAll();
+    public LiveData<List<EquipmentEntity>> getAllEquipment() {
+        DatabaseReference reference = FirebaseDatabase.getInstance()
+                .getReference("equipments");
+        return new EquipmentListLiveData(reference);
     }
 
-    public void insert(final EquipmentEntity equipment, OnAsyncEventListener callback, Context context) {
-        new EquipmentCreate(context, callback).execute(equipment);
+    public void insert(final EquipmentEntity equipment, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("equipment")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(equipment, (databaseError, databaseReference) -> {
+                    if (databaseError != null){
+                        callback.onFailure(databaseError.toException());
+                        FirebaseAuth.getInstance().getCurrentUser().delete()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()){
+                                    callback.onFailure(null);
+                                } else {
+                                        callback.onFailure(task.getException());
+                                    }
+                        });
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void update(final EquipmentEntity equipment, OnAsyncEventListener callback, Context context) {
-        new EquipmentUpdate(context, callback).execute(equipment);
+    public void update(final EquipmentEntity equipment, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("equipment")
+                .child(equipment.getIdEquipmentString())
+                .updateChildren(equipment.map(), (databaseError, databaseReference) -> {
+                    if (databaseError != null){
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void delete(final EquipmentEntity equipment, OnAsyncEventListener callback, Context context) {
-        new EquipmentDelete(context, callback).execute(equipment);
+    public void delete(final EquipmentEntity equipment, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("equipment")
+                .child(equipment.getIdEquipmentString())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError!=null){
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 }

@@ -15,8 +15,14 @@ import java.util.List;
 public class EquipmentListLiveData extends LiveData<List<EquipmentEntity>> {
 
     private final DatabaseReference reference;
-    private final String equipment;
-    private final ValueEventListener valueEventListener = new ValueEventListener() {
+    private final MyValueEventListener listener = new MyValueEventListener();
+
+    public EquipmentListLiveData(DatabaseReference reference) {
+        this.reference = reference;
+    }
+
+    private class MyValueEventListener implements ValueEventListener{
+
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             setValue(toEquipment(snapshot));
@@ -26,23 +32,21 @@ public class EquipmentListLiveData extends LiveData<List<EquipmentEntity>> {
         public void onCancelled(@NonNull DatabaseError error) {
 
         }
-    };
+    }
 
     private List<EquipmentEntity> toEquipment(DataSnapshot snapshot) {
         List<EquipmentEntity> equipments = new ArrayList<>();
-        for (DataSnapshot childSnapchot : snapshot.getChildren()){
-            EquipmentEntity equipmentEntity = childSnapchot.getValue(EquipmentEntity.class);
-            equipmentEntity.setIdEquipmentString(childSnapchot.getKey());
+        for (DataSnapshot childSnapshot : snapshot.getChildren()){
+            EquipmentEntity equipmentEntity = childSnapshot.getValue(EquipmentEntity.class);
+            equipmentEntity.setIdEquipmentString(childSnapshot.getKey());
             equipments.add(equipmentEntity);
         }
         return equipments;
     }
 
 
-    public EquipmentListLiveData(DatabaseReference reference, String equipment) {
-        this.reference = reference;
-        this.equipment = equipment;
-    }
+
+
 
 
 }

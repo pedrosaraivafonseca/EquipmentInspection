@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.example.equipmentinspection.database.entity.InspectionEntity;
-import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,18 +15,24 @@ import java.util.List;
 public class InspectionListLiveData extends LiveData<List<InspectionEntity>> {
 
     private final DatabaseReference reference;
-    private final String inspection;
-    private final ValueEventListener valueEventListener = new ValueEventListener() {
+    private final MyValueEventListener listener = new MyValueEventListener();
+
+    public InspectionListLiveData(DatabaseReference reference) {
+        this.reference = reference;
+    }
+
+    private class MyValueEventListener implements ValueEventListener{
+
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-        setValue(toInspection(snapshot));
+            setValue(toInspection(snapshot));
         }
 
         @Override
         public void onCancelled(@NonNull DatabaseError error) {
 
         }
-    };
+    }
 
     private List<InspectionEntity> toInspection(DataSnapshot snapshot) {
         List<InspectionEntity> inspections = new ArrayList<>();
@@ -39,8 +44,5 @@ public class InspectionListLiveData extends LiveData<List<InspectionEntity>> {
         return inspections;
     }
 
-    public InspectionListLiveData(DatabaseReference reference, String inspection) {
-        this.reference = reference;
-        this.inspection = inspection;
-    }
+
 }
