@@ -10,14 +10,15 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 
+import java.util.List;
+
 public class InspectorDetailsViewModel extends AndroidViewModel{
     private InspectorRepository repository;
-
-    private Context applicationContext;
 
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<InspectorEntity> observableInspector;
@@ -27,8 +28,6 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
         super(application);
 
         repository = inspectorRepository;
-
-        applicationContext = application.getApplicationContext();
 
         observableInspector = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
@@ -48,14 +47,14 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
         @NonNull
         private final Application application;
 
-        private final Long idInspector;
+        private final String idInspector;
 
         private final InspectorRepository repository;
 
-        public Factory(@NonNull Application application, Long idInspector) {
+        public Factory(@NonNull Application application, String idInspector) {
             this.application = application;
             this.idInspector = idInspector;
-            repository = InspectorRepository.getInstance();
+            repository = ((BaseApp) application).getInspectorRepository();
         }
 
         @Override
@@ -72,15 +71,14 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
         return observableInspector;
     }
 
-    public void createInspector(InspectorEntity inspector, OnAsyncEventListener callback) {
-        repository.insert(inspector, callback, applicationContext);
-    }
 
     public void updateInspector(InspectorEntity inspector, OnAsyncEventListener callback) {
-        repository.update(inspector, callback, applicationContext);
+        ((BaseApp) getApplication()).getInspectorRepository()
+                .update(inspector, callback);
     }
 
     public void deleteInspector(InspectorEntity inspector, OnAsyncEventListener callback) {
-        repository.delete(inspector, callback, applicationContext);
+        ((BaseApp) getApplication()).getInspectorRepository()
+                .delete(inspector, callback);
     }
 }

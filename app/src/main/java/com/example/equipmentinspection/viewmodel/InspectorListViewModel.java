@@ -12,6 +12,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
@@ -21,8 +22,6 @@ public class InspectorListViewModel extends AndroidViewModel {
 
     private InspectorRepository repository;
 
-    private Context applicationContext;
-
     private final MediatorLiveData<List<InspectorEntity>> observableInspectors;
 
     public InspectorListViewModel(@NonNull Application application, InspectorRepository inspectorRepository) {
@@ -30,13 +29,11 @@ public class InspectorListViewModel extends AndroidViewModel {
 
         repository = inspectorRepository;
 
-        applicationContext = application.getApplicationContext();
-
         observableInspectors = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableInspectors.setValue(null);
 
-        LiveData<List<InspectorEntity>> inspectors = repository.getAllInspector(applicationContext);
+        LiveData<List<InspectorEntity>> inspectors = repository.getAllInspector();
 
         // observe the changes of the entities from the database and forward them
         observableInspectors.addSource(inspectors, observableInspectors::setValue);
@@ -54,7 +51,7 @@ public class InspectorListViewModel extends AndroidViewModel {
 
         public Factory(@NonNull Application application) {
             this.application = application;
-            inspectorRepository = InspectorRepository.getInstance();
+            inspectorRepository = ((BaseApp) application).getInspectorRepository();
         }
 
         @Override
@@ -72,6 +69,7 @@ public class InspectorListViewModel extends AndroidViewModel {
     }
 
     public void deleteInspector(InspectorEntity inspector, OnAsyncEventListener callback) {
-        repository.delete(inspector, callback, applicationContext);
+        ((BaseApp) getApplication()).getInspectorRepository()
+                .delete(inspector, callback);
     }
 }

@@ -12,6 +12,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.repository.EquipmentRepository;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
@@ -20,8 +21,6 @@ public class EquipmentListViewModel extends AndroidViewModel {
 
     private EquipmentRepository repository;
 
-    private Context applicationContext;
-
     private final MediatorLiveData<List<EquipmentEntity>> observableEquipments;
 
     public EquipmentListViewModel(@NonNull Application application, EquipmentRepository equipmentRepository) {
@@ -29,13 +28,11 @@ public class EquipmentListViewModel extends AndroidViewModel {
 
         repository = equipmentRepository;
 
-        applicationContext = application.getApplicationContext();
-
         observableEquipments = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableEquipments.setValue(null);
 
-        LiveData<List<EquipmentEntity>> equipments = repository.getAllEquipment(applicationContext);
+        LiveData<List<EquipmentEntity>> equipments = repository.getAllEquipment();
 
         // observe the changes of the entities from the database and forward them
         observableEquipments.addSource(equipments, observableEquipments::setValue);
@@ -53,7 +50,7 @@ public class EquipmentListViewModel extends AndroidViewModel {
 
         public Factory(@NonNull Application application) {
             this.application = application;
-            equipmentRepository = EquipmentRepository.getInstance();
+            equipmentRepository = ((BaseApp) application).getEquipmentRepository();
         }
 
         @Override
@@ -71,6 +68,7 @@ public class EquipmentListViewModel extends AndroidViewModel {
     }
 
     public void deleteEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
-        repository.delete(equipment, callback, applicationContext);
+        ((BaseApp) getApplication()).getEquipmentRepository()
+                .delete(equipment, callback);
     }
 }

@@ -1,19 +1,10 @@
 package com.example.equipmentinspection.database.repository;
 
-import android.app.Application;
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 
-import com.example.equipmentinspection.BaseApp;
-import com.example.equipmentinspection.database.AppDatabase;
-import com.example.equipmentinspection.database.async.InspectorCreate;
-import com.example.equipmentinspection.database.async.InspectorDelete;
-import com.example.equipmentinspection.database.async.InspectorUpdate;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
-import com.example.equipmentinspection.ui.mgmt.RegisterActivity;
+import com.example.equipmentinspection.database.firebase.InspectorListLiveData;
+import com.example.equipmentinspection.database.firebase.InspectorLiveData;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
@@ -97,18 +88,33 @@ public class InspectorRepository {
     public LiveData<List<InspectorEntity>> getAllInspector() {
         DatabaseReference reference = FirebaseDatabase.getInstance()
                 .getReference("inspectors");
-        return new InspectorLiveData();
+        return new InspectorListLiveData(reference);
     }
 
-    public void insert(final InspectorEntity inspector, OnAsyncEventListener callback, Context context) {
-        new InspectorCreate(context, callback).execute(inspector);
+
+    public void update(final InspectorEntity inspector, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("inspector")
+                .child(inspector.getIdInspector())
+                .updateChildren(inspector.map(), (databadeError, databaseReference) -> {
+                    if (databadeError != null){
+                        callback.onFailure(databadeError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 
-    public void update(final InspectorEntity inspector, OnAsyncEventListener callback, Context context) {
-        new InspectorUpdate(context, callback).execute(inspector);
-    }
-
-    public void delete(final InspectorEntity inspector, OnAsyncEventListener callback, Context context) {
-        new InspectorDelete(context, callback).execute(inspector);
+    public void delete(final InspectorEntity inspector, OnAsyncEventListener callback) {
+        FirebaseDatabase.getInstance()
+                .getReference("inspector")
+                .child(inspector.getIdInspector())
+                .removeValue((databaseError, databaseReference) -> {
+                    if (databaseError != null){
+                        callback.onFailure(databaseError.toException());
+                    } else {
+                        callback.onSuccess();
+                    }
+                });
     }
 }

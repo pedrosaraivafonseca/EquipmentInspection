@@ -10,6 +10,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.repository.EquipmentRepository;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
@@ -17,24 +18,20 @@ import com.example.equipmentinspection.util.OnAsyncEventListener;
 public class EquipmentDetailsViewModel extends AndroidViewModel {
     private EquipmentRepository repository;
 
-    private Context applicationContext;
-
     // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<EquipmentEntity> observableEquipment;
 
     public EquipmentDetailsViewModel(@NonNull Application application,
-                                     final Long idEquipment, EquipmentRepository equipmentRepository) {
+                                     final String idEquipment, EquipmentRepository equipmentRepository) {
         super(application);
 
         repository = equipmentRepository;
-
-        applicationContext = application.getApplicationContext();
 
         observableEquipment = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         observableEquipment.setValue(null);
 
-        LiveData<EquipmentEntity> equipment = repository.getEquipment(idEquipment, applicationContext);
+        LiveData<EquipmentEntity> equipment = repository.getEquipment(idEquipment);
 
         // observe the changes of the client entity from the database and forward them
         observableEquipment.addSource(equipment, observableEquipment::setValue);
@@ -48,14 +45,14 @@ public class EquipmentDetailsViewModel extends AndroidViewModel {
         @NonNull
         private final Application application;
 
-        private final Long idEquipment;
+        private final String idEquipment;
 
         private final EquipmentRepository repository;
 
-        public Factory(@NonNull Application application, Long idEquipment) {
+        public Factory(@NonNull Application application, String idEquipment) {
             this.application = application;
             this.idEquipment = idEquipment;
-            repository = EquipmentRepository.getInstance();
+            repository = ((BaseApp) application).getEquipmentRepository();
         }
 
         @Override
@@ -72,15 +69,13 @@ public class EquipmentDetailsViewModel extends AndroidViewModel {
         return observableEquipment;
     }
 
-    public void createEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
-        repository.insert(equipment, callback);
-    }
-
     public void updateEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
-        repository.update(equipment, callback);
+        ((BaseApp) getApplication()).getEquipmentRepository()
+                .update(equipment, callback);
     }
 
     public void deleteEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
-        repository.delete(equipment, callback);
+        ((BaseApp) getApplication()).getEquipmentRepository()
+                .delete(equipment, callback);
     }
 }

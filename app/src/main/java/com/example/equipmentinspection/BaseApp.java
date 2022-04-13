@@ -2,7 +2,6 @@ package com.example.equipmentinspection;
 
 import android.app.Application;
 
-import com.example.equipmentinspection.database.AppDatabase;
 import com.example.equipmentinspection.database.repository.EquipmentRepository;
 import com.example.equipmentinspection.database.repository.InspectionRepository;
 import com.example.equipmentinspection.database.repository.InspectorRepository;

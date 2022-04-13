@@ -12,6 +12,7 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.repository.InspectionRepository;
@@ -36,7 +37,7 @@ public class InspectionListViewModel extends AndroidViewModel {
         // set by default null, until we get data from the database.
         observableInspections.setValue(null);
 
-        LiveData<List<InspectionEntity>> inspections = repository.getAllInspection(applicationContext);
+        LiveData<List<InspectionEntity>> inspections = repository.getAllInspection();
 
         // observe the changes of the entities from the database and forward them
         observableInspections.addSource(inspections, observableInspections::setValue);
@@ -54,7 +55,7 @@ public class InspectionListViewModel extends AndroidViewModel {
 
         public Factory(@NonNull Application application) {
             this.application = application;
-            inspectionRepository = InspectionRepository.getInstance();
+            inspectionRepository = ((BaseApp) application).getInspectionRepository();
         }
 
         @Override
@@ -72,6 +73,7 @@ public class InspectionListViewModel extends AndroidViewModel {
     }
 
     public void deleteInspection(InspectionEntity inspection, OnAsyncEventListener callback) {
-        repository.delete(inspection, callback, applicationContext);
+        ((BaseApp) getApplication()).getInspectionRepository()
+                .delete(inspection, callback);
     }
 }

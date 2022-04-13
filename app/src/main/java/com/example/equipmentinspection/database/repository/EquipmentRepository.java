@@ -1,17 +1,11 @@
 package com.example.equipmentinspection.database.repository;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 
-import com.example.equipmentinspection.database.AppDatabase;
-import com.example.equipmentinspection.database.async.EquipmentDelete;
-import com.example.equipmentinspection.database.async.EquipmentUpdate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.firebase.EquipmentListLiveData;
 import com.example.equipmentinspection.database.firebase.EquipmentLiveData;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
-import com.example.equipmentinspection.database.async.EquipmentCreate;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
