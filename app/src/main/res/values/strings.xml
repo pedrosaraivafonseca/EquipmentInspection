@@ -51,8 +51,9 @@
     <!-- Errors -->
     <string name="error_password_retype">The passwords do not match</string>
     <string name="error_invalid_email">Invalid email entered</string>
+    <string name="error_invalid_password">Invalid password (6 characters min)</string>
     <string name="error_empty_field">Please fill in the field</string>
-    <string name="error_already_registered">Email already in use</string>
+    <string name="error_already_registered">Email not available</string>
     <string name="error_dates_field">Purchase date is superior to warranty date</string>
     <string name="error_inspection_date">Date can not be set as today</string>
 

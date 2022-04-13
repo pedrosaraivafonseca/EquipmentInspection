@@ -12,9 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.database.async.InspectorCreate;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
+import com.example.equipmentinspection.database.repository.InspectorRepository;
 import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 
@@ -29,12 +31,15 @@ public class RegisterActivity extends AppCompatActivity {
     private Button register_register_button;
     private Button register_login_button;
 
+    private InspectorRepository repository;
+
     //Build UI
     //Buttons listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        repository = ((BaseApp) getApplication()).getInspectorRepository();
 
         register_email = findViewById(R.id.register_email);
         register_password = findViewById(R.id.register_password);
@@ -42,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         register_lastname = findViewById(R.id.register_lastname);
         register_firstname = findViewById(R.id.register_firstname);
         register_register_button = findViewById(R.id.register_register_button);
-
         register_login_button = findViewById(R.id.register_login_button);
 
         register_login_button.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +76,14 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        if (password1.length() < 6){
+            register_password.setError(getString(R.string.error_invalid_password));
+            register_password.requestFocus();
+            register_password.setText("");
+            register_password_retype.setText("");
+            return;
+        }
+
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             register_email.setError(getString(R.string.error_invalid_email));
             register_email.requestFocus();
@@ -86,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         InspectorEntity inspector = new InspectorEntity(lastname, firstname, email, password1);
 
-        new InspectorCreate(getApplication(), new OnAsyncEventListener() {
+        repository.register(inspector, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 SharedPreferences.Editor editor = getSharedPreferences(LoginActivity.PREFS_USER, 0).edit();
@@ -94,17 +106,20 @@ public class RegisterActivity extends AppCompatActivity {
                 editor.apply();
 
                 setResponse(true);
+
             }
 
             @Override
             public void onFailure(Exception e) {
+                System.out.println(e);
                 setResponse(false);
             }
-        }).execute(inspector);
+        });
     }
 
     //Check if account can be created
     private void setResponse(Boolean response) {
+        System.out.println(response);
         if (response) {
             Toast toast = Toast.makeText(RegisterActivity.this, "Account successfully created", Toast.LENGTH_SHORT);
             toast.show();
@@ -116,8 +131,4 @@ public class RegisterActivity extends AppCompatActivity {
             register_email.requestFocus();
         }
     }
-
-
-
-
 }

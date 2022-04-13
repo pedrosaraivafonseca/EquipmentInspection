@@ -5,6 +5,11 @@ import androidx.room.ForeignKey;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity(tableName = "inspections",
         foreignKeys = {
             @ForeignKey(
@@ -36,8 +41,8 @@ public class InspectionEntity {
 
     @PrimaryKey(autoGenerate = true)
     private Long idInspection;
-
-    private Long idInspectorInspection;
+    private String idInspectionString;
+    private String idInspectorInspection;
     private Long idEquipmentInspection;
     private String nameEquipmentInspection;
     private String dateInspection;
@@ -59,8 +64,16 @@ public class InspectionEntity {
         this.idInspection = idInspection;
     }
 
+    public String getIdInspectionString() {
+        return idInspectionString;
+    }
 
-    public Long getIdInspectorInspection() {
+    public void setIdInspectionString(String idInspectionString) {
+        this.idInspectionString = idInspectionString;
+    }
+
+
+    public String getIdInspectorInspection() {
         return idInspectorInspection;
     }
 
@@ -68,7 +81,7 @@ public class InspectionEntity {
         return idEquipmentInspection;
     }
 
-    public void setIdInspectorInspection(Long idInspectorInspection) {
+    public void setIdInspectorInspection(String idInspectorInspection) {
         this.idInspectorInspection = idInspectorInspection;
     }
 
@@ -104,5 +117,17 @@ public class InspectionEntity {
     @Override
     public String toString(){
         return nameEquipmentInspection + " Inspection on " + dateInspection;
+    }
+
+    @Exclude
+    public Map<String, Object> map(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("inspectorId", idInspectorInspection);
+        result.put("equipmentId", idEquipmentInspection);
+        result.put("nameEquipment", nameEquipmentInspection);
+        result.put("date", dateInspection);
+        result.put("statius", statusInspection);
+
+        return result;
     }
 }

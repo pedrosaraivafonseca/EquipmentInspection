@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "941757707276",
+    "project_id": "equipment-inspection-604ff",
+    "storage_bucket": "equipment-inspection-604ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941757707276:android:1f85a5c5eb3e0fff82aa29",
+        "android_client_info": {
+          "package_name": "com.example.equipmentinspection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "941757707276-mdql42aj7vu2dd41ufgm70dmp2s7q7j8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOkUXnZorwRljfewyoZjpW3nwFgGdMOzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "941757707276-mdql42aj7vu2dd41ufgm70dmp2s7q7j8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

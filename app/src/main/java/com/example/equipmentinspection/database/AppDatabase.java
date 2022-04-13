@@ -10,10 +10,6 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
-import com.example.equipmentinspection.database.dao.EquipmentDao;
-import com.example.equipmentinspection.database.dao.InspectionDao;
-import com.example.equipmentinspection.database.dao.InspectorDao;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
@@ -28,10 +24,6 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
 
     private static final String DATABASE_NAME = "database";
-
-    public abstract EquipmentDao equipmentDao();
-    public abstract InspectionDao inspectionDao();
-    public abstract InspectorDao inspectorDao();
 
     private final MutableLiveData<Boolean> isDatabaseCreated = new MutableLiveData<>();
 

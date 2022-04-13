@@ -4,8 +4,12 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity(tableName = "equipments", indices = {@Index(value = {"nameEquipment"}, unique = true)})
@@ -13,7 +17,7 @@ public class EquipmentEntity {
 
     @PrimaryKey(autoGenerate = true)
     private Long idEquipment;
-
+    private String idEquipmentString;
 
     private String nameEquipment;
     private double priceEquipment;
@@ -45,6 +49,14 @@ public class EquipmentEntity {
 
     public void setIdEquipment(Long idEquipment) {
         this.idEquipment = idEquipment;
+    }
+
+    public String getIdEquipmentString() {
+        return idEquipmentString;
+    }
+
+    public void setIdEquipmentString(String idEquipmentString) {
+        this.idEquipmentString = idEquipmentString;
     }
 
     public String getNameEquipment() {
@@ -124,4 +136,20 @@ public class EquipmentEntity {
     public String toString(){
         return nameEquipment;
     }
+
+    @Exclude
+    public Map<String, Object> map(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("name", nameEquipment);
+        result.put("price", priceEquipment);
+        result.put("purchaseDate", purchaseDateEquipment);
+        result.put("warrantyDate", warrantyDateEquipment);
+        result.put("lastInspection", lastInspectionDateEquipment);
+        result.put("lastInspector", lastInspectorEquipment);
+        result.put("nextInspection", nextInspectionDateEquipment);
+        result.put("status", statusEquipment);
+
+        return result;
+    }
+
 }

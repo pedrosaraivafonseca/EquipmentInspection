@@ -41,3 +41,21 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     annotationProcessor 'androidx.room:room-compiler:2.4.2'
 }
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+
+dependencies {
+    implementation 'com.google.firebase:firebase-database:20.0.4'
+    // ...
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:29.3.0')
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    // Declare the dependencies for the desired Firebase products
+    // For example, declare the dependencies for Firebase Authentication and Cloud Firestore
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+}

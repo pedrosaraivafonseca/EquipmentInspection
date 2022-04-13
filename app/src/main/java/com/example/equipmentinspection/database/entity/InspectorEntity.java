@@ -1,17 +1,17 @@
 package com.example.equipmentinspection.database.entity;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import com.google.firebase.database.Exclude;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity(tableName = "inspectors")
 public class InspectorEntity {
 
-    @PrimaryKey(autoGenerate = true)
-    private Long idInspector;
+    private String idInspector;
 
     private String nameInspector;
     private String firstNameInspector;
@@ -25,11 +25,11 @@ public class InspectorEntity {
         this.passwordInspector = passwordInspector;
     }
 
-    public Long getIdInspector() {
+    public String getIdInspector() {
         return idInspector;
     }
 
-    public void setIdInspector(Long idInspector) {
+    public void setIdInspector(String idInspector) {
         this.idInspector = idInspector;
     }
 
@@ -77,5 +77,16 @@ public class InspectorEntity {
     @Override
     public String toString(){
         return firstNameInspector + " " + nameInspector;
+    }
+
+    @Exclude
+    public Map<String, Object> map(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("email", emailInspector);
+        result.put("password", passwordInspector);
+        result.put("firstName", firstNameInspector);
+        result.put("lastName", nameInspector);
+
+        return result;
     }
 }
