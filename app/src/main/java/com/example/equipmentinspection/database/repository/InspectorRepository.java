@@ -1,5 +1,6 @@
 package com.example.equipmentinspection.database.repository;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.example.equipmentinspection.database.entity.InspectorEntity;
@@ -7,8 +8,10 @@ import com.example.equipmentinspection.database.firebase.InspectorListLiveData;
 import com.example.equipmentinspection.database.firebase.InspectorLiveData;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,7 +33,6 @@ public class InspectorRepository {
         }
         return instance;
     }
-
 
     public LiveData<InspectorEntity> getInspector(final String inspectorId) {
         DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
@@ -61,6 +63,20 @@ public class InspectorRepository {
                 callback.onFailure(task.getException());
             }
         });
+    }
+
+    public void registerDelete(final OnAsyncEventListener callback){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callback.onSuccess();
+                        }
+                    }
+                });
     }
 
     private void insert(final InspectorEntity inspector, final OnAsyncEventListener callback) {

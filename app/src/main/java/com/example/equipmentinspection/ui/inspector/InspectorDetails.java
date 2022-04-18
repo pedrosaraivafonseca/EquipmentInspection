@@ -215,6 +215,19 @@ public class InspectorDetails extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         InspectorDetailsViewModel.Factory inspectorVMFactory = new InspectorDetailsViewModel.Factory(getApplication(), inspector.getId());
                         InspectorDetailsViewModel inspectorVM = inspectorVMFactory.create(InspectorDetailsViewModel.class);
+
+                        inspectorVM.deleteInspectorAuth(new OnAsyncEventListener() {
+                            @Override
+                            public void onSuccess() {
+
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+
+                            }
+                        });
+
                         inspectorVM.deleteInspector(inspector, new OnAsyncEventListener() {
                             @Override
                             public void onSuccess() {

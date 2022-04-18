@@ -89,7 +89,7 @@ public class InspectionFragment extends Fragment {
 
         InspectionListViewModel.Factory factory = new InspectionListViewModel.Factory(
                 getActivity().getApplication());
-        inspectionVM = new InspectionListViewModel(this.getActivity().getApplication(), InspectionRepository.getInstance());
+        inspectionVM = factory.create(InspectionListViewModel.class);
         inspectionVM.getInspections().observe(getViewLifecycleOwner(), inspectionEntities -> {
             if (inspectionEntities != null) {
                 inspections = inspectionEntities;

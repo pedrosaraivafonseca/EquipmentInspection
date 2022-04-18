@@ -18,13 +18,25 @@ public class InspectionLiveData extends LiveData<InspectionEntity> {
         this.reference = reference;
     }
 
+    @Override
+    protected void onActive() {
+        reference.addValueEventListener(listener);
+    }
+
+    @Override
+    protected void onInactive() {
+
+    }
+
     private class MyValueEventListener implements ValueEventListener{
 
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             InspectionEntity entity = snapshot.getValue(InspectionEntity.class);
-            entity.setId(snapshot.getKey());
-            setValue(entity);
+            if(entity != null) {
+                entity.setId(snapshot.getKey());
+                setValue(entity);
+            }
         }
 
         @Override

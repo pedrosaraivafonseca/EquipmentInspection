@@ -81,4 +81,9 @@ public class InspectorDetailsViewModel extends AndroidViewModel{
         ((BaseApp) getApplication()).getInspectorRepository()
                 .delete(inspector, callback);
     }
+
+    public void deleteInspectorAuth(OnAsyncEventListener callback) {
+        ((BaseApp) getApplication()).getInspectorRepository()
+                .registerDelete(callback);
+    }
 }

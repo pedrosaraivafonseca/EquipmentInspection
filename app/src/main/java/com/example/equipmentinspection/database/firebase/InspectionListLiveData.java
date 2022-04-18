@@ -21,6 +21,16 @@ public class InspectionListLiveData extends LiveData<List<InspectionEntity>> {
         this.reference = reference;
     }
 
+    @Override
+    protected void onActive() {
+        reference.addValueEventListener(listener);
+    }
+
+    @Override
+    protected void onInactive() {
+
+    }
+
     private class MyValueEventListener implements ValueEventListener{
 
         @Override
