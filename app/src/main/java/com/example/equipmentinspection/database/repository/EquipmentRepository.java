@@ -45,7 +45,7 @@ public class EquipmentRepository {
     public void insert(final EquipmentEntity equipment, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("equipment")
-                .child(equipment.getIdEquipment())
+                .child(equipment.getId())
                 .setValue(equipment, (databaseError, databaseReference) -> {
                     if (databaseError != null){
                         callback.onFailure(databaseError.toException());
@@ -66,7 +66,7 @@ public class EquipmentRepository {
     public void update(final EquipmentEntity equipment, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("equipment")
-                .child(equipment.getIdEquipment())
+                .child(equipment.getId())
                 .updateChildren(equipment.map(), (databaseError, databaseReference) -> {
                     if (databaseError != null){
                         callback.onFailure(databaseError.toException());
@@ -79,7 +79,7 @@ public class EquipmentRepository {
     public void delete(final EquipmentEntity equipment, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("equipment")
-                .child(equipment.getNameEquipment())
+                .child(equipment.getId())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError!=null){
                         callback.onFailure(databaseError.toException());

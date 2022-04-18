@@ -51,11 +51,11 @@ public class InspectorRepository {
 
     public void register(final InspectorEntity inspector, final OnAsyncEventListener callback) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                inspector.getEmailInspector(),
-                inspector.getPasswordInspector()
+                inspector.getEmail(),
+                inspector.getPassword()
         ).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                inspector.setIdInspector(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                inspector.setId(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 insert(inspector, callback);
             } else {
                 callback.onFailure(task.getException());
@@ -63,11 +63,11 @@ public class InspectorRepository {
         });
     }
 
-    private void insert(final InspectorEntity client, final OnAsyncEventListener callback) {
+    private void insert(final InspectorEntity inspector, final OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference("clients")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .setValue(client, (databaseError, databaseReference) -> {
+                .getReference("inspector")
+                .child(inspector.getId())
+                .setValue(inspector, (databaseError, databaseReference) -> {
                     if (databaseError != null) {
                         callback.onFailure(databaseError.toException());
                         FirebaseAuth.getInstance().getCurrentUser().delete()
@@ -87,7 +87,7 @@ public class InspectorRepository {
 
     public LiveData<List<InspectorEntity>> getAllInspector() {
         DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference("inspectors");
+                .getReference("inspector");
         return new InspectorListLiveData(reference);
     }
 
@@ -95,7 +95,7 @@ public class InspectorRepository {
     public void update(final InspectorEntity inspector, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspector")
-                .child(inspector.getIdInspector())
+                .child(inspector.getId())
                 .updateChildren(inspector.map(), (databadeError, databaseReference) -> {
                     if (databadeError != null){
                         callback.onFailure(databadeError.toException());
@@ -108,7 +108,7 @@ public class InspectorRepository {
     public void delete(final InspectorEntity inspector, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspector")
-                .child(inspector.getIdInspector())
+                .child(inspector.getId())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError != null){
                         callback.onFailure(databaseError.toException());

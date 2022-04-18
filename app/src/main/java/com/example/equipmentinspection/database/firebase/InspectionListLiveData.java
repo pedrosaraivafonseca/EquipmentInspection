@@ -38,7 +38,7 @@ public class InspectionListLiveData extends LiveData<List<InspectionEntity>> {
         List<InspectionEntity> inspections = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()) {
             InspectionEntity inspectionEntity = childSnapshot.getValue(InspectionEntity.class);
-            inspectionEntity.setIdInspection(childSnapshot.getKey());
+            inspectionEntity.setId(childSnapshot.getKey());
             inspections.add(inspectionEntity);
         }
         return inspections;

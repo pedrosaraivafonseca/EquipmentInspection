@@ -3,32 +3,20 @@ package com.example.equipmentinspection.ui.equipment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.adapter.RecyclerAdapter;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
-import com.example.equipmentinspection.database.repository.EquipmentRepository;
-import com.example.equipmentinspection.database.repository.InspectorRepository;
-import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.util.RecyclerViewItemClickListener;
 import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
-import com.example.equipmentinspection.viewmodel.InspectorListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -86,7 +74,7 @@ public class EquipmentFragment extends Fragment {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("equipmentId", equipments.get(position).getIdEquipment());
+                intent.putExtra("equipmentId", equipments.get(position).getId());
                 startActivity(intent);
             }
 

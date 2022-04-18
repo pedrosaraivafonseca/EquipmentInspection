@@ -6,58 +6,60 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InspectorEntity {
-    private String idInspector;
-    private String nameInspector;
-    private String firstNameInspector;
-    private String emailInspector;
-    private String passwordInspector;
+    private String id;
+    private String lastName;
+    private String firstName;
+    private String email;
+    private String password;
 
-    public InspectorEntity(String nameInspector, String firstNameInspector, String emailInspector, String passwordInspector) {
-        this.nameInspector = nameInspector;
-        this.firstNameInspector = firstNameInspector;
-        this.emailInspector = emailInspector;
-        this.passwordInspector = passwordInspector;
+    public InspectorEntity(){}
+
+    public InspectorEntity(String lastName, String firstName, String email, String password) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+        this.password = password;
     }
 
     @Exclude
-    public String getIdInspector() {
-        return idInspector;
+    public String getId() {
+        return id;
     }
 
-    public void setIdInspector(String idInspector) {
-        this.idInspector = idInspector;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getNameInspector() {
-        return nameInspector;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setNameInspector(String nameInspector) {
-        this.nameInspector = nameInspector;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getFirstNameInspector() {
-        return firstNameInspector;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstNameInspector(String firstNameInspector) {
-        this.firstNameInspector = firstNameInspector;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getEmailInspector() {
-        return emailInspector;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailInspector(String emailInspector) {
-        this.emailInspector = emailInspector;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPasswordInspector() {
-        return passwordInspector;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordInspector(String passwordInspector) {
-        this.passwordInspector = passwordInspector;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
@@ -66,21 +68,21 @@ public class InspectorEntity {
         if (obj == this) return true;
         if (!(obj instanceof InspectorEntity)) return false;
         InspectorEntity o = (InspectorEntity) obj;
-        return o.getIdInspector().equals(this.getIdInspector());
+        return o.getId().equals(this.getId());
     }
 
     @Override
     public String toString(){
-        return firstNameInspector + " " + nameInspector;
+        return firstName + " " + lastName;
     }
 
     @Exclude
     public Map<String, Object> map(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("email", emailInspector);
-        result.put("password", passwordInspector);
-        result.put("firstName", firstNameInspector);
-        result.put("lastName", nameInspector);
+        result.put("email", email);
+        result.put("password", password);
+        result.put("firstName", firstName);
+        result.put("lastName", lastName);
 
         return result;
     }

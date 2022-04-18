@@ -5,11 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -17,14 +15,11 @@ import android.widget.Toast;
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.ui.MainActivity;
-import com.example.equipmentinspection.ui.mgmt.RegisterActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
-import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
 import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -125,14 +120,14 @@ public class EquipmentAdd extends AppCompatActivity {
         EquipmentEntity newEquipment = new EquipmentEntity();
 
         double price = Double.parseDouble(equipmentPriceString);
-        newEquipment.setNameEquipment(equipmentNameString);
-        newEquipment.setPriceEquipment(price);
-        newEquipment.setPurchaseDateEquipment(equipmentPurchaseDateString);
-        newEquipment.setWarrantyDateEquipment(equipmentWarrantyDateString);
+        newEquipment.setName(equipmentNameString);
+        newEquipment.setPrice(price);
+        newEquipment.setPurchaseDate(equipmentPurchaseDateString);
+        newEquipment.setWarrantyDate(equipmentWarrantyDateString);
         newEquipment.setNewEquipmentFields();
         String id;
         id = Integer.toString(ThreadLocalRandom.current().nextInt());
-        newEquipment.setIdEquipment(id);
+        newEquipment.setId(id);
 
         EquipmentListViewModel.Factory equipmentVMFactory = new EquipmentListViewModel.Factory(getApplication());
 

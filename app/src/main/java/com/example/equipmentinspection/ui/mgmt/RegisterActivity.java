@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -101,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 SharedPreferences.Editor editor = getSharedPreferences(LoginActivity.PREFS_USER, 0).edit();
-                editor.putString(LoginActivity.PREFS_USER, inspector.getEmailInspector());
+                editor.putString(LoginActivity.PREFS_USER, inspector.getEmail());
                 editor.apply();
 
                 setResponse(true);

@@ -1,7 +1,5 @@
 package com.example.equipmentinspection.database.firebase;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -36,8 +34,10 @@ public class InspectorLiveData extends LiveData<InspectorEntity> {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             InspectorEntity entity = snapshot.getValue(InspectorEntity.class);
-            entity.setIdInspector(snapshot.getKey());
-            setValue(entity);
+            if(entity != null) {
+                entity.setId(snapshot.getKey());
+                setValue(entity);
+            }
         }
 
         @Override

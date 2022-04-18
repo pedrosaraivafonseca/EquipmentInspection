@@ -51,11 +51,11 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
         T item = mData.get(position);
         if (item.getClass().equals(EquipmentEntity.class))
-            holder.mTextView.setText(((EquipmentEntity) item).getNameEquipment());
+            holder.mTextView.setText(((EquipmentEntity) item).getName());
         if (item.getClass().equals(InspectorEntity.class))
-            holder.mTextView.setText(((InspectorEntity) item).getFirstNameInspector() + " " + ((InspectorEntity) item).getNameInspector());
+            holder.mTextView.setText(((InspectorEntity) item).getFirstName() + " " + ((InspectorEntity) item).getLastName());
         if(item.getClass().equals(InspectionEntity.class))
-            holder.mTextView.setText("Inspection #" + ((InspectionEntity) item).getIdInspection() + " " + ((InspectionEntity) item).getDateInspection());
+            holder.mTextView.setText("Inspection #" + ((InspectionEntity) item).getId() + " " + ((InspectionEntity) item).getDate());
     }
 
     @Override
@@ -86,16 +86,16 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
                     if (mData instanceof EquipmentEntity) {
-                        return ((EquipmentEntity) mData.get(oldItemPosition)).getIdEquipment().equals(
-                                (((EquipmentEntity) data.get(newItemPosition)).getIdEquipment()));
+                        return ((EquipmentEntity) mData.get(oldItemPosition)).getId().equals(
+                                (((EquipmentEntity) data.get(newItemPosition)).getId()));
                     }
                     if (mData instanceof InspectorEntity) {
-                        return ((InspectorEntity) mData.get(oldItemPosition)).getIdInspector() ==
-                                (((InspectorEntity) data.get(newItemPosition)).getIdInspector());
+                        return ((InspectorEntity) mData.get(oldItemPosition)).getId() ==
+                                (((InspectorEntity) data.get(newItemPosition)).getId());
                     }
                     if (mData instanceof InspectionEntity) {
-                        return ((InspectionEntity) mData.get(oldItemPosition)).getIdInspection() ==
-                                (((InspectionEntity) data.get(newItemPosition)).getIdInspection());
+                        return ((InspectionEntity) mData.get(oldItemPosition)).getId() ==
+                                (((InspectionEntity) data.get(newItemPosition)).getId());
                     }
                     return false;
                 }
@@ -105,35 +105,35 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
                     if (mData instanceof EquipmentEntity) {
                         EquipmentEntity newEquipment = (EquipmentEntity) data.get(newItemPosition);
                         EquipmentEntity oldEquipment = (EquipmentEntity) mData.get(newItemPosition);
-                        return newEquipment.getIdEquipment().equals(oldEquipment.getIdEquipment())
-                                && Objects.equals(newEquipment.getNameEquipment(), oldEquipment.getNameEquipment())
-                                && Objects.equals(newEquipment.getPriceEquipment(), oldEquipment.getPriceEquipment())
-                                && newEquipment.getLastInspectionDateEquipment().equals(oldEquipment.getNextInspectionDateEquipment())
-                                && newEquipment.getLastInspectorEquipment().equals(oldEquipment.getLastInspectorEquipment())
-                                && newEquipment.getStatusEquipment().equals(oldEquipment.getStatusEquipment())
-                                && newEquipment.getPurchaseDateEquipment().equals(oldEquipment.getPurchaseDateEquipment())
-                                && newEquipment.getWarrantyDateEquipment().equals(oldEquipment.getWarrantyDateEquipment())
-                                && newEquipment.getNextInspectionDateEquipment().equals(oldEquipment.getNextInspectionDateEquipment());
+                        return newEquipment.getId().equals(oldEquipment.getId())
+                                && Objects.equals(newEquipment.getName(), oldEquipment.getName())
+                                && Objects.equals(newEquipment.getPrice(), oldEquipment.getPrice())
+                                && newEquipment.getLastInspectionDate().equals(oldEquipment.getNextInspectionDate())
+                                && newEquipment.getLastInspector().equals(oldEquipment.getLastInspector())
+                                && newEquipment.getStatus().equals(oldEquipment.getStatus())
+                                && newEquipment.getPurchaseDate().equals(oldEquipment.getPurchaseDate())
+                                && newEquipment.getWarrantyDate().equals(oldEquipment.getWarrantyDate())
+                                && newEquipment.getNextInspectionDate().equals(oldEquipment.getNextInspectionDate());
                     }
 
                     if (mData instanceof InspectorEntity) {
                         InspectorEntity newInspector = (InspectorEntity) data.get(newItemPosition);
                         InspectorEntity oldInspector = (InspectorEntity) mData.get(newItemPosition);
-                        return newInspector.getIdInspector().equals(oldInspector.getIdInspector())
-                                && Objects.equals(newInspector.getEmailInspector(), oldInspector.getEmailInspector())
-                                && Objects.equals(newInspector.getFirstNameInspector(), oldInspector.getFirstNameInspector())
-                                && Objects.equals(newInspector.getNameInspector(), oldInspector.getNameInspector())
-                                && newInspector.getPasswordInspector().equals(oldInspector.getPasswordInspector());
+                        return newInspector.getId().equals(oldInspector.getId())
+                                && Objects.equals(newInspector.getEmail(), oldInspector.getEmail())
+                                && Objects.equals(newInspector.getFirstName(), oldInspector.getFirstName())
+                                && Objects.equals(newInspector.getLastName(), oldInspector.getLastName())
+                                && newInspector.getPassword().equals(oldInspector.getPassword());
                     }
 
                     if (mData instanceof InspectionEntity) {
                         InspectionEntity newInspection = (InspectionEntity) data.get(newItemPosition);
                         InspectionEntity oldInspection = (InspectionEntity) mData.get(newItemPosition);
-                        return newInspection.getIdInspection().equals(oldInspection.getIdInspection())
-                                && Objects.equals(newInspection.getDateInspection(), oldInspection.getDateInspection())
-                                && Objects.equals(newInspection.getIdInspectorInspection(), oldInspection.getIdInspectorInspection())
-                                && Objects.equals(newInspection.getIdEquipmentInspection(), oldInspection.getIdEquipmentInspection())
-                                && newInspection.getStatusInspection().equals(oldInspection.getStatusInspection());
+                        return newInspection.getId().equals(oldInspection.getId())
+                                && Objects.equals(newInspection.getDate(), oldInspection.getDate())
+                                && Objects.equals(newInspection.getIdInspector(), oldInspection.getIdInspector())
+                                && Objects.equals(newInspection.getIdEquipment(), oldInspection.getIdEquipment())
+                                && newInspection.getStatus().equals(oldInspection.getStatus());
                     }
                     return false;
                 }

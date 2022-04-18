@@ -5,60 +5,60 @@ import com.google.firebase.database.Exclude;
 import java.util.HashMap;
 import java.util.Map;
 public class InspectionEntity {
-    private String idInspection;
-    private String idInspectorInspection;
-    private String idEquipmentInspection;
-    private String nameEquipmentInspection;
-    private String dateInspection;
-    private String statusInspection;
+    private String id;
+    private String idInspector;
+    private String idEquipment;
+    private String nameEquipment;
+    private String date;
+    private String status;
 
-    public String getNameEquipmentInspection() {
-        return nameEquipmentInspection;
+    public String getNameEquipment() {
+        return nameEquipment;
     }
 
-    public void setNameEquipmentInspection(String nameEquipmentInspection) {
-        this.nameEquipmentInspection = nameEquipmentInspection;
+    public void setNameEquipment(String nameEquipment) {
+        this.nameEquipment = nameEquipment;
     }
 
     @Exclude
-    public String getIdInspection() {
-        return idInspection;
+    public String getId() {
+        return id;
     }
 
-    public void setIdInspection(String idInspection) {
-        this.idInspection = idInspection;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getIdInspectorInspection() {
-        return idInspectorInspection;
+    public String getIdInspector() {
+        return idInspector;
     }
 
-    public String getIdEquipmentInspection(){
-        return idEquipmentInspection;
+    public String getIdEquipment(){
+        return idEquipment;
     }
 
-    public void setIdInspectorInspection(String idInspectorInspection) {
-        this.idInspectorInspection = idInspectorInspection;
+    public void setIdInspector(String idInspector) {
+        this.idInspector = idInspector;
     }
 
-    public void setIdEquipmentInspection(String idEquipmentInspection) {
-        this.idEquipmentInspection = idEquipmentInspection;
+    public void setIdEquipment(String idEquipment) {
+        this.idEquipment = idEquipment;
     }
 
-    public String getDateInspection() {
-        return dateInspection;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateInspection(String dateInspection) {
-        this.dateInspection = dateInspection;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getStatusInspection() {
-        return statusInspection;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStatusInspection(String statusInspection) {
-        this.statusInspection = statusInspection;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -67,22 +67,22 @@ public class InspectionEntity {
         if (obj == this) return true;
         if (!(obj instanceof InspectionEntity)) return false;
         InspectionEntity o = (InspectionEntity) obj;
-        return o.getIdInspection().equals(this.getIdInspection());
+        return o.getId().equals(this.getId());
     }
 
     @Override
     public String toString(){
-        return nameEquipmentInspection + " Inspection on " + dateInspection;
+        return nameEquipment + " Inspection on " + date;
     }
 
     @Exclude
     public Map<String, Object> map(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("inspectorId", idInspectorInspection);
-        result.put("equipmentId", idEquipmentInspection);
-        result.put("nameEquipment", nameEquipmentInspection);
-        result.put("date", dateInspection);
-        result.put("status", statusInspection);
+        result.put("inspectorId", idInspector);
+        result.put("equipmentId", idEquipment);
+        result.put("nameEquipment", nameEquipment);
+        result.put("date", date);
+        result.put("status", status);
 
         return result;
     }

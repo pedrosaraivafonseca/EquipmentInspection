@@ -25,7 +25,6 @@ import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
 import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
-import com.example.equipmentinspection.viewmodel.InspectionDetailsViewModel;
 import com.example.equipmentinspection.viewmodel.InspectionListViewModel;
 import com.example.equipmentinspection.viewmodel.InspectorListViewModel;
 
@@ -123,11 +122,11 @@ public class InspectionAdd extends AppCompatActivity {
 
         InspectionEntity newInspection = new InspectionEntity();
 
-        newInspection.setIdInspectorInspection(inspector.getIdInspector());
-        newInspection.setIdEquipmentInspection(equipment.getIdEquipment());
-        newInspection.setNameEquipmentInspection(equipment.getNameEquipment());
-        newInspection.setDateInspection(date);
-        newInspection.setStatusInspection("To do");
+        newInspection.setIdInspector(inspector.getId());
+        newInspection.setIdEquipment(equipment.getId());
+        newInspection.setNameEquipment(equipment.getName());
+        newInspection.setDate(date);
+        newInspection.setStatus("To do");
 
         InspectionListViewModel.Factory inspectionVMFactory = new InspectionListViewModel.Factory(getApplication());
         InspectionListViewModel inspectionVM = inspectionVMFactory.create(InspectionListViewModel.class);
@@ -268,10 +267,10 @@ public class InspectionAdd extends AppCompatActivity {
     //Update the equipment that is set to be inspected
     //Fields NextInspectionDate and Inspector
     private void updateEquipment(EquipmentEntity equipment){
-        equipment.setStatusEquipment("To be inspected");
-        equipment.setNextInspectionDateEquipment(inspectionCreated.getDateInspection());
+        equipment.setStatus("To be inspected");
+        equipment.setNextInspectionDate(inspectionCreated.getDate());
 
-        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipment.getIdEquipment());
+        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipment.getId());
 
         EquipmentDetailsViewModel equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
 

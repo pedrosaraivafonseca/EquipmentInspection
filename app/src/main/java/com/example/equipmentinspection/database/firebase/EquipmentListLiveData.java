@@ -1,7 +1,5 @@
 package com.example.equipmentinspection.database.firebase;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -50,7 +48,7 @@ public class EquipmentListLiveData extends LiveData<List<EquipmentEntity>> {
         List<EquipmentEntity> equipments = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()){
             EquipmentEntity equipmentEntity = childSnapshot.getValue(EquipmentEntity.class);
-            equipmentEntity.setIdEquipment(childSnapshot.getKey());
+            equipmentEntity.setId(childSnapshot.getKey());
             equipments.add(equipmentEntity);
         }
         return equipments;

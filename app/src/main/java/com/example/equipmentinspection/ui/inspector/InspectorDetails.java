@@ -1,17 +1,12 @@
 package com.example.equipmentinspection.ui.inspector;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -27,8 +22,6 @@ import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.viewmodel.InspectorDetailsViewModel;
-
-import org.w3c.dom.Text;
 
 public class InspectorDetails extends AppCompatActivity {
 
@@ -141,7 +134,7 @@ public class InspectorDetails extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String inputPassword=input.getText().toString().trim();
-                    if (inputPassword.equals(inspector.getPasswordInspector())){
+                    if (inputPassword.equals(inspector.getPassword())){
                         setNewPassword();
                     } else {
                         Toast toast = Toast.makeText(getApplication(), "Wrong Password", Toast.LENGTH_SHORT);
@@ -179,12 +172,12 @@ public class InspectorDetails extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String inputPassword=input.getText().toString().trim();
-                if (inputPassword.equals(inspector.getPasswordInspector())){
+                if (inputPassword.equals(inspector.getPassword())){
                     Toast toast = Toast.makeText(getApplication(), "Password already in use", Toast.LENGTH_SHORT);
                     toast.show();
-                } else if (!inputPassword.equals(inspector.getPasswordInspector())){
-                    saveChanges(inspector.getFirstNameInspector(), inspector.getNameInspector(), inspector.getEmailInspector(), inputPassword);
-                    inspector.setPasswordInspector(inputPassword);
+                } else if (!inputPassword.equals(inspector.getPassword())){
+                    saveChanges(inspector.getFirstName(), inspector.getLastName(), inspector.getEmail(), inputPassword);
+                    inspector.setPassword(inputPassword);
                     Toast toast = Toast.makeText(getApplication(), "Password succesfully changed", Toast.LENGTH_SHORT);
                     toast.show();
 
@@ -212,16 +205,15 @@ public class InspectorDetails extends AppCompatActivity {
         builder.create().show();
     }
 
-
     //Alert to delete account
     private AlertDialog createDeleteDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle("Delete")
-                .setMessage("Do you want to Delete " + inspector.getNameInspector())
+                .setMessage("Do you want to Delete " + inspector.getLastName())
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        InspectorDetailsViewModel.Factory inspectorVMFactory = new InspectorDetailsViewModel.Factory(getApplication(), inspector.getIdInspector());
+                        InspectorDetailsViewModel.Factory inspectorVMFactory = new InspectorDetailsViewModel.Factory(getApplication(), inspector.getId());
                         InspectorDetailsViewModel inspectorVM = inspectorVMFactory.create(InspectorDetailsViewModel.class);
                         inspectorVM.deleteInspector(inspector, new OnAsyncEventListener() {
                             @Override
@@ -319,9 +311,9 @@ public class InspectorDetails extends AppCompatActivity {
             return;
         }
 
-        inspector.setFirstNameInspector(inspecFirstName);
-        inspector.setNameInspector(inspecLastName);
-        inspector.setEmailInspector(inspectMail);
+        inspector.setFirstName(inspecFirstName);
+        inspector.setLastName(inspecLastName);
+        inspector.setEmail(inspectMail);
 
         inspectorVM.updateInspector(inspector, new OnAsyncEventListener() {
             @Override
@@ -385,10 +377,10 @@ public class InspectorDetails extends AppCompatActivity {
     //Get data from livedata
     private void updateContent() {
         if (inspector!=null){
-            inspectorFirstName.setText(inspector.getFirstNameInspector());
-            inspectorLastName.setText(inspector.getNameInspector());
-            inspectorMail.setText(inspector.getEmailInspector());
-            mail = inspector.getEmailInspector();
+            inspectorFirstName.setText(inspector.getFirstName());
+            inspectorLastName.setText(inspector.getLastName());
+            inspectorMail.setText(inspector.getEmail());
+            mail = inspector.getEmail();
             checkEdit();
         }
     }

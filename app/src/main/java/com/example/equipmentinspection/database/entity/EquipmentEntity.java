@@ -6,113 +6,104 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class EquipmentEntity {
 
-    private String idEquipment;
-    private String owner;
-    private String nameEquipment;
-    private double priceEquipment;
-    private String purchaseDateEquipment;
-    private String warrantyDateEquipment;
-    private String lastInspectionDateEquipment;
-    private String nextInspectionDateEquipment;
-    private String lastInspectorEquipment;
-    private String statusEquipment;
+    private String id;
+    private String name;
+    private double price;
+    private String purchaseDate;
+    private String warrantyDate;
+    private String lastInspectionDate;
+    private String nextInspectionDate;
+    private String lastInspector;
+    private String status;
 
     public EquipmentEntity(){
     }
 
     //Fill the specified fields with generic info for next and last inspection as well as status
     public void setNewEquipmentFields(){
-        setLastInspectionDateEquipment(null);
-        setLastInspectorEquipment("");
+        setLastInspectionDate(null);
+        setLastInspector("");
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, 3);
-        Date nextInspectionTime = cal.getTime();
-        setNextInspectionDateEquipment(nextInspectionTime.toString());
-        setStatusEquipment("Uninspected");
+        //cal.add(Calendar.MONTH, 3);
+        //Date nextInspectionTime = cal.getTime();
+        //setNextInspectionDate(nextInspectionTime.toString());
+        setStatus("Uninspected");
     }
 
     @Exclude
-    public String getIdEquipment() {
-        return idEquipment;
+    public String getId() {
+        return id;
     }
 
-    @Exclude
-    public String getOwner() { return owner; }
-
-    public void setOwner(String owner){
-        this.owner = owner;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setIdEquipment(String idEquipment) {
-        this.idEquipment = idEquipment;
+    public String getName() {
+        return name;
     }
 
-    public String getNameEquipment() {
-        return nameEquipment;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setNameEquipment(String nameEquipment) {
-        this.nameEquipment = nameEquipment;
+    public double getPrice() {
+        return price;
     }
 
-    public double getPriceEquipment() {
-        return priceEquipment;
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-    public void setPriceEquipment(double priceEquipment) {
-        this.priceEquipment = priceEquipment;
+    public String getPurchaseDate() {
+        return purchaseDate;
     }
 
-    public String getPurchaseDateEquipment() {
-        return purchaseDateEquipment;
+    public void setPurchaseDate(String purchaseDate) {
+        this.purchaseDate = purchaseDate;
     }
 
-    public void setPurchaseDateEquipment(String purchaseDateEquipment) {
-        this.purchaseDateEquipment = purchaseDateEquipment;
+    public String getWarrantyDate() {
+        return warrantyDate;
     }
 
-    public String getWarrantyDateEquipment() {
-        return warrantyDateEquipment;
+    public void setWarrantyDate(String warrantyDate) {
+        this.warrantyDate = warrantyDate;
     }
 
-    public void setWarrantyDateEquipment(String warrantyDateEquipment) {
-        this.warrantyDateEquipment = warrantyDateEquipment;
+    public String getLastInspectionDate() {
+        return lastInspectionDate;
     }
 
-    public String getLastInspectionDateEquipment() {
-        return lastInspectionDateEquipment;
+    public void setLastInspectionDate(String lastInspectionDate) {
+        this.lastInspectionDate = lastInspectionDate;
     }
 
-    public void setLastInspectionDateEquipment(String lastInspectionDateEquipment) {
-        this.lastInspectionDateEquipment = lastInspectionDateEquipment;
+    public String getNextInspectionDate() {
+        return nextInspectionDate;
     }
 
-    public String getNextInspectionDateEquipment() {
-        return nextInspectionDateEquipment;
+    public void setNextInspectionDate(String nextInspectionDate) {
+        this.nextInspectionDate = nextInspectionDate;
     }
 
-    public void setNextInspectionDateEquipment(String nextInspectionDateEquipment) {
-        this.nextInspectionDateEquipment = nextInspectionDateEquipment;
+    public String getLastInspector() {
+        return lastInspector;
     }
 
-    public String getLastInspectorEquipment() {
-        return lastInspectorEquipment;
+    public void setLastInspector(String lastInspector) {
+        this.lastInspector = lastInspector;
     }
 
-    public void setLastInspectorEquipment(String lastInspectorEquipment) {
-        this.lastInspectorEquipment = lastInspectorEquipment;
+    public String getStatus() {
+        return status;
     }
 
-    public String getStatusEquipment() {
-        return statusEquipment;
-    }
-
-    public void setStatusEquipment(String statusEquipment) {
-        this.statusEquipment = statusEquipment;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -121,25 +112,25 @@ public class EquipmentEntity {
         if (obj == this) return true;
         if (!(obj instanceof EquipmentEntity)) return false;
         EquipmentEntity o = (EquipmentEntity) obj;
-        return o.getIdEquipment().equals(this.getIdEquipment());
+        return o.getId().equals(this.getId());
     }
 
     @Override
     public String toString(){
-        return nameEquipment;
+        return name;
     }
 
     @Exclude
     public Map<String, Object> map(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("name", nameEquipment);
-        result.put("price", priceEquipment);
-        result.put("purchaseDate", purchaseDateEquipment);
-        result.put("warrantyDate", warrantyDateEquipment);
-        result.put("lastInspection", lastInspectionDateEquipment);
-        result.put("lastInspector", lastInspectorEquipment);
-        result.put("nextInspection", nextInspectionDateEquipment);
-        result.put("status", statusEquipment);
+        result.put("name", name);
+        result.put("price", price);
+        result.put("purchaseDate", purchaseDate);
+        result.put("warrantyDate", warrantyDate);
+        result.put("lastInspection", lastInspectionDate);
+        result.put("lastInspector", lastInspector);
+        result.put("nextInspection", nextInspectionDate);
+        result.put("status", status);
 
         return result;
     }

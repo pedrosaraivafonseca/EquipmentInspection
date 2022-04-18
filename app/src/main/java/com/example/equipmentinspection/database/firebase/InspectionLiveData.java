@@ -23,7 +23,7 @@ public class InspectionLiveData extends LiveData<InspectionEntity> {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             InspectionEntity entity = snapshot.getValue(InspectionEntity.class);
-            entity.setIdInspection(snapshot.getKey());
+            entity.setId(snapshot.getKey());
             setValue(entity);
         }
 

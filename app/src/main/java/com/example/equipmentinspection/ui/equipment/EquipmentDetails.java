@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
+import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
 
@@ -51,7 +52,6 @@ public class EquipmentDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         String equipmentId = intent.getStringExtra("equipmentId");
-        System.out.println(equipmentId);
 
         EquipmentDetailsViewModel.Factory factory = new EquipmentDetailsViewModel.Factory(getApplication(), equipmentId);
         equipmentVM = new ViewModelProvider(this, factory).get(EquipmentDetailsViewModel.class);
@@ -165,7 +165,7 @@ public class EquipmentDetails extends AppCompatActivity {
             return;
         }
 
-        equipment.setStatusEquipment(equipStatus);
+        equipment.setStatus(equipStatus);
 
         equipmentVM.updateEquipment(equipment, new OnAsyncEventListener() {
             @Override
@@ -183,14 +183,14 @@ public class EquipmentDetails extends AppCompatActivity {
     //Use to get the equipment from LiveData
     private void updateContent() {
         if (equipment != null) {
-            equipmentName.setText(equipment.getNameEquipment());
-            equipmentPrice.setText(Double.toString(equipment.getPriceEquipment()));
-            equipmentPurchase.setText(equipment.getPurchaseDateEquipment());
-            equipmentWarranty.setText(equipment.getWarrantyDateEquipment());
-            equipmentLastInspector.setText(equipment.getLastInspectorEquipment());
-            equipmentLastInspection.setText(equipment.getLastInspectionDateEquipment());
-            equipmentNextInspection.setText(equipment.getNextInspectionDateEquipment());
-            equipmentStatus.setText(equipment.getStatusEquipment());
+            equipmentName.setText(equipment.getName());
+            equipmentPrice.setText(Double.toString(equipment.getPrice()));
+            equipmentPurchase.setText(equipment.getPurchaseDate());
+            equipmentWarranty.setText(equipment.getWarrantyDate());
+            equipmentLastInspector.setText(equipment.getLastInspector());
+            equipmentLastInspection.setText(equipment.getLastInspectionDate());
+            equipmentNextInspection.setText(equipment.getNextInspectionDate());
+            equipmentStatus.setText(equipment.getStatus());
         }
     }
 
@@ -198,12 +198,12 @@ public class EquipmentDetails extends AppCompatActivity {
     private AlertDialog createDeleteDialog() {
         AlertDialog dialogBox = new AlertDialog.Builder(this)
                 .setTitle("Delete")
-                .setMessage("Do you want to Delete " + equipment.getNameEquipment())
+                .setMessage("Do you want to Delete " + equipment.getName())
 
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipment.getIdEquipment());
+                        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipment.getId());
                         EquipmentDetailsViewModel equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
                             equipmentVM.deleteEquipment(equipment, new OnAsyncEventListener() {
                                 @Override
@@ -211,7 +211,7 @@ public class EquipmentDetails extends AppCompatActivity {
                                     Toast toast = Toast.makeText(getApplication(), "Equipment successfully deleted", Toast.LENGTH_LONG);
                                     toast.show();
 
-                                    Intent intent = new Intent(getApplication(), EquipmentFragment.class);
+                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
                                 }
 

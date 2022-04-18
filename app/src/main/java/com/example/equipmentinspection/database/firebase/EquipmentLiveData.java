@@ -1,7 +1,5 @@
 package com.example.equipmentinspection.database.firebase;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -14,12 +12,10 @@ import com.google.firebase.database.ValueEventListener;
 public class EquipmentLiveData extends LiveData<EquipmentEntity> {
 
     private final DatabaseReference reference;
-    private final String owner;
     private final EquipmentLiveData.MyValueEventListener listener = new EquipmentLiveData.MyValueEventListener();
 
 
     public EquipmentLiveData(DatabaseReference reference) {
-        this.owner = reference.getParent().getParent().getKey();
         this.reference = reference;
     }
 
@@ -38,6 +34,11 @@ public class EquipmentLiveData extends LiveData<EquipmentEntity> {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+            EquipmentEntity entity = snapshot.getValue(EquipmentEntity.class);
+            if(entity != null){
+                entity.setId(snapshot.getKey());
+                setValue(entity);
+            }
         }
 
         @Override

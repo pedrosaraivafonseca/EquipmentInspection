@@ -3,7 +3,6 @@ package com.example.equipmentinspection.ui.inspection;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,20 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
 import com.example.equipmentinspection.adapter.RecyclerAdapter;
-import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
-import com.example.equipmentinspection.database.repository.EquipmentRepository;
 import com.example.equipmentinspection.database.repository.InspectionRepository;
-import com.example.equipmentinspection.ui.equipment.EquipmentAdd;
-import com.example.equipmentinspection.ui.equipment.EquipmentDetails;
-import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.util.RecyclerViewItemClickListener;
-import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 import com.example.equipmentinspection.viewmodel.InspectionListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -84,9 +75,9 @@ public class InspectionFragment extends Fragment {
                         Intent.FLAG_ACTIVITY_NO_ANIMATION |
                                 Intent.FLAG_ACTIVITY_NO_HISTORY
                 );
-                intent.putExtra("inspectionId", inspections.get(position).getIdInspection());
-                intent.putExtra("inspectorId", inspections.get(position).getIdInspectorInspection());
-                intent.putExtra("equipmentId", inspections.get(position).getIdEquipmentInspection());
+                intent.putExtra("inspectionId", inspections.get(position).getId());
+                intent.putExtra("inspectorId", inspections.get(position).getIdInspector());
+                intent.putExtra("equipmentId", inspections.get(position).getIdEquipment());
                 startActivity(intent);
             }
 

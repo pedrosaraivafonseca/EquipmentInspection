@@ -21,7 +21,6 @@ import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.ui.MainActivity;
-import com.example.equipmentinspection.ui.equipment.EquipmentFragment;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
 import com.example.equipmentinspection.viewmodel.InspectionDetailsViewModel;
@@ -142,9 +141,9 @@ public class InspectionDetails extends AppCompatActivity {
     private void updateContent() {
         InspectionEntity ins = inspection;
             if(ins != null) {
-                inspectionDate.setText(ins.getDateInspection());
-                inspectionEquipment.setText(ins.getNameEquipmentInspection());
-                inspectionStatus.setText(ins.getStatusInspection());
+                inspectionDate.setText(ins.getDate());
+                inspectionEquipment.setText(ins.getNameEquipment());
+                inspectionStatus.setText(ins.getStatus());
                 checkInspection(ins);
             }
     }
@@ -214,7 +213,7 @@ public class InspectionDetails extends AppCompatActivity {
             return;
         }
 
-        inspection.setDateInspection(dateInsp);
+        inspection.setDate(dateInsp);
 
         inspectionVM.updateInspection(inspection, new OnAsyncEventListener() {
             @Override
@@ -238,7 +237,7 @@ public class InspectionDetails extends AppCompatActivity {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspection.getIdInspection());
+                        InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspection.getId());
                         InspectionDetailsViewModel inspectionVM = inspectionVMFactory.create(InspectionDetailsViewModel.class);
                         inspectionVM.deleteInspection(inspection, new OnAsyncEventListener() {
                             @Override
@@ -279,13 +278,13 @@ public class InspectionDetails extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspection.getIdInspection());
+                        InspectionDetailsViewModel.Factory inspectionVMFactory = new InspectionDetailsViewModel.Factory(getApplication(), inspection.getId());
                         InspectionDetailsViewModel inspectionVM = inspectionVMFactory.create(InspectionDetailsViewModel.class);
-                        inspection.setStatusInspection("Done");
+                        inspection.setStatus("Done");
 
-                        equipment.setLastInspectionDateEquipment(inspection.getDateInspection());
-                        equipment.setStatusEquipment("Inspected");
-                        equipment.setLastInspectorEquipment(inspector.toString());
+                        equipment.setLastInspectionDate(inspection.getDate());
+                        equipment.setStatus("Inspected");
+                        equipment.setLastInspector(inspector.toString());
 
                         equipmentVM.updateEquipment(equipment, new OnAsyncEventListener() {
                             @Override
@@ -344,7 +343,7 @@ public class InspectionDetails extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.PREFS_USER, 0);
         String userMail = sharedPreferences.getString("email", "");
 
-        if (userMail.equals(inspectorCheck.getEmailInspector())){
+        if (userMail.equals(inspectorCheck.getEmail())){
             inspectionEdit.setVisibility(View.VISIBLE);
             inspectionValidate.setVisibility(View.VISIBLE);
             inspectionDelete.setVisibility(View.VISIBLE);
@@ -356,7 +355,7 @@ public class InspectionDetails extends AppCompatActivity {
     }
 
     private void checkInspection(InspectionEntity inspectionCheck){
-        if(inspectionCheck.getStatusInspection().equals("Done")){
+        if(inspectionCheck.getStatus().equals("Done")){
             inspectionEdit.setVisibility(View.GONE);
             inspectionValidate.setVisibility(View.GONE);
             inspectionDelete.setVisibility(View.GONE);
