@@ -16,8 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.database.async.EquipmentUpdate;
-import com.example.equipmentinspection.database.async.InspectionCreate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
@@ -25,7 +23,10 @@ import com.example.equipmentinspection.database.repository.EquipmentRepository;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
 import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
+import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
 import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
+import com.example.equipmentinspection.viewmodel.InspectionDetailsViewModel;
+import com.example.equipmentinspection.viewmodel.InspectionListViewModel;
 import com.example.equipmentinspection.viewmodel.InspectorListViewModel;
 
 import java.text.ParseException;
@@ -128,21 +129,23 @@ public class InspectionAdd extends AppCompatActivity {
         newInspection.setDateInspection(date);
         newInspection.setStatusInspection("To do");
 
-        new InspectionCreate(getApplication(), new OnAsyncEventListener() {
+        InspectionListViewModel.Factory inspectionVMFactory = new InspectionListViewModel.Factory(getApplication());
+        InspectionListViewModel inspectionVM = inspectionVMFactory.create(InspectionListViewModel.class);
+
+        inspectionVM.createInspection(newInspection, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 inspectionCreated = newInspection;
                 equipmentToUpdate = equipment;
                 inspectorName = inspector.toString();
                 setResponse(true);
-
             }
 
             @Override
             public void onFailure(Exception e) {
                 setResponse(false);
             }
-        }).execute(newInspection);
+        });
     }
 
     //Use by saveChanges() to determine if the operation was successful or not
@@ -268,7 +271,11 @@ public class InspectionAdd extends AppCompatActivity {
         equipment.setStatusEquipment("To be inspected");
         equipment.setNextInspectionDateEquipment(inspectionCreated.getDateInspection());
 
-        new EquipmentUpdate(this, new OnAsyncEventListener() {
+        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipment.getIdEquipment());
+
+        EquipmentDetailsViewModel equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
+
+        equipmentVM.updateEquipment(equipment, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
 
@@ -278,6 +285,6 @@ public class InspectionAdd extends AppCompatActivity {
             public void onFailure(Exception e) {
 
             }
-        }).execute(equipment);
+        });
     }
 }

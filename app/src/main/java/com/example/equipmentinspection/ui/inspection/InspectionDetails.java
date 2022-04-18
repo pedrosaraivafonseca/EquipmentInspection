@@ -17,8 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.database.async.EquipmentUpdate;
-import com.example.equipmentinspection.database.async.InspectionUpdate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.database.entity.InspectionEntity;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
@@ -52,9 +50,9 @@ public class InspectionDetails extends AppCompatActivity {
     EquipmentDetailsViewModel equipmentVM;
     InspectionDetailsViewModel inspectionVM;
     final Calendar myCalendar= Calendar.getInstance();
-    Long inspectionId;
-    Long inspectorId;
-    Long equipmentId;
+    String inspectionId;
+    String inspectorId;
+    String equipmentId;
 
     //Build the UI, get the intents from fragment
     @Override
@@ -63,9 +61,9 @@ public class InspectionDetails extends AppCompatActivity {
         setContentView(R.layout.activity_inspection_details);
 
         Intent intent = getIntent();
-        inspectionId = intent.getLongExtra("inspectionId", 0);
-        inspectorId = intent.getLongExtra("inspectorId", 0);
-        equipmentId = intent.getLongExtra("equipmentId", 0);
+        inspectionId = intent.getStringExtra("inspectionId");
+        inspectorId = intent.getStringExtra("inspectorId");
+        equipmentId = intent.getStringExtra("equipmentId");
 
 
         inspectionBackButton = (ImageButton) findViewById(R.id.inspection_back_button);
@@ -218,7 +216,7 @@ public class InspectionDetails extends AppCompatActivity {
 
         inspection.setDateInspection(dateInsp);
 
-        new InspectionUpdate(this, new OnAsyncEventListener() {
+        inspectionVM.updateInspection(inspection, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
 
@@ -228,7 +226,7 @@ public class InspectionDetails extends AppCompatActivity {
             public void onFailure(Exception e) {
 
             }
-        }).execute(inspection);
+        });
     }
 
     //Create a delete confirmation dialog to delete the inspection

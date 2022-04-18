@@ -76,4 +76,9 @@ public class InspectionListViewModel extends AndroidViewModel {
         ((BaseApp) getApplication()).getInspectionRepository()
                 .delete(inspection, callback);
     }
+
+    public void createInspection(InspectionEntity inspection, OnAsyncEventListener callback) {
+        ((BaseApp) getApplication()).getInspectionRepository()
+                .insert(inspection, callback);
+    }
 }

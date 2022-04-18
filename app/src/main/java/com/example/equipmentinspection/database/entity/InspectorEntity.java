@@ -1,18 +1,12 @@
 package com.example.equipmentinspection.database.entity;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Entity(tableName = "inspectors")
 public class InspectorEntity {
-
     private String idInspector;
-
     private String nameInspector;
     private String firstNameInspector;
     private String emailInspector;
@@ -25,6 +19,7 @@ public class InspectorEntity {
         this.passwordInspector = passwordInspector;
     }
 
+    @Exclude
     public String getIdInspector() {
         return idInspector;
     }

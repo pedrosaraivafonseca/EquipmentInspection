@@ -1,9 +1,5 @@
 package com.example.equipmentinspection.database.entity;
 
-import androidx.room.Entity;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-
 import com.google.firebase.database.Exclude;
 
 import java.util.Calendar;
@@ -12,13 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Entity(tableName = "equipments", indices = {@Index(value = {"nameEquipment"}, unique = true)})
 public class EquipmentEntity {
-
-    @PrimaryKey(autoGenerate = true)
-    private Long idEquipment;
-    private String idEquipmentString;
-
+    private String idEquipment;
+    private String owner;
     private String nameEquipment;
     private double priceEquipment;
     private String purchaseDateEquipment;
@@ -29,7 +21,6 @@ public class EquipmentEntity {
     private String statusEquipment;
 
     public EquipmentEntity(){
-
     }
 
     //Fill the specified fields with generic info for next and last inspection as well as status
@@ -43,20 +34,20 @@ public class EquipmentEntity {
         setStatusEquipment("Uninspected");
     }
 
-    public Long getIdEquipment() {
+    @Exclude
+    public String getIdEquipment() {
         return idEquipment;
     }
 
-    public void setIdEquipment(Long idEquipment) {
+    @Exclude
+    public String getOwner() { return owner; }
+
+    public void setOwner(String owner){
+        this.owner = owner;
+    }
+
+    public void setIdEquipment(String idEquipment) {
         this.idEquipment = idEquipment;
-    }
-
-    public String getIdEquipmentString() {
-        return idEquipmentString;
-    }
-
-    public void setIdEquipmentString(String idEquipmentString) {
-        this.idEquipmentString = idEquipmentString;
     }
 
     public String getNameEquipment() {

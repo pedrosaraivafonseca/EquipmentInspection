@@ -11,16 +11,6 @@ import com.example.equipmentinspection.database.repository.InspectorRepository;
  */
 public class BaseApp extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    public AppDatabase getDatabase() {
-        return AppDatabase.getInstance(this);
-    }
-
-
     public InspectorRepository getInspectorRepository() {
         return InspectorRepository.getInstance();
     }

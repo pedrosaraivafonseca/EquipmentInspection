@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.example.equipmentinspection.BaseApp;
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.database.async.InspectorCreate;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.database.repository.InspectorRepository;
 import com.example.equipmentinspection.ui.MainActivity;

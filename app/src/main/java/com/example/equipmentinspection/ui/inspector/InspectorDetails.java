@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.database.async.InspectorUpdate;
 import com.example.equipmentinspection.database.entity.InspectorEntity;
 import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
@@ -44,6 +43,7 @@ public class InspectorDetails extends AppCompatActivity {
     private Button inspectorDelete;
     private Boolean isEditable;
     private Button inspector_password_button;
+    private InspectorDetailsViewModel inspectorVM;
 
     private static String mail;
 
@@ -60,10 +60,10 @@ public class InspectorDetails extends AppCompatActivity {
         setTitle("Inspector Details");
 
         Intent intent = getIntent();
-        Long inspectorId = intent.getLongExtra("inspectorId", 0);
+        String inspectorId = intent.getStringExtra("inspectorId");
 
         InspectorDetailsViewModel.Factory inspectorVMFactory = new InspectorDetailsViewModel.Factory(getApplication(), inspectorId);
-        InspectorDetailsViewModel inspectorVM = inspectorVMFactory.create(InspectorDetailsViewModel.class);
+        inspectorVM = inspectorVMFactory.create(InspectorDetailsViewModel.class);
 
         inspectorVM.getInspector().observe(this, inspectorEntity -> {
                     inspector = inspectorEntity;
@@ -323,7 +323,7 @@ public class InspectorDetails extends AppCompatActivity {
         inspector.setNameInspector(inspecLastName);
         inspector.setEmailInspector(inspectMail);
 
-        new InspectorUpdate(this, new OnAsyncEventListener() {
+        inspectorVM.updateInspector(inspector, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 if (!mail.equals(inspectMail)){
@@ -341,7 +341,7 @@ public class InspectorDetails extends AppCompatActivity {
             public void onFailure(Exception e) {
 
             }
-        }).execute(inspector);
+        });
     }
 
     //Check if user corresponds to the user selected

@@ -1,49 +1,13 @@
 package com.example.equipmentinspection.database.entity;
 
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
-
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
 import java.util.Map;
-
-@Entity(tableName = "inspections",
-        foreignKeys = {
-            @ForeignKey(
-                entity = InspectorEntity.class,
-                parentColumns = "idInspector",
-                childColumns = "idInspectorInspection",
-                onDelete = ForeignKey.CASCADE
-            ),
-            @ForeignKey(
-                entity = EquipmentEntity.class,
-                parentColumns = "idEquipment",
-                childColumns = "idEquipmentInspection",
-                onDelete = ForeignKey.CASCADE
-            ),
-                @ForeignKey(
-                        entity = EquipmentEntity.class,
-                        parentColumns = "nameEquipment",
-                        childColumns = "nameEquipmentInspection",
-                        onDelete = ForeignKey.CASCADE
-                )
-        },
-        indices = {
-            @Index(value = {"idInspectorInspection"}),
-            @Index(value = {"idEquipmentInspection"}),
-            @Index(value = {"nameEquipmentInspection"})}
-)
-
 public class InspectionEntity {
-
-    @PrimaryKey(autoGenerate = true)
-    private Long idInspection;
-    private String idInspectionString;
+    private String idInspection;
     private String idInspectorInspection;
-    private Long idEquipmentInspection;
+    private String idEquipmentInspection;
     private String nameEquipmentInspection;
     private String dateInspection;
     private String statusInspection;
@@ -56,28 +20,20 @@ public class InspectionEntity {
         this.nameEquipmentInspection = nameEquipmentInspection;
     }
 
-    public Long getIdInspection() {
+    @Exclude
+    public String getIdInspection() {
         return idInspection;
     }
 
-    public void setIdInspection(Long idInspection) {
+    public void setIdInspection(String idInspection) {
         this.idInspection = idInspection;
     }
-
-    public String getIdInspectionString() {
-        return idInspectionString;
-    }
-
-    public void setIdInspectionString(String idInspectionString) {
-        this.idInspectionString = idInspectionString;
-    }
-
 
     public String getIdInspectorInspection() {
         return idInspectorInspection;
     }
 
-    public Long getIdEquipmentInspection(){
+    public String getIdEquipmentInspection(){
         return idEquipmentInspection;
     }
 
@@ -85,7 +41,7 @@ public class InspectionEntity {
         this.idInspectorInspection = idInspectorInspection;
     }
 
-    public void setIdEquipmentInspection(Long idEquipmentInspection) {
+    public void setIdEquipmentInspection(String idEquipmentInspection) {
         this.idEquipmentInspection = idEquipmentInspection;
     }
 
@@ -126,7 +82,7 @@ public class InspectionEntity {
         result.put("equipmentId", idEquipmentInspection);
         result.put("nameEquipment", nameEquipmentInspection);
         result.put("date", dateInspection);
-        result.put("statius", statusInspection);
+        result.put("status", statusInspection);
 
         return result;
     }

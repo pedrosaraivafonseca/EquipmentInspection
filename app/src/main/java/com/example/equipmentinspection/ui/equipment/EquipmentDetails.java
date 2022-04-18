@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.database.async.EquipmentUpdate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
 import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
@@ -37,6 +36,7 @@ public class EquipmentDetails extends AppCompatActivity {
     private EditText equipmentLastInspection;
     private EditText equipmentNextInspection;
     private EditText equipmentStatus;
+    EquipmentDetailsViewModel equipmentVM;
 
     private EquipmentEntity equipment;
 
@@ -49,11 +49,11 @@ public class EquipmentDetails extends AppCompatActivity {
         setContentView(R.layout.activity_equipment_details);
 
         Intent intent = getIntent();
-        Long equipmentId = intent.getLongExtra("equipmentId", 0);
+        String equipmentId = intent.getStringExtra("equipmentId");
 
         EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipmentId);
 
-        EquipmentDetailsViewModel equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
+        equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
 
         equipmentVM.getEquipment().observe(this, equipmentEntity -> {
             equipment = equipmentEntity;
@@ -166,15 +166,17 @@ public class EquipmentDetails extends AppCompatActivity {
 
         equipment.setStatusEquipment(equipStatus);
 
-        new EquipmentUpdate(this, new OnAsyncEventListener() {
+        equipmentVM.updateEquipment(equipment, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
+
             }
 
             @Override
             public void onFailure(Exception e) {
+
             }
-        }).execute(equipment);
+        });
     }
 
     //Use to get the equipment from LiveData

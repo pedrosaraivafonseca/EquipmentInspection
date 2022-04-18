@@ -33,7 +33,7 @@ public class InspectorRepository {
 
 
     public LiveData<InspectorEntity> getInspector(final String inspectorId) {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspector")
                 .child(inspectorId);
         return new InspectorLiveData(reference);
@@ -64,7 +64,7 @@ public class InspectorRepository {
     }
 
     private void insert(final InspectorEntity client, final OnAsyncEventListener callback) {
-        FirebaseDatabase.getInstance()
+        FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("clients")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .setValue(client, (databaseError, databaseReference) -> {
@@ -86,14 +86,14 @@ public class InspectorRepository {
     }
 
     public LiveData<List<InspectorEntity>> getAllInspector() {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspectors");
         return new InspectorListLiveData(reference);
     }
 
 
     public void update(final InspectorEntity inspector, OnAsyncEventListener callback) {
-        FirebaseDatabase.getInstance()
+        FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspector")
                 .child(inspector.getIdInspector())
                 .updateChildren(inspector.map(), (databadeError, databaseReference) -> {
@@ -106,7 +106,7 @@ public class InspectorRepository {
     }
 
     public void delete(final InspectorEntity inspector, OnAsyncEventListener callback) {
-        FirebaseDatabase.getInstance()
+        FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspector")
                 .child(inspector.getIdInspector())
                 .removeValue((databaseError, databaseReference) -> {

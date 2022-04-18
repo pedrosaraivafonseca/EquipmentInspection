@@ -29,31 +29,31 @@ public class InspectionRepository {
     }
 
     public LiveData<InspectionEntity> getInspection(final String id) {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspection")
                 .child(id);
         return new InspectionLiveData(reference);
     }
 
     public LiveData<InspectionEntity> getInspectionByStatus(final String status) {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspection")
                 .child(status);
         return new InspectionLiveData(reference);
     }
 
     public LiveData<List<InspectionEntity>> getAllInspection() {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspection");
         return new InspectionListLiveData(reference);
 
     }
 
     public void insert(final InspectionEntity inspection, OnAsyncEventListener callback) {
-        DatabaseReference reference = FirebaseDatabase.getInstance()
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspection");
         String key = reference.push().getKey();
-        FirebaseDatabase.getInstance()
+        FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspection")
                 .child(key)
                 .setValue(inspection, (databaseError, databaseReference) -> {
@@ -66,9 +66,9 @@ public class InspectionRepository {
     }
 
     public void update(final InspectionEntity inspection, OnAsyncEventListener callback) {
-        FirebaseDatabase.getInstance()
+        FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspection")
-                .child(inspection.getIdInspectionString())
+                .child(inspection.getIdInspection())
                 .updateChildren(inspection.map(), (databaseError, databaseReference) -> {
                     if (databaseError != null){
                         callback.onFailure(databaseError.toException());
@@ -79,9 +79,9 @@ public class InspectionRepository {
     }
 
     public void delete(final InspectionEntity inspection, OnAsyncEventListener callback) {
-        FirebaseDatabase.getInstance()
+        FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("inspection")
-                .child(inspection.getIdInspectionString())
+                .child(inspection.getIdInspection())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError!= null){
                         callback.onFailure(databaseError.toException());

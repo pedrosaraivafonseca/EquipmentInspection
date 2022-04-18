@@ -71,4 +71,9 @@ public class EquipmentListViewModel extends AndroidViewModel {
         ((BaseApp) getApplication()).getEquipmentRepository()
                 .delete(equipment, callback);
     }
+
+    public void createEquipment(EquipmentEntity equipment, OnAsyncEventListener callback) {
+        ((BaseApp) getApplication()).getEquipmentRepository()
+                .insert(equipment, callback);
+    }
 }

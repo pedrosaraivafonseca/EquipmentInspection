@@ -1,5 +1,7 @@
 package com.example.equipmentinspection.database.firebase;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -20,6 +22,16 @@ public class InspectorListLiveData extends LiveData<List<InspectorEntity>> {
 
     public InspectorListLiveData(DatabaseReference reference) {
         this.reference = reference;
+    }
+
+    @Override
+    protected void onActive() {
+        reference.addValueEventListener(listener);
+    }
+
+    @Override
+    protected void onInactive() {
+
     }
 
     private class MyValueEventListener implements ValueEventListener {

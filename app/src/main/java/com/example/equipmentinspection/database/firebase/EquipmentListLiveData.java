@@ -1,5 +1,7 @@
 package com.example.equipmentinspection.database.firebase;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -21,6 +23,16 @@ public class EquipmentListLiveData extends LiveData<List<EquipmentEntity>> {
         this.reference = reference;
     }
 
+    @Override
+    protected void onActive() {
+        reference.addValueEventListener(listener);
+    }
+
+    @Override
+    protected void onInactive() {
+
+    }
+
     private class MyValueEventListener implements ValueEventListener{
 
         @Override
@@ -38,7 +50,7 @@ public class EquipmentListLiveData extends LiveData<List<EquipmentEntity>> {
         List<EquipmentEntity> equipments = new ArrayList<>();
         for (DataSnapshot childSnapshot : snapshot.getChildren()){
             EquipmentEntity equipmentEntity = childSnapshot.getValue(EquipmentEntity.class);
-            equipmentEntity.setIdEquipmentString(childSnapshot.getKey());
+            equipmentEntity.setIdEquipment(childSnapshot.getKey());
             equipments.add(equipmentEntity);
         }
         return equipments;

@@ -15,12 +15,12 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.equipmentinspection.R;
-import com.example.equipmentinspection.database.async.EquipmentCreate;
-import com.example.equipmentinspection.database.async.InspectorCreate;
 import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.ui.MainActivity;
 import com.example.equipmentinspection.ui.mgmt.RegisterActivity;
 import com.example.equipmentinspection.util.OnAsyncEventListener;
+import com.example.equipmentinspection.viewmodel.EquipmentDetailsViewModel;
+import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -130,7 +130,11 @@ public class EquipmentAdd extends AppCompatActivity {
         newEquipment.setWarrantyDateEquipment(equipmentWarrantyDateString);
         newEquipment.setNewEquipmentFields();
 
-        new EquipmentCreate(getApplication(), new OnAsyncEventListener() {
+        EquipmentListViewModel.Factory equipmentVMFactory = new EquipmentListViewModel.Factory(getApplication());
+
+        EquipmentListViewModel equipmentVM = equipmentVMFactory.create(EquipmentListViewModel.class);
+
+        equipmentVM.createEquipment(newEquipment, new OnAsyncEventListener() {
             @Override
             public void onSuccess() {
                 setResponse(true);
@@ -140,7 +144,7 @@ public class EquipmentAdd extends AppCompatActivity {
             public void onFailure(Exception e) {
                 setResponse(false);
             }
-        }).execute(newEquipment);
+        });
     }
 
     //Use by saveChanges() to determine if the operation was successful or not
@@ -151,6 +155,7 @@ public class EquipmentAdd extends AppCompatActivity {
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
 
         } else {
             equipmentPrice.setError(getString(R.string.generic_error));
