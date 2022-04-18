@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EquipmentEntity {
+
     private String idEquipment;
     private String owner;
     private String nameEquipment;

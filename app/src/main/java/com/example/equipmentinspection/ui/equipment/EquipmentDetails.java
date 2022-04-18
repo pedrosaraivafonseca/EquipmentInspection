@@ -3,6 +3,7 @@ package com.example.equipmentinspection.ui.equipment;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,10 +51,10 @@ public class EquipmentDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         String equipmentId = intent.getStringExtra("equipmentId");
+        System.out.println(equipmentId);
 
-        EquipmentDetailsViewModel.Factory equipmentVMFactory = new EquipmentDetailsViewModel.Factory(getApplication(), equipmentId);
-
-        equipmentVM = equipmentVMFactory.create(EquipmentDetailsViewModel.class);
+        EquipmentDetailsViewModel.Factory factory = new EquipmentDetailsViewModel.Factory(getApplication(), equipmentId);
+        equipmentVM = new ViewModelProvider(this, factory).get(EquipmentDetailsViewModel.class);
 
         equipmentVM.getEquipment().observe(this, equipmentEntity -> {
             equipment = equipmentEntity;

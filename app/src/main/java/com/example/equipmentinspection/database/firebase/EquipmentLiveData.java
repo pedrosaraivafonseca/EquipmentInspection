@@ -37,10 +37,7 @@ public class EquipmentLiveData extends LiveData<EquipmentEntity> {
 
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
-            EquipmentEntity entity = snapshot.getValue(EquipmentEntity.class);
-            entity.setIdEquipment(snapshot.getKey());
-            entity.setOwner(owner);
-            setValue(entity);
+
         }
 
         @Override

@@ -98,7 +98,7 @@ public class EquipmentFragment extends Fragment {
 
         EquipmentListViewModel.Factory factory = new EquipmentListViewModel.Factory(
                 getActivity().getApplication());
-        equipmentVM = new EquipmentListViewModel(this.getActivity().getApplication(), EquipmentRepository.getInstance());
+        equipmentVM = factory.create(EquipmentListViewModel.class);
         equipmentVM.getEquipments().observe(getViewLifecycleOwner(), equipmentEntities -> {
             if (equipmentEntities != null) {
                 equipments = equipmentEntities;

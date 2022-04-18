@@ -28,6 +28,7 @@ import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EquipmentAdd extends AppCompatActivity {
 
@@ -129,6 +130,9 @@ public class EquipmentAdd extends AppCompatActivity {
         newEquipment.setPurchaseDateEquipment(equipmentPurchaseDateString);
         newEquipment.setWarrantyDateEquipment(equipmentWarrantyDateString);
         newEquipment.setNewEquipmentFields();
+        String id;
+        id = Integer.toString(ThreadLocalRandom.current().nextInt());
+        newEquipment.setIdEquipment(id);
 
         EquipmentListViewModel.Factory equipmentVMFactory = new EquipmentListViewModel.Factory(getApplication());
 

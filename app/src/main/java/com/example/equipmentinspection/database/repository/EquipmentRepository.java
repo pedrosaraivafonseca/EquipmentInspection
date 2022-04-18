@@ -31,22 +31,21 @@ public class EquipmentRepository {
 
     public LiveData<EquipmentEntity> getEquipment(final String id) {
         DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference("equipments")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .getReference("equipment")
                 .child(id);
         return new EquipmentLiveData(reference);
     }
 
     public LiveData<List<EquipmentEntity>> getAllEquipment() {
         DatabaseReference reference = FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
-                .getReference("equipments");
+                .getReference("equipment");
         return new EquipmentListLiveData(reference);
     }
 
     public void insert(final EquipmentEntity equipment, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("equipment")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child(equipment.getIdEquipment())
                 .setValue(equipment, (databaseError, databaseReference) -> {
                     if (databaseError != null){
                         callback.onFailure(databaseError.toException());
@@ -80,7 +79,7 @@ public class EquipmentRepository {
     public void delete(final EquipmentEntity equipment, OnAsyncEventListener callback) {
         FirebaseDatabase.getInstance("https://equipment-inspection-604ff-default-rtdb.europe-west1.firebasedatabase.app")
                 .getReference("equipment")
-                .child(equipment.getIdEquipment())
+                .child(equipment.getNameEquipment())
                 .removeValue((databaseError, databaseReference) -> {
                     if (databaseError!=null){
                         callback.onFailure(databaseError.toException());
