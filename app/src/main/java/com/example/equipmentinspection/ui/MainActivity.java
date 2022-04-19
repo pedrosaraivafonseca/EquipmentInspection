@@ -157,7 +157,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = getSharedPreferences(LoginActivity.PREFS_USER, 0).edit();
         editor.remove("logged");
         editor.apply();
-        Intent intent = new Intent(this, MainActivity.class);
+        finishAffinity();
+        Intent intent = new Intent(this, MainActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 }

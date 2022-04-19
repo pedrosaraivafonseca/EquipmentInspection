@@ -18,6 +18,7 @@ import com.example.equipmentinspection.database.entity.EquipmentEntity;
 import com.example.equipmentinspection.util.RecyclerViewItemClickListener;
 import com.example.equipmentinspection.viewmodel.EquipmentListViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
