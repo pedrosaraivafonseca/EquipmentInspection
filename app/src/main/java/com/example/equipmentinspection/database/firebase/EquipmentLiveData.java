@@ -17,6 +17,7 @@ public class EquipmentLiveData extends LiveData<EquipmentEntity> {
 
     public EquipmentLiveData(DatabaseReference reference) {
         this.reference = reference;
+
     }
 
     @Override
