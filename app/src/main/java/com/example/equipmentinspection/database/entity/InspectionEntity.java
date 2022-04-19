@@ -72,7 +72,7 @@ public class InspectionEntity {
 
     @Override
     public String toString(){
-        return date;
+        return nameEquipment + " Inspection on " + date;
     }
 
     @Exclude

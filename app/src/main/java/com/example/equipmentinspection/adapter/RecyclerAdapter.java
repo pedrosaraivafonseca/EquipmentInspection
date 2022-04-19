@@ -55,7 +55,7 @@ public class RecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerAdapter.Vie
         if (item.getClass().equals(InspectorEntity.class))
             holder.mTextView.setText(((InspectorEntity) item).getFirstName() + " " + ((InspectorEntity) item).getLastName());
         if(item.getClass().equals(InspectionEntity.class))
-            holder.mTextView.setText("Inspection #" + ((InspectionEntity) item).getId() + " " + ((InspectionEntity) item).getDate());
+            holder.mTextView.setText(((InspectionEntity) item).toString());
     }
 
     @Override
