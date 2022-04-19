@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void checkCredentials(String email, String password) {
-        if (!TextUtils.isEmpty(password) || TextUtils.isEmpty(email) || !validEmail(email)){
+        if (TextUtils.isEmpty(password) || TextUtils.isEmpty(email) || !validEmail(email)){
             login_password_field.setError(getString(R.string.error_invalid_login));
         }
         attemptLogin(email, password);
@@ -99,5 +99,10 @@ public class LoginActivity extends AppCompatActivity {
               login_password_field.setText("");
           }
       });
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
     }
 }
